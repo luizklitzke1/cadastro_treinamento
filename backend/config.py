@@ -17,8 +17,8 @@ CORS(app)
 path = os.path.dirname(os.path.abspath(__file__))
 
 #Configurações do DB
-db = os.path.join(path, 'rpg.db')
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///" + db
+arquivodb = os.path.join(path, 'dados.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///" + arquivodb
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # Remover warnings
 
 db = SQLAlchemy(app)
