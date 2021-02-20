@@ -100,9 +100,7 @@ if __name__ == "__main__":
     )
     
     db.session.add(c1)
-    print(c1)
     db.session.add(c2)
-    print(c2)
     
     s1 = Sala(
         nome = "Sala 1"
@@ -114,6 +112,9 @@ if __name__ == "__main__":
     db.session.add(s1)
     db.session.add(s2)
     db.session.commit()
+    print(c1)
+    print(c2)
+    
     print(s1)
     print(s2)
     
