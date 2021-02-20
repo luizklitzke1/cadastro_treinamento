@@ -20,12 +20,13 @@ class Sala(db.Model):
     id_sala = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(150), nullable=False)
     #Lotação é modificada toda vez que um aluno entra ou sai, para evitar muitas requisições ao DB
-    lotacao = db.Column(db.Integer, nullable=False, default = 0)
+    lotacao1 = db.Column(db.Integer, nullable=False, default = 0)
+    lotacao2 = db.Column(db.Integer, nullable=False, default = 0)
     
 
     #Representação em String
     def __repr__(self):
-        return f"ID: '{self.id_sala}', Nome: '{self.nome}', Lotação: '{self.lotacao}'"
+        return f"ID: '{self.id_sala}', Nome: '{self.nome}', Lotação e1: '{self.lotacao1}', Lotação e2: '{self.lotacao2}'"
 
     #Expressão da classe em Json - conversão para Frontend
     def json(self):
@@ -49,35 +50,35 @@ class Pessoa(db.Model):
     
     
     #Chave estrangeira da primeira sala
-    sala1_id = db.Column(db.Integer, db.ForeignKey(Sala.id_sala), nullable = False)
+    sala1_id = db.Column(db.Integer, db.ForeignKey(Sala.id_sala), nullable = True,)
     sala1 = db.relationship("Sala", foreign_keys=sala1_id)
     
     #Chave estrangeira da segunda sala
-    sala2_id = db.Column(db.Integer, db.ForeignKey(Sala.id_sala), nullable = False)
+    sala2_id = db.Column(db.Integer, db.ForeignKey(Sala.id_sala), nullable = True)
     sala2 = db.relationship("Sala", foreign_keys=sala2_id)
     
     #Chave estrangeira do primeiro espaço de café
-    cafe1_id = db.Column(db.Integer, db.ForeignKey(Espaco_Cafe.id_espaco), nullable = False)
+    cafe1_id = db.Column(db.Integer, db.ForeignKey(Espaco_Cafe.id_espaco), nullable = True)
     cafe1 = db.relationship("Espaco_Cafe", foreign_keys=cafe1_id)
     
     #Chave estrangeira do segundo espaço de café
-    cafe2_id = db.Column(db.Integer, db.ForeignKey(Espaco_Cafe.id_espaco), nullable = False)
+    cafe2_id = db.Column(db.Integer, db.ForeignKey(Espaco_Cafe.id_espaco), nullable = True)
     cafe2 = db.relationship("Espaco_Cafe", foreign_keys=cafe2_id)
     
 
     #Representação em String
     def __str__(self):
-        return f"Nome: '{self.nome}', Sobrenome: '{self.sobrenome}', Sala1: '{self.sala1.nome}, Sala2: '{self.sala2.nome}, Cafe1: '{self.cafe1.nome}, Cafe2: '{self.cafe2.nome} '"
+        return f"Nome: '{self.nome}', Sobrenome: '{self.sobrenome}', Sala1: '{self.sala1_id}, Sala2: '{self.sala2_id}, Cafe1: '{self.cafe1_id}, Cafe2: '{self.cafe2_id} '"
 
     #Expressão da classe em Json - conversão para Frontend
     def json(self):
         return{
             "cpf": self.cpf, "nome": self.nome,
             "sobrenome": self.sobrenome,
-            "cafe1": self.cafe1.json(),
-            "cafe2": self.cafe2.json(),
-            "sala1": self.sala1.json(),
-            "sala2": self.sala1.json(),
+            "cafe1": self.cafe1_id,
+            "cafe2": self.cafe2_id,
+            "sala1": self.sala1_id,
+            "sala2": self.sala2_id,
             "foto": self.foto,
         }
   
@@ -108,9 +109,17 @@ if __name__ == "__main__":
     s2 = Sala(
         nome = "Sala 2"
     )
+    s3 = Sala(
+        nome = "Sala 32"
+    )
+    s4 = Sala(
+        nome = "Sala 4"
+    )
     
     db.session.add(s1)
     db.session.add(s2)
+    db.session.add(s3)
+    db.session.add(s4)
     db.session.commit()
     print(c1)
     print(c2)
@@ -122,23 +131,15 @@ if __name__ == "__main__":
     p1 = Pessoa(
         cpf = "05435950643",
         nome = "Jonas",
-        sobrenome = "Silveira",
-        sala1_id = 2,
-        sala2_id = 1,
-        cafe1_id = 2,
-        cafe2_id = 1,
+        sobrenome = "Silveira"
+
         
     )
     
     p2 = Pessoa(
         cpf = "61284732533",
         nome = "Carlinhos",
-        sobrenome = "Teixeira",
-        sala1 = s1,
-        sala2 = s2,
-        cafe1 = c1,
-        cafe2 = c2,
-        
+        sobrenome = "Teixeira"
     )
         
     db.session.add(p1)

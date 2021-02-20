@@ -1,10 +1,11 @@
-#Módulo responsável pra lógica de rotas do servidor backend
+#Módulo responsável pra lógica de rotas do servidor backend e comunicação com o DB
 
 from models_db import Pessoa, Sala, Espaco_Cafe
 from PIL import Image
 import base64
 from config import *
 import os, io
+import json
 
 
 # Rota para a home
@@ -135,6 +136,54 @@ def registrar_Sala():
     resposta.headers.add("Access-Control-Allow-Origin","*")
     
     return resposta
+
+# Rota para  alocar uma pessoa em uma sala
+# http://127.0.0.1:5000/alocar_pessoa_sala/1/05435950643/1
+@app.route("/alocar_pessoa_sala/<int:id_sala>/<string:cpf>/<int:etapa>", methods=['POST', 'GET'])
+def alocar_pessoa_sala(id_sala, cpf, etapa):
+    
+    resposta = jsonify({"resultado":"ok","detalhes": "ok"})
+    dados = request.get_json()
+    
+    try: #Tenta alocar a pessoa
+        
+        sala_esp = Sala.query.get_or_404(id_sala)
+        
+        salas= db.session.query(Sala).all()
+        
+        for sala in salas:
+            
+            if etapa == 1:
+                if (sala_esp.lotacao1 > sala.lotacao1):
+                    print("puuutz1")
+                    raise Exception("deu ruim")
+            else:
+                if (sala_esp.lotacao2 > sala.lotacao2):
+                    print("puuutz2")
+                    raise Exception("deu ruim")
+        
+        pessoa = Pessoa.query.get_or_404(cpf)
+        
+        if etapa == 1 and pessoa.sala1_id != sala_esp.id_sala:
+            pessoa.sala1_id = sala_esp.id_sala
+            sala_esp.lotacao1 += 1
+            
+        elif etapa == 2 and pessoa.sala2_id != sala_esp.id_sala:
+            pessoa.sala2_id = sala_esp.id_sala
+            sala_esp.lotacao2 += 1
+        
+        db.session.commit()
+            
+        
+    #Retorna erro com detalhes
+    except Exception as e: 
+        resposta = jsonify({"resultado":"erro","detalhes":str(e)})
+        
+    resposta.headers.add("Access-Control-Allow-Origin","*")
+    
+    return resposta
+    
+    
 
 # Método para salvar imagens de perfil compactadas
 def salvar_imagem_base64(diretorio, base64str):
