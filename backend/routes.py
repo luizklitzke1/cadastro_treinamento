@@ -66,3 +66,97 @@ def listar_pessoas_cafe(id_espaco,etapa):
     
     pessoas_json = [Pessoa.json() for Pessoa in pessoas]
     return (jsonify(pessoas_json))
+
+
+# Rota para registrar pessoas
+@app.route("/registrar_pessoa", methods=['POST'])
+def registrar_Pessoa():
+    
+    resposta = jsonify({"resultado":"ok","detalhes": "ok"})
+    dados = request.get_json()
+    try: #Tenta fazer o registro
+        
+        nova_Pessoa = Pessoa(**dados)
+        
+        #Testa se foi informada alguma foto para salvar nos arquivos, ou mantém a padrão
+        if (dados["foto"] != None):
+            nova_Pessoa.foto = salvar_imagem_base64('../front_end/static/imagens_pessoas',(dados["foto"]))
+        
+        db.session.add(nova_Pessoa)
+        db.session.commit()
+        
+    #Retorna erro com detalhes
+    except Exception as e: 
+        resposta = jsonify({"resultado":"erro","detalhes":str(e)})
+        
+    resposta.headers.add("Access-Control-Allow-Origin","*")
+    
+    return resposta
+
+# Rota para registrar espaços para café
+@app.route("/registrar_espaco_cafe", methods=['POST'])
+def registrar_Espaco_Cafe():
+    
+    resposta = jsonify({"resultado":"ok","detalhes": "ok"})
+    dados = request.get_json()
+    try: #Tenta fazer o registro
+        
+        novo_Espaco = Espaco_Cafe(**dados)
+        
+        db.session.add(novo_Espaco)
+        db.session.commit()
+        
+    #Retorna erro com detalhes
+    except Exception as e: 
+        resposta = jsonify({"resultado":"erro","detalhes":str(e)})
+        
+    resposta.headers.add("Access-Control-Allow-Origin","*")
+    
+    return resposta
+
+# Rota para registrar salas
+@app.route("/registrar_sala", methods=['POST'])
+def registrar_Sala():
+    
+    resposta = jsonify({"resultado":"ok","detalhes": "ok"})
+    dados = request.get_json()
+    
+    try: #Tenta fazer o registro
+        
+        nova_Sala = Sala(**dados)
+        
+        db.session.add(nova_Sala)
+        db.session.commit()
+        
+    #Retorna erro com detalhes
+    except Exception as e: 
+        resposta = jsonify({"resultado":"erro","detalhes":str(e)})
+        
+    resposta.headers.add("Access-Control-Allow-Origin","*")
+    
+    return resposta
+
+# Método para salvar imagens de perfil compactadas
+def salvar_imagem_base64(diretorio, base64str):
+    
+    rhex = secrets.token_hex(9)
+    nome_foto = rhex + ".png"
+    caminho = os.path.join(app.root_path, diretorio, nome_foto)
+    tamanho_imagem = (200, 200)
+    
+    image = base64.b64decode(str(base64str)) 
+    
+    imagem_menor = Image.open(io.BytesIO(image))
+    imagem_menor.thumbnail(tamanho_imagem)
+    imagem_menor.save(caminho)
+    
+    return nome_foto
+
+
+# Método para apagar as imagens
+def apagar_imagem(diretorio, foto):
+    
+    #Verifica se não é a imagem padrão
+    if (foto != "pessoa.png"):
+        caminho = os.path.join(app.root_path, diretorio, foto)
+        os.remove(caminho)
