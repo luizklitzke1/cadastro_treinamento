@@ -41,3 +41,16 @@ def listar_espacos_cafe():
     espacos_cafe = db.session.query(Espaco_Cafe).all()
     espacos_cafe_json = [Espaco_Cafe.json() for Espaco_Cafe in espacos_cafe]
     return (jsonify(espacos_cafe_json))
+
+
+# Rota para listar oas pessoas de determinada sala e etapa
+@app.route("/listar_pessoas_esp/<int:id_sala>/<int:etapa>",  methods=['POST', 'GET'])
+def listar_pessoas_esp(id_sala,etapa):
+   
+    if etapa == 1:
+        pessoas = Pessoa.query.filter(Pessoa.sala1_id == id_sala).all()
+    else:
+        pessoas = Pessoa.query.filter(Pessoa.sala2_id == id_sala).all()
+    
+    pessoas_json = [Pessoa.json() for Pessoa in pessoas]
+    return (jsonify(pessoas_json))
