@@ -1,3 +1,5 @@
+"""
+
 #sala1
 
 pessoas11 = ["a","b","c"]
@@ -50,3 +52,15 @@ print(conincide)
 
 print(1//2)
 
+"""
+def teste(a):
+    b = a+2
+    c = a+4
+    return (b,c)
+
+
+d,e = teste(1)
+print(d,e)
+
+f = teste(1)[0]
+print(f)

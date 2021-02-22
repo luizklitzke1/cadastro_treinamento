@@ -118,7 +118,7 @@ if __name__ == "__main__":
     
     db.session.add(s1)
     db.session.add(s2)
-    db.session.add(s3)
+    #db.session.add(s3)
     db.session.commit()
     print(c1)
     print(c2)
@@ -157,12 +157,26 @@ if __name__ == "__main__":
         nome = "Anna",
         sobrenome = "Kretz"
     )
+    
+    p6 = Pessoa(
+        cpf = "55564351460",
+        nome = "Jarbas",
+        sobrenome = "Souza"
+    )
+    
+    p7 = Pessoa(
+        cpf = "63414167506",
+        nome = "Tobias",
+        sobrenome = "Afreim"
+    )
         
     db.session.add(p1)
     db.session.add(p2)
     db.session.add(p3)
     db.session.add(p4)
     db.session.add(p5)
+    db.session.add(p6)
+    db.session.add(p7)
     db.session.commit()
     print(p1)
     print(p2)

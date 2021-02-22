@@ -137,33 +137,57 @@ def registrar_Sala():
     
     return resposta
 
+def calcular_coincidentes_e_metade(id_sala):
+    
+    #Pega a lista de pessoas na primeira e segunda etapa e descobre quantas continuaram na segunda
+    #E calcula o 50% esperados - aredondando pra baixo em caso de imapr
+    sala = Sala.query.get_or_404(id_sala)
+    pessoas_etapa1 = Pessoa.query.filter_by(sala1_id = id_sala)
+    pessoas_etapa2 = Pessoa.query.filter_by(sala2_id = id_sala)
+    coincidem =  len([p for p in pessoas_etapa1 if p in pessoas_etapa2 ])
+    metade = sala.lotacao1//2
+    return(coincidem, metade)
+
 #Rota para designar automaticamente a sala da segunda etapa para uma pessoa
 #(A pessoa pode alterar posteriomente, se necessário e atenda os critérios)
 def designar_etapa2(pessoa):
     
     salas= db.session.query(Sala).all()
     
-    for sala in salas:
-        elegivel = True
-        pessoas_etapa1 = Pessoa.query.filter_by(sala1_id = sala.id_sala)
-        pessoas_etapa2 = Pessoa.query.filter_by(sala2_id = sala.id_sala)
-        coincidem =  len([p for p in pessoas_etapa1 if p in pessoas_etapa2 ])
-        metade = sala.lotacao1//2
-        
-        #Garante que 50% sejam mantido e da preferência pra misturar os alunos
-        if ((coincidem < metade or metade == 0) and pessoa.sala1_id == sala.id_sala) or ((coincidem >= metade and pessoa.sala1_id != sala.id_sala)):
-        
-            for s2 in salas:
+    coincidem, metade = calcular_coincidentes_e_metade(pessoa.sala1_id)
+    sala1 = Sala.query.get_or_404(pessoa.sala1_id)
     
-                if (sala.lotacao2 > s2.lotacao2):
-                    
-                    elegivel = False
-                    pass
-            if elegivel:
-                
-                pessoa.sala2_id = sala.id_sala
-                sala.lotacao2 += 1
-                return True
+    #Verifica primeiramente se a sala da pessoa na etapa 1 precisa ter sua porcentagem mantida
+    # Feita fora do loop, uma vez que outra sala pode ser elegivel antes dessa
+   
+    
+    if ((coincidem < metade or metade == 0) and (pessoa.sala1_id == sala1.id_sala)):
+        pessoa.sala2_id = sala1.id_sala
+        pessoa.sala1.lotacao2 += 1
+        return True
+    
+    else:
+        for sala in salas:
+            elegivel = True
+            coincidem, metade =  calcular_coincidentes_e_metade(sala.id_sala)
+            print("--------\n",sala.nome)
+            print("Coincidem: ", coincidem, "Metade:", metade)
+            #Garante que 50% sejam mantido e da preferência pra misturar os alunos
+            
+            if ((coincidem < metade or metade == 0) and pessoa.sala1_id == sala.id_sala) or ((coincidem >= metade and pessoa.sala1_id != sala.id_sala)):
+            
+                for s2 in salas:
+                    print(s2.nome)
+        
+                    if (sala.lotacao2 > s2.lotacao2):
+                        
+                        elegivel = False
+                        pass
+                if elegivel:
+            
+                    pessoa.sala2_id = sala.id_sala
+                    sala.lotacao2 += 1
+                    return True
 
 
 # Rota para  alocar uma pessoa em uma sala
@@ -193,9 +217,7 @@ def alocar_pessoa_sala(id_sala, cpf, etapa):
                 
                 #Verifica quantas pessoas que tinham essa sala na etapa 1 permaneceram para a etapa, vide a permanencia de 50%
                 #Caso seja um número impar, considera o inteiro da divisão por 2
-                pessoas_etapa1 = Pessoa.query.filter_by(sala1_id = sala.id_sala)
-                pessoas_etapa2 = Pessoa.query.filter_by(sala2_id = sala.id_sala)
-                coincidem =  len([p for p in pessoas_etapa1 if p in pessoas_etapa2 ])
+                coincidem = calcular_coincidentes_e_metade(sala.id_sala)[0]
                 if coincidem != sala_esp.lotacao1//2:
                     raise Exception("Para estimular a troca de conhecimentos, metade das pessoas precisam trocar de sala entre as duas etapas do treinamento.")
                 
@@ -225,9 +247,12 @@ def alocar_pessoa_sala(id_sala, cpf, etapa):
     
     return resposta
     
-    
+#Alocar pessoa para um espaço de café
+@app.route("/alocar_pessoa_cafe/<int:id_espaco_cafe>/<string:cpf>/<int:etapa>", methods=['POST', 'GET'])
+def alocar_pessoa_cafe(id_sala, cpf, etapa):
+    pass
 
-# Método para salvar imagens de perfil compactadas
+#Método para salvar imagens de perfil compactadas
 def salvar_imagem_base64(diretorio, base64str):
     
     rhex = secrets.token_hex(9)
