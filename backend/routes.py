@@ -159,8 +159,6 @@ def designar_etapa2(pessoa):
     
     #Verifica primeiramente se a sala da pessoa na etapa 1 precisa ter sua porcentagem mantida
     # Feita fora do loop, uma vez que outra sala pode ser elegivel antes dessa
-   
-    
     if ((coincidem < metade or metade == 0) and (pessoa.sala1_id == sala1.id_sala)):
         pessoa.sala2_id = sala1.id_sala
         pessoa.sala1.lotacao2 += 1
@@ -208,8 +206,6 @@ def alocar_pessoa_sala(id_sala, cpf, etapa):
             if etapa == 1:
                 
                 if (sala_esp.lotacao1 > sala.lotacao1):
-                    print("--------","\n",sala_esp.nome,sala.nome)
-                    print( sala_esp.lotacao1,sala.lotacao1 )
                     raise Exception("A diferença de pessoas em cada sala deverá ser de no máximo 1 pessoa!")
             else:
                 if (sala_esp.lotacao2 > sala.lotacao2):
@@ -229,7 +225,7 @@ def alocar_pessoa_sala(id_sala, cpf, etapa):
             sala_esp.lotacao1 += 1
             #Designa automaticamente um sala pra segunda etapa
             if not(designar_etapa2(pessoa)):
-                raise Exception("aaaaaaaaaaaaaaaaaa")
+                raise Exception("Erro no algoritmo de separação de pessoas...")
             
             
         elif etapa == 2 and (pessoa.sala2_id != sala_esp.id_sala):
@@ -249,8 +245,33 @@ def alocar_pessoa_sala(id_sala, cpf, etapa):
     
 #Alocar pessoa para um espaço de café
 @app.route("/alocar_pessoa_cafe/<int:id_espaco_cafe>/<string:cpf>/<int:etapa>", methods=['POST', 'GET'])
-def alocar_pessoa_cafe(id_sala, cpf, etapa):
-    pass
+def alocar_pessoa_cafe(id_espaco_cafe, cpf, etapa):
+    
+    resposta = jsonify({"resultado":"ok","detalhes": "ok"})
+    
+    try:
+    
+        pessoa = Pessoa.query.get_or_404(cpf)
+        
+        if etapa == 1:
+            pessoa.cafe1_id = id_espaco_cafe
+        
+        #Evita a repetição do espaço de café
+        elif pessoa.cafe1_id != id_espaco_cafe:
+            pessoa.cafe2_id = id_espaco_cafe
+        
+        else:
+            raise Exception("O espaço de café não pode se repetir nas duas etapas!")
+       
+     #Retorna erro com detalhes
+    except Exception as e: 
+        resposta = jsonify({"resultado":"erro","detalhes":str(e)})
+        
+    db.session.commit()
+    resposta.headers.add("Access-Control-Allow-Origin","*")
+    
+    return resposta
+        
 
 #Método para salvar imagens de perfil compactadas
 def salvar_imagem_base64(diretorio, base64str):
