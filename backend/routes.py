@@ -144,24 +144,27 @@ def designar_etapa2(pessoa):
     salas= db.session.query(Sala).all()
     
     for sala in salas:
+        elegivel = True
         pessoas_etapa1 = Pessoa.query.filter_by(sala1_id = sala.id_sala)
         pessoas_etapa2 = Pessoa.query.filter_by(sala2_id = sala.id_sala)
         coincidem =  len([p for p in pessoas_etapa1 if p in pessoas_etapa2 ])
         metade = sala.lotacao1//2
-        if (coincidem >= metade and metade != 0) != (pessoa.sala1_id == sala.id_sala):
+        
+        #Garante que 50% sejam mantido e da preferência pra misturar os alunos
+        if ((coincidem < metade or metade == 0) and pessoa.sala1_id == sala.id_sala) or ((coincidem >= metade and pessoa.sala1_id != sala.id_sala)):
         
             for s2 in salas:
-                print(s2.nome)
+    
                 if (sala.lotacao2 > s2.lotacao2):
                     
-                    print(sala.lotacao2, s2.lotacao2)
-                    return False
-  
-            pessoa.sala2_id = sala.id_sala
-            sala.lotacao2 += 1
-            return True
+                    elegivel = False
+                    pass
+            if elegivel:
+                
+                pessoa.sala2_id = sala.id_sala
+                sala.lotacao2 += 1
+                return True
 
-    
 
 # Rota para  alocar uma pessoa em uma sala
 # http://127.0.0.1:5000/alocar_pessoa_sala/1/05435950643/1
@@ -181,7 +184,8 @@ def alocar_pessoa_sala(id_sala, cpf, etapa):
             if etapa == 1:
                 
                 if (sala_esp.lotacao1 > sala.lotacao1):
-                    print(sala.nome,sala_esp.lotacao1, sala.lotacao1,)
+                    print("--------","\n",sala_esp.nome,sala.nome)
+                    print( sala_esp.lotacao1,sala.lotacao1 )
                     raise Exception("A diferença de pessoas em cada sala deverá ser de no máximo 1 pessoa!")
             else:
                 if (sala_esp.lotacao2 > sala.lotacao2):
