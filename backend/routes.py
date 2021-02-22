@@ -137,13 +137,38 @@ def registrar_Sala():
     
     return resposta
 
+#Rota para designar automaticamente a sala da segunda etapa para uma pessoa
+#(A pessoa pode alterar posteriomente, se necessário e atenda os critérios)
+def designar_etapa2(pessoa):
+    
+    salas= db.session.query(Sala).all()
+    
+    for sala in salas:
+        pessoas_etapa1 = Pessoa.query.filter_by(sala1_id = sala.id_sala)
+        pessoas_etapa2 = Pessoa.query.filter_by(sala2_id = sala.id_sala)
+        coincidem =  len([p for p in pessoas_etapa1 if p in pessoas_etapa2 ])
+        metade = sala.lotacao1//2
+        if (coincidem >= metade and metade != 0) != (pessoa.sala1_id == sala.id_sala):
+        
+            for s2 in salas:
+                print(s2.nome)
+                if (sala.lotacao2 > s2.lotacao2):
+                    
+                    print(sala.lotacao2, s2.lotacao2)
+                    return False
+  
+            pessoa.sala2_id = sala.id_sala
+            sala.lotacao2 += 1
+            return True
+
+    
+
 # Rota para  alocar uma pessoa em uma sala
 # http://127.0.0.1:5000/alocar_pessoa_sala/1/05435950643/1
 @app.route("/alocar_pessoa_sala/<int:id_sala>/<string:cpf>/<int:etapa>", methods=['POST', 'GET'])
 def alocar_pessoa_sala(id_sala, cpf, etapa):
     
     resposta = jsonify({"resultado":"ok","detalhes": "ok"})
-    dados = request.get_json()
     
     try: #Tenta alocar a pessoa
         
@@ -154,21 +179,34 @@ def alocar_pessoa_sala(id_sala, cpf, etapa):
         for sala in salas:
             
             if etapa == 1:
+                
                 if (sala_esp.lotacao1 > sala.lotacao1):
-                    print("puuutz1")
-                    raise Exception("deu ruim")
+                    print(sala.nome,sala_esp.lotacao1, sala.lotacao1,)
+                    raise Exception("A diferença de pessoas em cada sala deverá ser de no máximo 1 pessoa!")
             else:
                 if (sala_esp.lotacao2 > sala.lotacao2):
-                    print("puuutz2")
-                    raise Exception("deu ruim")
+                    raise Exception("A diferença de pessoas em cada sala deverá ser de no máximo 1 pessoa!")
+                
+                #Verifica quantas pessoas que tinham essa sala na etapa 1 permaneceram para a etapa, vide a permanencia de 50%
+                #Caso seja um número impar, considera o inteiro da divisão por 2
+                pessoas_etapa1 = Pessoa.query.filter_by(sala1_id = sala.id_sala)
+                pessoas_etapa2 = Pessoa.query.filter_by(sala2_id = sala.id_sala)
+                coincidem =  len([p for p in pessoas_etapa1 if p in pessoas_etapa2 ])
+                if coincidem != sala_esp.lotacao1//2:
+                    raise Exception("Para estimular a troca de conhecimentos, metade das pessoas precisam trocar de sala entre as duas etapas do treinamento.")
+                
         
         pessoa = Pessoa.query.get_or_404(cpf)
         
-        if etapa == 1 and pessoa.sala1_id != sala_esp.id_sala:
+        if etapa == 1 and (pessoa.sala1_id != sala_esp.id_sala):
             pessoa.sala1_id = sala_esp.id_sala
             sala_esp.lotacao1 += 1
+            #Designa automaticamente um sala pra segunda etapa
+            if not(designar_etapa2(pessoa)):
+                raise Exception("aaaaaaaaaaaaaaaaaa")
             
-        elif etapa == 2 and pessoa.sala2_id != sala_esp.id_sala:
+            
+        elif etapa == 2 and (pessoa.sala2_id != sala_esp.id_sala):
             pessoa.sala2_id = sala_esp.id_sala
             sala_esp.lotacao2 += 1
         

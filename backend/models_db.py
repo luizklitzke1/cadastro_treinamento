@@ -32,7 +32,7 @@ class Sala(db.Model):
     def json(self):
         return{
             "id_sala": self.id_sala, "nome": self.nome,
-            "lotacao": self.lotacao,
+            "lotacao1": self.lotacao1, "lotacao2" : self.lotacao2
         }
       
 
@@ -110,7 +110,7 @@ if __name__ == "__main__":
         nome = "Sala 2"
     )
     s3 = Sala(
-        nome = "Sala 32"
+        nome = "Sala 3"
     )
     s4 = Sala(
         nome = "Sala 4"
@@ -119,7 +119,6 @@ if __name__ == "__main__":
     db.session.add(s1)
     db.session.add(s2)
     db.session.add(s3)
-    db.session.add(s4)
     db.session.commit()
     print(c1)
     print(c2)
@@ -133,7 +132,6 @@ if __name__ == "__main__":
         nome = "Jonas",
         sobrenome = "Silveira"
 
-        
     )
     
     p2 = Pessoa(
@@ -141,9 +139,30 @@ if __name__ == "__main__":
         nome = "Carlinhos",
         sobrenome = "Teixeira"
     )
+    
+    p3 = Pessoa(
+        cpf = "18187443090",
+        nome = "Zéca",
+        sobrenome = "Pagodinho"
+    )
+    
+    p4 = Pessoa(
+        cpf = "61784818887",
+        nome = "Lucas",
+        sobrenome = "Machado"
+    )
+    
+    p5 = Pessoa(
+        cpf = "88345372546",
+        nome = "Anna",
+        sobrenome = "Kretz"
+    )
         
     db.session.add(p1)
     db.session.add(p2)
+    db.session.add(p3)
+    db.session.add(p4)
+    db.session.add(p5)
     db.session.commit()
     print(p1)
     print(p2)
