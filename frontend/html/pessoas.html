@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <!-- Meta Tags -->
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <link rel="icon" type="image/png" href="" />
+
+      
+      <!--Link para CSS  do Bootstrap-->
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+
+
+      <title>Sistema Evento - Pessoas</title>
+
+  </head>
+  <body">
+    <div class="container-fluid ">
+        <div class="row min-vh-100 flex-column flex-md-row "  >
+            <aside class="col-12 col-md-2 p-0 bg-dark flex-shrink-1 pt-4 ">
+                <nav class="navbar navbar-expand navbar-dark bg-dark flex-md-column flex-row align-items-start py-2 sticky-top">
+                    <div class="collapse navbar-collapse ">
+                        <ul class="flex-md-column flex-row navbar-nav w-100 justify-content-between ml-2 pl-2" >
+
+                            <li class="nav-item pl-0 h2 border-bottom mb-4 " >
+                                <a class="nav-link pl-0 text-nowrap" href="index.html"><i class="fab fa-leanpub"></i> <span class="font-weight-bold">Evento</span></a>
+                            </li>
+
+                            <li class="nav-item h5">
+                                <a class="nav-link pl-0" href="index.html"><i class="fas fa-chart-bar"></i> <span class="d-none d-md-inline">Geral</span></a>
+                            </li>
+
+                            <li class="nav-item h5">
+                                <a class="nav-link pl-0" href="pessoas.html"><i class="fas fa-user-friends"></i> <span class="d-none d-md-inline">Pessoas</span></a>
+                            </li>
+
+                            <li class="nav-item h5">
+                                <a class="nav-link pl-0" href="salas.html"><i class="fas fa-door-open"></i> <span class="d-none d-md-inline">Salas</span></a>
+                            </li>
+
+                            <li class="nav-item h5">
+                                <a class="nav-link pl-0" href="espacos_cafe.html"><span class="d-none d-md-inline" ><i class="fas fa-mug-hot"> </i> Espaço para café</span></a>
+                            </li>
+                           
+                        </ul>
+                    </div>
+                </nav>
+            </aside>
+            <main class="col bg-faded py-3 flex-grow-1 pl-4 m-4" >
+                <h2 class="h2 underlined"><i class="fas fa-user-friends mr-2"></i><u>Pessoas</u></h2>
+              
+                <span class="mt-4 font-weight-bold mt-2">Total de pessoas cadastradas:  </span>  <span id="total_pessoas"> 33 </span><br>
+                
+                <button type="button" class="btn btn-success btn-md mt-5" style="font-weight: bold;">Cadastrar pessoa</button>
+
+
+                <p class="h4 mt-5">Procurar por uma pessoa</p>
+                <section class="search-sec">
+                    <div class="container ml-0 pl-0 mr-0 pr-0">
+                        <form action="#" method="post" novalidate="novalidate">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-lg-2 p-2 m-1">
+                                            <input type="text" class="form-control search-slt" placeholder="CPF">
+                                        </div>
+                                        <div class="col-lg-2 p-2 m-1">
+                                            <input type="text" class="form-control search-slt" placeholder="Nome">
+                                        </div>
+                                        <div class="col-lg-2 p-2 m-1">
+                                            <input type="text" class="form-control search-slt" placeholder="Sobrenome">
+                                        </div>
+                                        <div class="col-lg-2 p-2 m-1">
+                                            <select class="form-control search-slt">
+                                                <option>Sala1</option>
+                                                <option>Sala2</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-2 p-2 m-1">
+                                            <select class="form-control search-slt">
+                                                <option>Sala1</option>
+                                                <option>Sala2</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm p-2 m-1">
+                                            <button type="button" class="btn btn-primary wrn-btn" title="Procurar"><i class="fas fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+                
+                
+                <p class="mt-5">Clique em qualquer sala para obter mais detalhes como a lista de pessoas alocados em cada etapa.</p>
+
+
+                <table class="table table-striped table-hover col-lg-8 text-center">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">CPF</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Sobrenome</th>
+                        <th scope="col">Sala etapa 1</th>
+                        <th scope="col">Sala etapa 2</th>
+                        <th scope="col">Café etapa 1</th>
+                        <th scope="col">Café etapa 2</th>
+                        <th scope="col">Opções</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">1</th>
+                        <td>092441414</td>
+                        <td>Carlos</td>
+                        <td>Silva</td>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>1</td>
+                        <td style="font-size: 1.5em">
+                            <a href="#" title="Apagar"><i class="fas fa-trash pr-4 text-danger"></i></a>
+                            <a href="#" title="Editar"><i class="fas fa-edit text-primary"></i></a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">1</th>
+                        <td>092441414</td>
+                        <td>Carlos</td>
+                        <td>Silva</td>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>1</td>
+                        <td style="font-size: 1.5em">
+                            <a href="#" title="Apagar"><i class="fas fa-trash pr-4 text-danger"></i></a>
+                            <a href="#" title="Editar"><i class="fas fa-edit text-primary"></i></a>
+                        </td>
+                        
+                      </tr>
+                      <tr>
+                        <th scope="row">1</th>
+                        <td>092441414</td>
+                        <td>Carlos</td>
+                        <td>Silva</td>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>1</td>
+                        <td style="font-size: 1.5em">
+                            <a href="#" title="Apagar"><i class="fas fa-trash pr-4 text-danger"></i></a>
+                            <a href="#" title="Editar"><i class="fas fa-edit text-primary"></i></a>
+                        </td>
+                      </tr>
+                      
+                    </tbody>
+                </table>
+
+                  
+            </main>
+        </div>
+    </div>
+    </body>
