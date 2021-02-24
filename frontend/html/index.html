@@ -10,18 +10,13 @@
         <!--Link para CSS  do Bootstrap-->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
 
 
         <title>Sistema Evento - Geral</title>
 
     </head>
-    <body>
+    <body onload="popularSalasGeral();popularPessoasGeral();popularCafeGeral();">
         <div class="container-fluid ">
             <div class="row min-vh-100 flex-column flex-md-row" >
                 <aside class="col-12 col-md-2 p-0 bg-dark flex-shrink-1 pt-4 " id="sticky-sidebar">
@@ -105,45 +100,13 @@
                                 <th scope="col">Ações</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Sala1</td>
-                                <td>1</td>
-                                <td>2</td>
-                                <td style="font-size: 1.5em">
-                                    <a href="#" title="Apagar"><i class="fas fa-trash pr-4 text-danger"></i></a>
-                                    <a href="#" title="Editar"><i class="fas fa-edit text-primary"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Sala2</td>
-                                <td>2</td>
-                                <td>1</td>
-                                <td style="font-size: 1.5em">
-                                    <a href="#" title="Apagar"><i class="fas fa-trash pr-4 text-danger"></i></a>
-                                    <a href="#" title="Editar"><i class="fas fa-edit text-primary"></i></a>
-                                </td>
-                                
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Sala3</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td style="font-size: 1.5em">
-                                    <a href="#" title="Apagar"><i class="fas fa-trash pr-4 text-danger"></i></a>
-                                    <a href="#" title="Editar"><i class="fas fa-edit text-primary"></i></a>
-                                </td>
-                            </tr>
-                            
+                            <tbody id="corpoTabelaSalas">
+                        
                             </tbody>
                         </table>
                     </div>
 
-                    <!--###############################################-->
-
+     
                     <p class="h3 mt-5">Pessoas</p>
                     
                     <span class="mt-2 font-weight-bold mt-2">Total de pessoas cadastradas:  </span>  <span id="total_pessoas"> 33 </span><br>
@@ -214,56 +177,12 @@
                                 <th scope="col">Opções</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>092441414</td>
-                                <td>Carlos</td>
-                                <td>Silva</td>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>1</td>
-                                <td style="font-size: 1.5em">
-                                    <a href="#" title="Apagar"><i class="fas fa-trash pr-4 text-danger"></i></a>
-                                    <a href="#" title="Editar"><i class="fas fa-edit text-primary"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>092441414</td>
-                                <td>Carlos</td>
-                                <td>Silva</td>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>1</td>
-                                <td style="font-size: 1.5em">
-                                    <a href="#" title="Apagar"><i class="fas fa-trash pr-4 text-danger"></i></a>
-                                    <a href="#" title="Editar"><i class="fas fa-edit text-primary"></i></a>
-                                </td>
-                                
-                            </tr>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>092441414</td>
-                                <td>Carlos</td>
-                                <td>Silva</td>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>1</td>
-                                <td style="font-size: 1.5em">
-                                    <a href="#" title="Apagar"><i class="fas fa-trash pr-4 text-danger"></i></a>
-                                    <a href="#" title="Editar"><i class="fas fa-edit text-primary"></i></a>
-                                </td>
-                            </tr>
-                            
+                            <tbody id="corpoTabelaPessoas">
+                           
                             </tbody>
                         </table>
                     </div>
 
-                    <!--###############################################-->
                     <p class="h3 mt-5">Espaços Para Café</p>
                     <span class="mt-4 font-weight-bold mt-2">Total de espaços para café cadastradas:  </span>  <span id="total_espacos_cafe"> 33 </span><br>
 
@@ -311,38 +230,7 @@
                                 <th scope="col">Ações</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Sala1</td>
-                                <td>1</td>
-                                <td>2</td>
-                                <td style="font-size: 1.5em">
-                                    <a href="#" title="Apagar"><i class="fas fa-trash pr-4 text-danger"></i></a>
-                                    <a href="#" title="Editar"><i class="fas fa-edit text-primary"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Sala2</td>
-                                <td>2</td>
-                                <td>1</td>
-                                <td style="font-size: 1.5em">
-                                    <a href="#" title="Apagar"><i class="fas fa-trash pr-4 text-danger"></i></a>
-                                    <a href="#" title="Editar"><i class="fas fa-edit text-primary"></i></a>
-                                </td>
-                                
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Sala3</td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td style="font-size: 1.5em">
-                                    <a href="#" title="Apagar"><i class="fas fa-trash pr-4 text-danger"></i></a>
-                                    <a href="#" title="Editar"><i class="fas fa-edit text-primary"></i></a>
-                                </td>
-                            </tr>
+                            <tbody id="corpoTabelaCafe"> 
                             
                             </tbody>
                         </table>
