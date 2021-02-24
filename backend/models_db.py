@@ -75,10 +75,10 @@ class Pessoa(db.Model):
         return{
             "cpf": self.cpf, "nome": self.nome,
             "sobrenome": self.sobrenome,
-            "cafe1": self.cafe1_id,
-            "cafe2": self.cafe2_id,
-            "sala1": self.sala1_id,
-            "sala2": self.sala2_id,
+            "cafe1": self.cafe1.json(),
+            "cafe2": self.cafe2.json(),
+            "sala1": self.sala1.json(),
+            "sala2": self.sala2.json(),
             "foto": self.foto,
         }
   
