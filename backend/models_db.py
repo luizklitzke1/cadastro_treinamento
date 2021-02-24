@@ -4,15 +4,18 @@ from config import *
 class Espaco_Cafe(db.Model):
     id_espaco = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(150), nullable=False)
+    #Lotação é modificada toda vez que um aluno entra ou sai, para evitar muitas requisições ao DB
+    lotacao1 = db.Column(db.Integer, nullable=False, default = 0)
+    lotacao2 = db.Column(db.Integer, nullable=False, default = 0)
     
     #Representação em String
     def __repr__(self):
-        return f"ID: '{self.id_espaco}', Nome: '{self.nome}'"
+        return f"ID: '{self.id_espaco}', Nome: '{self.nome}', Lotação e1: '{self.lotacao1}', Lotação e2: '{self.lotacao2}' "
 
     #Expressão da classe em Json - conversão para Frontend
     def json(self):
         return{
-            "id_espaco": self.id_espaco, "nome": self.nome,
+            "id_espaco": self.id_espaco, "nome": self.nome, "lotacao1":  self.lotacao1, "lotacao2":  self.lotacao2
         }
 
 #Classe para os dados de uma Sala

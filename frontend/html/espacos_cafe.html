@@ -21,7 +21,7 @@
         <title>Sistema Evento - Geral</title>
 
     </head>
-    <body>
+    <body onload="popularCafeGeral();">
         <div class="container-fluid ">
             <div class="row min-vh-100 flex-column flex-md-row" >
                 <aside class="col-12 col-md-2 p-0 bg-dark flex-shrink-1 pt-4">
@@ -56,7 +56,7 @@
                 <main class="col bg-faded py-3 flex-grow-1 pl-4 m-4">
                     <h2 class="h2 underlined"><i class="fas fa-mug-hot mr-2"> </i> <u>Espaços para café</u></h2>
                 
-                    <span class="mt-4 font-weight-bold mt-2">Total de espaços para café cadastradas:  </span>  <span id="total_espacos_cafe"> 33 </span><br>
+                    <span class="mt-4 font-weight-bold mt-2">Total de espaços para café cadastrados:  </span>  <span id="total_espacos_cafe"> 33 </span><br>
                     
                     <button type="button" class="btn btn-success btn-md mt-5" style="font-weight: bold;">Cadastrar espaço para café</button>
 
@@ -95,38 +95,7 @@
                             <th scope="col">Ações</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Sala1</td>
-                            <td>1</td>
-                            <td>2</td>
-                            <td style="font-size: 1.5em">
-                                <a href="#" title="Apagar"><i class="fas fa-trash pr-4 text-danger"></i></a>
-                                <a href="#" title="Editar"><i class="fas fa-edit text-primary"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Sala2</td>
-                            <td>2</td>
-                            <td>1</td>
-                            <td style="font-size: 1.5em">
-                                <a href="#" title="Apagar"><i class="fas fa-trash pr-4 text-danger"></i></a>
-                                <a href="#" title="Editar"><i class="fas fa-edit text-primary"></i></a>
-                            </td>
-                            
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Sala3</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td style="font-size: 1.5em">
-                                <a href="#" title="Apagar"><i class="fas fa-trash pr-4 text-danger"></i></a>
-                                <a href="#" title="Editar"><i class="fas fa-edit text-primary"></i></a>
-                            </td>
-                        </tr>
+                        <tbody id="corpoTabelaCafe">
                         
                         </tbody>
                     </table>

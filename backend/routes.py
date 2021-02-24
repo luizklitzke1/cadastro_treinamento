@@ -250,15 +250,19 @@ def alocar_pessoa_cafe(id_espaco_cafe, cpf, etapa):
     resposta = jsonify({"resultado":"ok","detalhes": "ok"})
     
     try:
+        
+        cafe_esp = Espaco_Cafe.query.get_or_404(id_espaco_cafe)
     
         pessoa = Pessoa.query.get_or_404(cpf)
         
         if etapa == 1:
             pessoa.cafe1_id = id_espaco_cafe
+            cafe_esp.lotacao1 += 1
         
         #Evita a repetição do espaço de café
         elif pessoa.cafe1_id != id_espaco_cafe:
             pessoa.cafe2_id = id_espaco_cafe
+            cafe_esp.lotacao2 += 1
         
         else:
             raise Exception("O espaço de café não pode se repetir nas duas etapas!")

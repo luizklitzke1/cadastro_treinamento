@@ -91,3 +91,46 @@ function popularSalasGeral(){
 
 }
 
+
+//Função para popular a tabela geral de espaços para café
+function popularCafeGeral(){
+
+    $.ajax({
+        url: "http://localhost:5000/listar_espacos_cafe",
+        method: "GET",
+        dataType: "json", 
+        success: listar, 
+        error: function(problema) {
+            alert("Erro ao buscar os dados no backend ");
+        }
+    });
+    function listar (espacos) {
+        // Limpa os dados da tablea
+        $("#corpoTabelaCafe").empty();    
+
+        // Define o texto para o total de salas
+        $("#total_espacos_cafe").text(espacos.length)
+        
+        // Percorre todas as salas registradas
+        for (espaco of espacos){
+            // Cria uma nova linha para cada sala
+            lin = "<tr>" + 
+                "<td>" + (espacos.indexOf(espaco)+1) +"</td>" +
+                "<td>" + espaco.nome + "</td>" + 
+                "<td>" + espaco.lotacao1+ "</td>" + 
+                "<td>" + espaco.lotacao2+ "</td>" + 
+
+                "<td style='font-size: 1.5em'>" + 
+                    "<a href='#' title='Apagar'><i class='fas fa-trash pr-1 text-danger'></i></a>" + 
+                    "<a href='#' title='Editar'><i class='fas fa-edit text-primary'></i></a>" + 
+                "</td>" +
+            "</tr>"
+
+            // Adiciona a nova linha na tabela
+            $("#corpoTabelaCafe").append(lin);
+        }
+      
+    }
+
+}
+
