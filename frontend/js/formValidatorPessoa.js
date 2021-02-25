@@ -52,7 +52,7 @@ function show(id){
 }
 
 //Padrão de verificação dos caracteres de texto
-var testeLetters = new RegExp(/^[a-z][a-z\s]*$/i);
+var testeLetters = new RegExp(/^[\s\p{L}]*$/ui);
 
 //Verificação customizada do nome
 $("#campoCPF").on('input', function() {
@@ -120,7 +120,13 @@ $("#campoSobrenome").on('input', function() {
         formValid["sobrenome"] = false;
     }
     else {
-        formValid["sobrenome"] = true;
+        if (testeLetters.test(input.val())){
+            formValid["nome"] = true;
+        }
+        else{
+            msg("#inv-nome","O nome deve conter apenas letras!");
+            formValid["nome"] = false;
+        };
     }   
 
     if (formValid["sobrenome"]){
