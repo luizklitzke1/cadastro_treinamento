@@ -113,9 +113,9 @@ function popularCafeGeral(){
         // Define o texto para o total de salas
         $("#total_espacos_cafe").text(espacos.length)
         
-        // Percorre todas as salas registradas
+        // Percorre todas as espaço registradas
         for (espaco of espacos){
-            // Cria uma nova linha para cada sala
+            // Cria uma nova linha para cada espaço
             lin = "<tr id='trCafe_"+ espaco.id_espaco +"'>" + 
                 "<td>" + (espacos.indexOf(espaco)+1) +"</td>" +
                 "<td>" + espaco.nome + "</td>" + 
@@ -131,6 +131,64 @@ function popularCafeGeral(){
 
             // Adiciona a nova linha na tabela
             $("#corpoTabelaCafe").append(lin);
+        }
+      
+    }
+
+}
+
+//Popula as opções de sala e espaço de café disponíveis para o cadastro
+function popularSalasCadastro(){
+    
+    //Pegar as opções de espaço de café
+    $.ajax({
+        url: "http://localhost:5000/listar_espacos_cafe",
+        method: "GET",
+        dataType: "json", 
+        success: listaresp, 
+        error: function(problema) {
+            alert("Erro ao buscar os dados no backend! ");
+        }
+    });
+    function listaresp (espacos) {
+        // Limpa os dados da tablea
+        $("#selectCafe1").empty();    
+        
+        // Percorre todas os espaços registradas
+        for (espaco of espacos){
+            // Cria uma nova linha para cada espaço
+           op =
+           "<option value= '" + espaco.id_espaco+"'>"+ espaco.nome + "</option>"
+
+            // Adiciona a nova linha na tabela
+            $("#selectCafe1").append(op);
+        }
+      
+    }
+
+    //Pegar as opções de sala
+    $.ajax({
+        url: "http://localhost:5000/listar_sala1_disponiveis",
+        method: "GET",
+        dataType: "json", 
+        success: listarsalas, 
+        error: function(problema) {
+            alert("Erro ao buscar os dados no backend! ");
+        }
+    });
+    function listarsalas (salas) {
+        
+        // Limpa os dados da tablea
+        $("#selectSala1").empty();    
+        
+        // Percorre todas as salas registradas
+        for (sala of salas){
+            // Cria uma nova linha para cada sala
+           op =
+           "<option value= '" + sala.id_sala+"'>"+ sala.nome + "</option>"
+
+            // Adiciona a nova linha na tabela
+            $("#selectSala1").append(op);
         }
       
     }

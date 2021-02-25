@@ -58,7 +58,8 @@
                 
                     <span class="mt-4 font-weight-bold mt-2">Total de pessoas cadastradas:  </span>  <span id="total_pessoas"> 33 </span><br>
                     
-                    <button type="button" class="btn btn-success btn-md mt-5" style="font-weight: bold;" data-toggle="modal" data-target="#modalPessoa" >Cadastrar pessoa</button>
+                    <button type="button" class="btn btn-success btn-md mt-5" style="font-weight: bold;" data-toggle="modal" data-target="#modalPessoa" 
+                            onClick="popularSalasCadastro();">Cadastrar pessoa</button>
 
 
                     <p class="h4 mt-5">Procurar por uma pessoa</p>
@@ -180,19 +181,15 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="campoSala1">Sala na primeira etapa</label>
+                                    <label for="selectSala1">Sala na primeira etapa</label>
                                     <p class="text-muted small">*A da segunda etapa será designada automaticamente e poderá ser editada posteriormente</p>
-                                    <select class="form-control search-slt" id="campoSala1">
-                                        <option>Sala1</option>
-                                        <option>Sala2</option>
+                                    <select class="form-control search-slt" id="selectSala1" name="selectSala1">
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="campoCafe1">Primeiro espaço para café</label>
+                                    <label for="selectCafe1">Primeiro espaço para café</label>
                                     <p class="text-muted small">*O segundo será designado automaticamente e poderá ser editado posteriormente</p>
-                                    <select class="form-control search-slt" id="campoCafe1">
-                                        <option>Espaço1</option>
-                                        <option>Espaço2</option>
+                                    <select class="form-control search-slt" id="selectCafe1" name="selectCafe1">
                                     </select>
                                 </div>
                                

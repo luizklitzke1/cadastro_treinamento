@@ -162,6 +162,50 @@ function apagarSala(id_sala){
 };
 
 
+//Registrar nova pessoa
+function cadastrarPessoa ()  {
+
+    cpf = $("#campoCPF").val();
+    cpf = String(cpf).replace(/[^\d]+/g,'');
+    nome = $("#campoNome").val();
+    sobrenome = $("#campoSobrenome").val();
+    sala1_id = $("#selectSala1").val();
+    cafe1_id = $("#selectCafe1").val();
+
+    var dados = JSON.stringify({cpf: cpf, nome: nome, sobrenome: sobrenome, sala1_id : sala1_id, cafe1_id: cafe1_id, foto: null});
+
+    // Enivo dos dados ao back-end para a inclusão
+    $.ajax({
+        url: 'http://localhost:5000/cadastrar_pessoa',
+        type: 'POST',
+        dataType: 'json', contentType: 'application/json',
+        data: dados, 
+        success: pessoaIncluida, 
+        error: erroAoIncluir
+
+    });
+    function pessoaIncluida (retorno) {
+        if (retorno.resultado == "ok") { 
+            alert(nome + " registrado(a) com sucesso!");
+            // Limpar os campo
+            cpf = $("#campoCPF").val("");
+            nome = $("#campoNome").val("");
+            sobrenome = $("#campoSobrenome").val("");
+            sala1_id = $("selectSala1").val("");
+            cafe1_id = $("selectCafe1").val("");
+            popularPessoasGeral();
+
+        } 
+        else {
+            // informar mensagem de erro
+            alert(retorno.resultado + ":" + retorno.detalhes);
+        };            
+    };
+        function erroAoIncluir (retorno) {
+            // informar mensagem de erro
+            alert("ERRO: "+retorno.resultado + ":" + retorno.detalhes);
+        };
+};
 
 //Muda os dados no modal da pessoa
 function chamarModalPessoaDelete(cpf){

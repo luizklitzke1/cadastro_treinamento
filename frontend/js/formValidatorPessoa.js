@@ -121,11 +121,11 @@ $("#campoSobrenome").on('input', function() {
     }
     else {
         if (testeLetters.test(input.val())){
-            formValid["nome"] = true;
+            formValid["sobrenome"] = true;
         }
         else{
-            msg("#inv-nome","O nome deve conter apenas letras!");
-            formValid["nome"] = false;
+            msg("#inv-sobrenome","O sobrenome deve conter apenas letras!");
+            formValid["sobrenome"] = false;
         };
     }   
 

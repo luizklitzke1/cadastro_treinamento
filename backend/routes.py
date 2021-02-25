@@ -75,6 +75,7 @@ def cadastar_Pessoa():
     
     resposta = jsonify({"resultado":"ok","detalhes": "ok"})
     dados = request.get_json()
+    print(dados)
     try: #Tenta fazer o registro
         
         nova_Pessoa = Pessoa(**dados)
@@ -84,7 +85,11 @@ def cadastar_Pessoa():
             nova_Pessoa.foto = salvar_imagem_base64('../front_end/static/imagens_pessoas',(dados["foto"]))
         
         db.session.add(nova_Pessoa)
+        alocar_pessoa_sala(nova_Pessoa.sala1_id,nova_Pessoa.cpf,1)
+        alocar_pessoa_cafe(nova_Pessoa.cafe1_id,nova_Pessoa.cpf,1)
+        
         db.session.commit()
+        
         
     #Retorna erro com detalhes
     except Exception as e: 
@@ -173,7 +178,25 @@ def apagar_Sala(id_sala):
     resposta.headers.add("Access-Control-Allow-Origin","*")
     return resposta
 
-
+# Rota para pegar a lista de salas disponíveis na primeira etapa
+@app.route("/listar_sala1_disponiveis",  methods=['GET'])
+def listar_salas1_diposniveis():
+    
+    salas= db.session.query(Sala).all()
+    salas_elegiveis = []
+    
+    for sala in salas:
+        
+        elegivel = True
+        for s2 in salas:
+            if (sala.lotacao1 > s2.lotacao1):
+                elegivel = False
+                break
+        
+        if elegivel:
+            salas_elegiveis.append(sala.json())
+    
+    return (jsonify(salas_elegiveis))
 
 def calcular_coincidentes_e_metade(id_sala):
     
@@ -186,9 +209,20 @@ def calcular_coincidentes_e_metade(id_sala):
     metade = sala.lotacao1//2
     return(coincidem, metade)
 
+
+def designar_cafe_etapa2(pessoa):
+    
+    espacos_cafe = db.session.query(Espaco_Cafe).all()
+    
+    for cafe in espacos_cafe:
+        if (cafe.id_espaco != pessoa.cafe1_id):
+            pessoa.cafe2_id = cafe.id_espaco
+            print(cafe)
+            cafe.lotacao2 += 1
+    
 #Rota para designar automaticamente a sala da segunda etapa para uma pessoa
 #(A pessoa pode alterar posteriomente, se necessário e atenda os critérios)
-def designar_etapa2(pessoa):
+def designar_sala_etapa2(pessoa):
     
     salas= db.session.query(Sala).all()
     
@@ -206,8 +240,6 @@ def designar_etapa2(pessoa):
         for sala in salas:
             elegivel = True
             coincidem, metade =  calcular_coincidentes_e_metade(sala.id_sala)
-            print("--------\n",sala.nome)
-            print("Coincidem: ", coincidem, "Metade:", metade)
             #Garante que 50% sejam mantido e da preferência pra misturar os alunos
             
             if ((coincidem < metade or metade == 0) and pessoa.sala1_id == sala.id_sala) or ((coincidem >= metade and pessoa.sala1_id != sala.id_sala)):
@@ -220,7 +252,7 @@ def designar_etapa2(pessoa):
                         elegivel = False
                         pass
                 if elegivel:
-            
+                    print(sala.id_sala)
                     pessoa.sala2_id = sala.id_sala
                     sala.lotacao2 += 1
                     return True
@@ -258,11 +290,11 @@ def alocar_pessoa_sala(id_sala, cpf, etapa):
         
         pessoa = Pessoa.query.get_or_404(cpf)
         
-        if etapa == 1 and (pessoa.sala1_id != sala_esp.id_sala):
+        if etapa == 1:
             pessoa.sala1_id = sala_esp.id_sala
             sala_esp.lotacao1 += 1
             #Designa automaticamente um sala pra segunda etapa
-            if not(designar_etapa2(pessoa)):
+            if not(designar_sala_etapa2(pessoa)):
                 raise Exception("Erro no algoritmo de separação de pessoas...")
             
             
@@ -296,11 +328,11 @@ def alocar_pessoa_cafe(id_espaco_cafe, cpf, etapa):
         if etapa == 1:
             pessoa.cafe1_id = id_espaco_cafe
             cafe_esp.lotacao1 += 1
+            designar_cafe_etapa2(pessoa)
         
         #Evita a repetição do espaço de café
         elif pessoa.cafe1_id != id_espaco_cafe:
-            pessoa.cafe2_id = id_espaco_cafe
-            cafe_esp.lotacao2 += 1
+            designar_cafe_etapa2(pessoa)
         
         else:
             raise Exception("O espaço de café não pode se repetir nas duas etapas!")
