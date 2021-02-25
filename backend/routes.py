@@ -75,7 +75,6 @@ def cadastar_Pessoa():
     
     resposta = jsonify({"resultado":"ok","detalhes": "ok"})
     dados = request.get_json()
-    print(dados)
     try: #Tenta fazer o registro
         
         nova_Pessoa = Pessoa(**dados)
@@ -178,6 +177,25 @@ def apagar_Sala(id_sala):
     resposta.headers.add("Access-Control-Allow-Origin","*")
     return resposta
 
+# Rota para apagar uma Pessoa
+@app.route("/apagar_pessoa/<string:cpf>",  methods=['DELETE'])
+def apagar_Pessoa(cpf):
+    
+    resposta = jsonify({"resultado":"ok","detalhes": "ok"})
+    
+    try: #Tentar realizar a exclusão
+        pessoa = Pessoa.query.get_or_404(cpf)
+                                               
+        db.session.delete(pessoa)
+        redistribuir_pessoas()
+        db.session.commit()
+        
+    except Exception as e:  #Envie mensagem em caso de erro
+        resposta = jsonify({"resultado":"erro", "detalhes":str(e)}) 
+        
+    resposta.headers.add("Access-Control-Allow-Origin","*")
+    return resposta
+
 # Rota para pegar a lista de salas disponíveis na primeira etapa
 @app.route("/listar_sala1_disponiveis",  methods=['GET'])
 def listar_salas1_diposniveis():
@@ -245,7 +263,6 @@ def designar_sala_etapa2(pessoa):
             if ((coincidem < metade or metade == 0) and pessoa.sala1_id == sala.id_sala) or ((coincidem >= metade and pessoa.sala1_id != sala.id_sala)):
             
                 for s2 in salas:
-                    print(s2.nome)
         
                     if (sala.lotacao2 > s2.lotacao2):
                         
@@ -276,18 +293,17 @@ def alocar_pessoa_sala(id_sala, cpf, etapa):
             if etapa == 1:
                 
                 if (sala_esp.lotacao1 > sala.lotacao1):
-                    raise Exception("A diferença de pessoas em cada sala deverá ser de no máximo 1 pessoa!")
+                    return False
             else:
                 if (sala_esp.lotacao2 > sala.lotacao2):
-                    raise Exception("A diferença de pessoas em cada sala deverá ser de no máximo 1 pessoa!")
+                    return False
                 
                 #Verifica quantas pessoas que tinham essa sala na etapa 1 permaneceram para a etapa, vide a permanencia de 50%
                 #Caso seja um número impar, considera o inteiro da divisão por 2
                 coincidem = calcular_coincidentes_e_metade(sala.id_sala)[0]
                 if coincidem != sala_esp.lotacao1//2:
-                    raise Exception("Para estimular a troca de conhecimentos, metade das pessoas precisam trocar de sala entre as duas etapas do treinamento.")
+                    return False
                 
-        
         pessoa = Pessoa.query.get_or_404(cpf)
         
         if etapa == 1:
@@ -295,7 +311,7 @@ def alocar_pessoa_sala(id_sala, cpf, etapa):
             sala_esp.lotacao1 += 1
             #Designa automaticamente um sala pra segunda etapa
             if not(designar_sala_etapa2(pessoa)):
-                raise Exception("Erro no algoritmo de separação de pessoas...")
+                return False
             
             
         elif etapa == 2 and (pessoa.sala2_id != sala_esp.id_sala):
@@ -306,12 +322,10 @@ def alocar_pessoa_sala(id_sala, cpf, etapa):
             
         
     #Retorna erro com detalhes
-    except Exception as e: 
-        resposta = jsonify({"resultado":"erro","detalhes":str(e)})
-        
-    resposta.headers.add("Access-Control-Allow-Origin","*")
+    except: 
+        return False
     
-    return resposta
+    return True
     
 #Alocar pessoa para um espaço de café
 @app.route("/alocar_pessoa_cafe/<int:id_espaco_cafe>/<string:cpf>/<int:etapa>", methods=['POST'])
@@ -345,6 +359,27 @@ def alocar_pessoa_cafe(id_espaco_cafe, cpf, etapa):
     resposta.headers.add("Access-Control-Allow-Origin","*")
     
     return resposta
+
+
+#Realocar todas as pessoas, priorizando suas posições atuais na primeira etapa
+def redistribuir_pessoas():
+    
+    pessoas = db.session.query(Pessoa).all()
+    salas = db.session.query(Sala).all()
+    
+    #Zera a lotação de todas as salas
+    for sala in salas:
+        sala.lotacao1 = 0
+        sala.lotacao2 = 0
+        
+    for pessoa in pessoas:
+        
+        #Tenta inicialmente alocar a pessoa em sua sala original da primeira etapa
+        if not(alocar_pessoa_sala(pessoa.sala1_id,pessoa.cpf,1)):
+           
+           #Caso de errado, tenta a proxima elegivel
+           for sala in salas:
+               alocar_pessoa_sala(sala.id_sala,pessoa.cpf,1)
         
 
 #Método para salvar imagens de perfil compactadas
