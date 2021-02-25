@@ -97,14 +97,14 @@ function cadastrarEspacoCafe ()  {
         };
 };
 
-
+//Muda os dados no modal do espaço
 function chamarModalCafeDelete(id_espaco_cafe){
 
     //$("#deleteCafeNome").val(espaco_nome);
     $("#modalCafeDeleteBtn").attr('onclick', ('apagarEspacoCafe('+id_espaco_cafe+ ')'));
 
 }
-//Apagar sala baseado no ID
+//Apagar espaço para café baseado no ID
 function apagarEspacoCafe(id_espaco_cafe){
     $.ajax({
         url: 'http://localhost:5000/apagar_espaco_cafe/'+id_espaco_cafe,
@@ -125,6 +125,72 @@ function apagarEspacoCafe(id_espaco_cafe){
         },
         error: function (error){
             alert("Ocorreu um erro ao apagar essa sala!");
+        }
+    })
+};
+
+//Muda os dados no modal da sala
+function chamarModalSalaDelete(id_sala){
+
+    //$("#deleteCafeNome").val(espaco_nome);
+    $("#modalSalaDeleteBtn").attr('onclick', ('apagarSala('+id_sala+')'));
+
+}
+//Apagar sala baseado no ID
+function apagarSala(id_sala){
+    $.ajax({
+        url: 'http://localhost:5000/apagar_sala/'+id_sala,
+        type: 'DELETE',
+        dataType: 'json', contentType: 'application/json',
+        data: JSON.stringify({ id_sala: id_sala}), 
+        success: function(retorno){
+            if (retorno.resultado == "ok") {
+                $("#trSala_" + id_sala).fadeOut(600, function(){ 
+                alert("Sala apagada com sucesso!"); 
+                
+            });
+            
+        }
+            else {
+                alert(retorno.resultado + " : " + retorno.detalhes);
+            }
+        },
+        error: function (error){
+            alert("Ocorreu um erro ao apagar essa sala!");
+        }
+    })
+};
+
+
+
+//Muda os dados no modal da pessoa
+function chamarModalPessoaDelete(cpf){
+
+    //$("#deleteCafeNome").val(espaco_nome);
+    $("#modalPessoaDeleteBtn").attr('onclick', ('apagarPessoa('+cpf+')'));
+
+}
+//Apagar pessoa baseado no ID
+function apagarPessoa(cpf){
+    $.ajax({
+        url: 'http://localhost:5000/apagar_pessoa/'+cpf,
+        type: 'DELETE',
+        dataType: 'json', contentType: 'application/json',
+        data: JSON.stringify({ cpf: cpf}), 
+        success: function(retorno){
+            if (retorno.resultado == "ok") {
+                $("#trPessoa_" + cpf).fadeOut(600, function(){ 
+                alert("Pessoa apagada com sucesso!"); 
+                
+            });
+            
+        }
+            else {
+                alert(retorno.resultado + " : " + retorno.detalhes);
+            }
+        },
+        error: function (error){
+            alert("Ocorreu um erro ao apagar essa pessoa!");
         }
     })
 };

@@ -36,7 +36,8 @@ function popularPessoasGeral(){
             "<td>" + pessoa.cafe2.nome+ "</td>" +  
 
             "<td style='font-size: 1.5em'>" + 
-                "<a  href='#' title='Apagar'><i class='fas fa-trash pr-1 text-danger'></i></a>" + 
+                "<a href='#' title='Apagar' data-toggle='modal' data-target='#modalPessoaDelete' onClick='chamarModalPessoaDelete(" +pessoa.cpf+");'>"+
+                "<i class='fas fa-trash pr-1 text-danger'></i></a>" + 
                 "<a href='#' title='Editar'><i class='fas fa-edit text-primary'></i></a>" + 
             "</td>" +
             "</tr>"
@@ -78,7 +79,8 @@ function popularSalasGeral(){
                 "<td>" + sala.lotacao2+ "</td>" + 
 
                 "<td style='font-size: 1.5em'>" + 
-                    "<a href='#' title='Apagar' onClick='apagarSala("+sala.id_sala+");'><i class='fas fa-trash pr-1 text-danger'></i></a>" + 
+                "<a href='#' title='Apagar' data-toggle='modal' data-target='#modalSalaDelete' onClick='chamarModalSalaDelete(" +sala.id_sala+");'>"+
+                "<i class='fas fa-trash pr-1 text-danger'></i></a>" +
                     "<a href='#' title='Editar'><i class='fas fa-edit text-primary'></i></a>" + 
                 "</td>" +
             "</tr>"
@@ -121,7 +123,8 @@ function popularCafeGeral(){
                 "<td>" + espaco.lotacao2+ "</td>" + 
 
                 "<td style='font-size: 1.5em'>" + 
-                "<a href='#' title='Apagar' data-toggle='modal' data-target='#modalCafeDelete' onClick='chamarModalCafeDelete(" +espaco.id_espaco+");'><i class='fas fa-trash pr-1 text-danger'></i></a>" + 
+                "<a href='#' title='Apagar' data-toggle='modal' data-target='#modalCafeDelete' onClick='chamarModalCafeDelete(" +espaco.id_espaco+");'>"+
+                    "<i class='fas fa-trash pr-1 text-danger'></i></a>" + 
                     "<a href='#' title='Editar'><i class='fas fa-edit text-primary'></i></a>" + 
                 "</td>" +
             "</tr>"

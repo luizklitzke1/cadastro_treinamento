@@ -45,7 +45,7 @@ def listar_espacos_cafe():
 
 
 # Rota para listar oas pessoas de determinada sala e etapa
-@app.route("/listar_pessoas_sala/<int:id_sala>/<int:etapa>",  methods=['POST', 'GET'])
+@app.route("/listar_pessoas_sala/<int:id_sala>/<int:etapa>",  methods=['POST'])
 def listar_pessoas_sala(id_sala,etapa):
    
     if etapa == 1:
@@ -57,7 +57,7 @@ def listar_pessoas_sala(id_sala,etapa):
     return (jsonify(pessoas_json))
 
 # Rota para listar oas pessoas de determinado espaço de café e etapa
-@app.route("/listar_pessoas_cafe/<int:id_espaco>/<int:etapa>",  methods=['POST', 'GET'])
+@app.route("/listar_pessoas_cafe/<int:id_espaco>/<int:etapa>",  methods=['POST'])
 def listar_pessoas_cafe(id_espaco,etapa):
    
     if etapa == 1:
@@ -115,7 +115,7 @@ def cadastrar_Espaco_Cafe():
     
     return resposta
 
-# Rota para apagar uma Sala
+# Rota para apagar um Espaço para Café
 @app.route("/apagar_espaco_cafe/<int:id_espaco_cafe>",  methods=['DELETE'])
 def apagar_Espaco_cafe(id_espaco_cafe):
     
@@ -228,7 +228,7 @@ def designar_etapa2(pessoa):
 
 # Rota para  alocar uma pessoa em uma sala
 # http://127.0.0.1:5000/alocar_pessoa_sala/1/05435950643/1
-@app.route("/alocar_pessoa_sala/<int:id_sala>/<string:cpf>/<int:etapa>", methods=['POST', 'GET'])
+@app.route("/alocar_pessoa_sala/<int:id_sala>/<string:cpf>/<int:etapa>", methods=['POST'])
 def alocar_pessoa_sala(id_sala, cpf, etapa):
     
     resposta = jsonify({"resultado":"ok","detalhes": "ok"})
@@ -282,7 +282,7 @@ def alocar_pessoa_sala(id_sala, cpf, etapa):
     return resposta
     
 #Alocar pessoa para um espaço de café
-@app.route("/alocar_pessoa_cafe/<int:id_espaco_cafe>/<string:cpf>/<int:etapa>", methods=['POST', 'GET'])
+@app.route("/alocar_pessoa_cafe/<int:id_espaco_cafe>/<string:cpf>/<int:etapa>", methods=['POST'])
 def alocar_pessoa_cafe(id_espaco_cafe, cpf, etapa):
     
     resposta = jsonify({"resultado":"ok","detalhes": "ok"})
