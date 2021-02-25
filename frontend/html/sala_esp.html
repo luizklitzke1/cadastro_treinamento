@@ -10,226 +10,222 @@
         <!--Link para CSS  do Bootstrap-->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
-
+        <link rel="stylesheet" href="../css/navbar-fixed-left.min.css">
+        
+         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+         <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+             integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+             crossorigin="anonymous"></script>
+         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+             crossorigin="anonymous"></script>
+         
+        <script src="../js/docs.js"></script>
 
         <title>Sistema Evento - Geral</title>
 
     </head>
-    <body>
-        <div class="container-fluid ">
-            <div class="row min-vh-100 flex-column flex-md-row "  >
-                <aside class="col-12 col-md-2 p-0 bg-dark flex-grow pt-4 " id="sticky-sidebar">
-                    <nav class="navbar navbar-expand navbar-dark bg-dark flex-md-column flex-row align-items-start py-2 sticky-top">
-                        <div class="collapse navbar-collapse ">
-                            <ul class="flex-md-column flex-row navbar-nav w-100 justify-content-between ml-2 pl-2" >
-
-                                <li class="nav-item pl-0 h2 border-bottom mb-4 " >
-                                    <a class="nav-link pl-0 text-nowrap" href="index.html"><i class="fab fa-leanpub"></i> <span class="font-weight-bold">Evento</span></a>
-                                </li>
-
-                                <li class="nav-item h5">
-                                    <a class="nav-link pl-0" href="index.html"><i class="fas fa-chart-bar"></i> <span class="d-none d-md-inline">Geral</span></a>
-                                </li>
-
-                                <li class="nav-item h5">
-                                    <a class="nav-link pl-0" href="pessoas.html"><i class="fas fa-user-friends"></i> <span class="d-none d-md-inline">Pessoas</span></a>
-                                </li>
-
-                                <li class="nav-item h5">
-                                    <a class="nav-link pl-0" href="salas.html"><i class="fas fa-door-open"></i> <span class="d-none d-md-inline">Salas</span></a>
-                                </li>
-
-                                <li class="nav-item h5">
-                                    <a class="nav-link pl-0" href="espacos_cafe.html"><span class="d-none d-md-inline" ><i class="fas fa-mug-hot"> </i> Espaço para café</span></a>
-                                </li>
-                            
-                            </ul>
-                        </div>
-                    </nav>
-                </aside>
-                <main class="col bg-faded py-3 flex-grow-1 pl-4 m-4" >
-                    <h2 class="h2 underlined"><i class="fas fa-door-open mr-2"></i><u>Nome da sala</u></h2>
+    <body onload="dadosSala();">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+            <a class="navbar-brand mt-2 mb-2" href="index.html"><span class="h2"><i class="fab fa-leanpub"></i>Evento</span></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+                    aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+    
+            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    
+                <ul class="navbar-nav" >
+    
+                    <li class="nav-item">
+                        <a class="nav-link pl-0 h5" href="index.html"><i class="fas fa-chart-bar"></i> Geral</a>
+                    </li>
+    
+                    <li class="nav-item">
+                        <a class="nav-link pl-0 h5" href="pessoas.html"><i class="fas fa-user-friends"></i> Pessoas</a>
+                    </li>
+    
+                    <li class="nav-item">
+                        <a class="nav-link pl-0 h5" href="salas.html"><i class="fas fa-door-open"></i> Salas</a>
+                    </li>
+    
+                    <li class="nav-item">
+                        <a class="nav-link pl-0 h5" href="espacos_cafe.html"><i class="fas fa-mug-hot"> </i> Espaço para café</a>
+                    </li>
+                
+                </ul>
+        </nav>
+    
+        <main class="container ml-2 mt-3">
+            <h2 class="h2 underlined"><i class="fas fa-door-open mr-2"></i><u>Nome da sala</u></h2>
                 
 
-                    <h4 class="h4 mt-5">Procurar por uma pessoa na sala</h4>
-                    <section class="search-sec">
-                        <div class="container ml-0 pl-0 mr-0 pr-0">
-                            <form action="#" method="post" novalidate="novalidate">
+            <h4 class="h4 mt-5">Procurar por uma pessoa na sala</h4>
+            <section class="search-sec">
+                <div class="container ml-0 pl-0 mr-0 pr-0">
+                    <form action="#" method="post" novalidate="novalidate">
+                        <div class="row">
+                            <div class="col-lg-12">
                                 <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="row">
-                                            <div class="col-lg-2 p-2 m-1">
-                                                <input type="text" class="form-control search-slt" placeholder="CPF">
-                                            </div>
-                                            <div class="col-lg-2 p-2 m-1">
-                                                <input type="text" class="form-control search-slt" placeholder="Nome">
-                                            </div>
-                                            <div class="col-lg-2 p-2 m-1">
-                                                <input type="text" class="form-control search-slt" placeholder="Sobrenome">
-                                            </div>
-                                            <div class="col-lg-2 p-2 m-1">
-                                                <select class="form-control search-slt">
-                                                    <option>Sala1</option>
-                                                    <option>Sala2</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-lg-2 p-2 m-1">
-                                                <select class="form-control search-slt">
-                                                    <option>Sala1</option>
-                                                    <option>Sala2</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-sm p-2 m-1">
-                                                <button type="button" class="btn btn-primary wrn-btn" title="Procurar"><i class="fas fa-search"></i></button>
-                                            </div>
-                                        </div>
+                                    <div class="col-lg-2 p-2 m-1">
+                                        <input type="text" class="form-control search-slt" placeholder="CPF">
+                                    </div>
+                                    <div class="col-lg-2 p-2 m-1">
+                                        <input type="text" class="form-control search-slt" placeholder="Nome">
+                                    </div>
+                                    <div class="col-lg-2 p-2 m-1">
+                                        <input type="text" class="form-control search-slt" placeholder="Sobrenome">
+                                    </div>
+                                    <div class="col-lg-2 p-2 m-1">
+                                        <select class="form-control search-slt">
+                                            <option>Sala1</option>
+                                            <option>Sala2</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-2 p-2 m-1">
+                                        <select class="form-control search-slt">
+                                            <option>Sala1</option>
+                                            <option>Sala2</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm p-2 m-1">
+                                        <button type="button" class="btn btn-primary wrn-btn" title="Procurar"><i class="fas fa-search"></i></button>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
-                    </section>
+                    </form>
+                </div>
+            </section>
 
+            
+            <h4 class="h4 mt-5">Primeira etapa</h4>
+            <p class="">Clique em qualquer pessoa para obter mais detalhes sobre a mesma.</p>
+            <table class="table table-striped table-hover col-lg-8 text-center">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">CPF</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Sobrenome</th>
+            
+                    <th scope="col">Opções</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>092441414</td>
+                    <td>Carlos</td>
+                    <td>Silva</td>
+                
+                    <td style="font-size: 1.5em">
+                        <a href="#" title="Apagar"><i class="fas fa-user-times text-danger"></i></a>
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>092441414</td>
+                    <td>Carlos</td>
+                    <td>Silva</td>
+                
+                    <td style="font-size: 1.5em">
+                        <a href="#" title="Apagar"><i class="fas fa-user-times text-danger"></i></a>
+                        
+                    </td>
                     
-                    <h4 class="h4 mt-5">Primeira etapa</h4>
-                    <p class="">Clique em qualquer pessoa para obter mais detalhes sobre a mesma.</p>
-                    <table class="table table-striped table-hover col-lg-8 text-center">
-                        <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">CPF</th>
-                            <th scope="col">Nome</th>
-                            <th scope="col">Sobrenome</th>
+                </tr>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>092441414</td>
+                    <td>Carlos</td>
+                    <td>Silva</td>
+                    <td style="font-size: 1.5em">
+                        <a href="#" title="Apagar"><i class="fas fa-user-times text-danger"></i></a>
+                        
+                    </td>
+                </tr>
+                
+                </tbody>
+            </table>
+
+            <h4 class="h4 mt-5">Segunda etapa</h4>
+            <p class="">Clique em qualquer pessoa para obter mais detalhes sobre a mesma.</p>
+            <table class="table table-striped table-hover col-lg-8 text-center">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">CPF</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Sobrenome</th>
+
+                    <th scope="col">Permanece</th>
+                
+                    <th scope="col">Opções</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>092441414</td>
+                    <td>Carlos</td>
+                    <td>Silva</td>
+
+                    <td style="font-size: 1.5em">
+                        <a href="#" title="Apagar"><i class="fas fa-times text-danger"></i></a>
+                        
+                    </td>
+                
+                    <td style="font-size: 1.5em">
+                        <a href="#" title="Apagar"><i class="fas fa-user-times text-danger"></i></a>
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>092441414</td>
+                    <td>Carlos</td>
+                    <td>Silva</td>
+
+                    <td style="font-size: 1.5em">
+                        <a href="#" title="Apagar"><i class="fas fa-times text-danger"></i></a>
+                        
+                    </td>
+                
+                    <td style="font-size: 1.5em">
+                        <a href="#" title="Apagar"><i class="fas fa-user-times text-danger"></i></a>
+                        
+                    </td>
                     
-                            <th scope="col">Opções</th>
+                </tr>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>092441414</td>
+                    <td>Carlos</td>
+                    <td>Silva</td>
 
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>092441414</td>
-                            <td>Carlos</td>
-                            <td>Silva</td>
-                        
-                            <td style="font-size: 1.5em">
-                                <a href="#" title="Apagar"><i class="fas fa-user-times text-danger"></i></a>
-                                
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>092441414</td>
-                            <td>Carlos</td>
-                            <td>Silva</td>
-                        
-                            <td style="font-size: 1.5em">
-                                <a href="#" title="Apagar"><i class="fas fa-user-times text-danger"></i></a>
-                                
-                            </td>
-                            
-                        </tr>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>092441414</td>
-                            <td>Carlos</td>
-                            <td>Silva</td>
-                            <td style="font-size: 1.5em">
-                                <a href="#" title="Apagar"><i class="fas fa-user-times text-danger"></i></a>
-                                
-                            </td>
-                        </tr>
-                        
-                        </tbody>
-                    </table>
+                    <td style="font-size: 1.5em">
+                        <a href="#" title="Apagar"><i class="fas fa-check text-success"></i></a>
 
-                    <h4 class="h4 mt-5">Segunda etapa</h4>
-                    <p class="">Clique em qualquer pessoa para obter mais detalhes sobre a mesma.</p>
-                    <table class="table table-striped table-hover col-lg-8 text-center">
-                        <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">CPF</th>
-                            <th scope="col">Nome</th>
-                            <th scope="col">Sobrenome</th>
-
-                            <th scope="col">Permanece</th>
+                    </td>
+                
+                    <td style="font-size: 1.5em">
+                        <a href="#" title="Apagar"><i class="fas fa-user-times text-danger"></i></a>
                         
-                            <th scope="col">Opções</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>092441414</td>
-                            <td>Carlos</td>
-                            <td>Silva</td>
+                    </td>
+                </tr>
+                
+                </tbody>
+            </table>
 
-                            <td style="font-size: 1.5em">
-                                <a href="#" title="Apagar"><i class="fas fa-times text-danger"></i></a>
-                                
-                            </td>
-                        
-                            <td style="font-size: 1.5em">
-                                <a href="#" title="Apagar"><i class="fas fa-user-times text-danger"></i></a>
-                                
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>092441414</td>
-                            <td>Carlos</td>
-                            <td>Silva</td>
-
-                            <td style="font-size: 1.5em">
-                                <a href="#" title="Apagar"><i class="fas fa-times text-danger"></i></a>
-                                
-                            </td>
-                        
-                            <td style="font-size: 1.5em">
-                                <a href="#" title="Apagar"><i class="fas fa-user-times text-danger"></i></a>
-                                
-                            </td>
-                            
-                        </tr>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>092441414</td>
-                            <td>Carlos</td>
-                            <td>Silva</td>
-
-                            <td style="font-size: 1.5em">
-                                <a href="#" title="Apagar"><i class="fas fa-check text-success"></i></a>
-
-                            </td>
-                        
-                            <td style="font-size: 1.5em">
-                                <a href="#" title="Apagar"><i class="fas fa-user-times text-danger"></i></a>
-                                
-                            </td>
-                        </tr>
-                        
-                        </tbody>
-                    </table>
-
-                    
-                </main>
-            </div>
-        </div>
-        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-            crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-            crossorigin="anonymous"></script>
+            
+        </main>
         <!-- Código para os JS  -->
         <script src="../js/tablePops.js"></script>
+        
     </body>
 </html>
