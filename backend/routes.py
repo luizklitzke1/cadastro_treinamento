@@ -69,9 +69,9 @@ def listar_pessoas_cafe(id_espaco,etapa):
     return (jsonify(pessoas_json))
 
 
-# Rota para registrar pessoas
-@app.route("/registrar_pessoa", methods=['POST'])
-def registrar_Pessoa():
+# Rota para cadastrar pessoas
+@app.route("/cadastrar_pessoa", methods=['POST'])
+def cadastar_Pessoa():
     
     resposta = jsonify({"resultado":"ok","detalhes": "ok"})
     dados = request.get_json()
@@ -94,9 +94,9 @@ def registrar_Pessoa():
     
     return resposta
 
-# Rota para registrar espaços para café
-@app.route("/registrar_espaco_cafe", methods=['POST'])
-def registrar_Espaco_Cafe():
+# Rota para cadastrar espaços para café
+@app.route("/cadastrar_espaco_cafe", methods=['POST'])
+def cadastrar_Espaco_Cafe():
     
     resposta = jsonify({"resultado":"ok","detalhes": "ok"})
     dados = request.get_json()
@@ -115,9 +115,27 @@ def registrar_Espaco_Cafe():
     
     return resposta
 
-# Rota para registrar salas
-@app.route("/registrar_sala", methods=['POST'])
-def registrar_Sala():
+# Rota para apagar uma Sala
+@app.route("/apagar_espaco_cafe/<int:id_espaco_cafe>",  methods=['DELETE'])
+def apagar_Espaco_cafe(id_espaco_cafe):
+    
+    resposta = jsonify({"resultado":"ok","detalhes": "ok"})
+    
+    try: #Tentar realizar a exclusão
+        espaco = Espaco_Cafe.query.get_or_404(id_espaco_cafe)
+                                               
+        db.session.delete(espaco)
+        db.session.commit()
+        
+    except Exception as e:  #Envie mensagem em caso de erro
+        resposta = jsonify({"resultado":"erro", "detalhes":str(e)}) 
+        
+    resposta.headers.add("Access-Control-Allow-Origin","*")
+    return resposta
+
+# Rota para cadastrar salas
+@app.route("/cadastrar_sala", methods=['POST'])
+def cadastrar_sala():
     
     resposta = jsonify({"resultado":"ok","detalhes": "ok"})
     dados = request.get_json()
@@ -137,7 +155,7 @@ def registrar_Sala():
     
     return resposta
 
-# Rota para apagar um Personagem
+# Rota para apagar uma Sala
 @app.route("/apagar_sala/<int:id_sala>",  methods=['DELETE'])
 def apagar_Sala(id_sala):
     
@@ -154,6 +172,7 @@ def apagar_Sala(id_sala):
         
     resposta.headers.add("Access-Control-Allow-Origin","*")
     return resposta
+
 
 
 def calcular_coincidentes_e_metade(id_sala):

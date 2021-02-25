@@ -36,7 +36,7 @@ function popularPessoasGeral(){
             "<td>" + pessoa.cafe2.nome+ "</td>" +  
 
             "<td style='font-size: 1.5em'>" + 
-                "<a href='#' title='Apagar'><i class='fas fa-trash pr-1 text-danger'></i></a>" + 
+                "<a  href='#' title='Apagar'><i class='fas fa-trash pr-1 text-danger'></i></a>" + 
                 "<a href='#' title='Editar'><i class='fas fa-edit text-primary'></i></a>" + 
             "</td>" +
             "</tr>"
@@ -114,14 +114,14 @@ function popularCafeGeral(){
         // Percorre todas as salas registradas
         for (espaco of espacos){
             // Cria uma nova linha para cada sala
-            lin = "<tr>" + 
+            lin = "<tr id='trCafe_"+ espaco.id_espaco +"'>" + 
                 "<td>" + (espacos.indexOf(espaco)+1) +"</td>" +
                 "<td>" + espaco.nome + "</td>" + 
                 "<td>" + espaco.lotacao1+ "</td>" + 
                 "<td>" + espaco.lotacao2+ "</td>" + 
 
                 "<td style='font-size: 1.5em'>" + 
-                    "<a href='#' title='Apagar'><i class='fas fa-trash pr-1 text-danger'></i></a>" + 
+                "<a href='#' title='Apagar' data-toggle='modal' data-target='#modalCafeDelete' onClick='chamarModalCafeDelete(" +espaco.id_espaco+");'><i class='fas fa-trash pr-1 text-danger'></i></a>" + 
                     "<a href='#' title='Editar'><i class='fas fa-edit text-primary'></i></a>" + 
                 "</td>" +
             "</tr>"
