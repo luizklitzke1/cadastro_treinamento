@@ -52,7 +52,6 @@ print(conincide)
 
 print(1//2)
 
-"""
 def teste(a):
     b = a+2
     c = a+4
@@ -64,3 +63,28 @@ print(d,e)
 
 f = teste(1)[0]
 print(f)
+
+"""
+def fib(n):
+    
+    i = 0
+    b = 0
+    a = 0
+    
+    while (i <= n):
+
+        b = b + a
+        a = b - a
+
+        if (b == 0) :
+            b = b + 1
+
+        i = i + 1
+        
+        print(i,b)
+        
+    return b
+        
+print(fib(8))
+
+

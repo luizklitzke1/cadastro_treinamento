@@ -24,7 +24,7 @@
     <body onload="popularSalasGeral();">
         <div class="container-fluid ">
             <div class="row min-vh-100 flex-column flex-md-row" >
-                <aside class="col-12 col-md-2 p-0 bg-dark flex-shrink-1 pt-4">
+                <aside class="col-12 col-md-2 p-0 bg-dark flex-grow pt-4 " id="sticky-sidebar">
                     <nav class="navbar navbar-expand navbar-dark bg-dark flex-md-column flex-row align-items-start py-2 sticky-top">
                         <div class="collapse navbar-collapse ">
                             <ul class="flex-md-column flex-row navbar-nav w-100 justify-content-between ml-2 pl-2" >
@@ -60,7 +60,7 @@
                 
                     <span class="mt-4 font-weight-bold mt-2">Total de salas cadastradas:  </span>  <span id="total_salas"> 33 </span><br>
                     
-                    <button type="button" class="btn btn-success btn-md mt-5" style="font-weight: bold;">Cadastrar sala</button>
+                    <button type="button" class="btn btn-success btn-md mt-5" style="font-weight: bold;" data-toggle="modal" data-target="#myModal">Cadastrar sala</button>
 
 
                     <p class="h4 mt-5">Procurar por uma sala</p>
@@ -104,6 +104,33 @@
 
                 </main>
             </div>
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                           
+                            <h4 class="modal-title" id="myModalLabel">Registrar Sala</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="campoNome">Nome</label>
+                                    <div class="input-group pb-modalreglog-input-group">
+                                        <input type="text" class="form-control" id="campoNome" placeholder="Nome da sala...">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-primary" onClick="registrarSala();">Registrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
@@ -114,6 +141,7 @@
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
         <!-- Código para os JS  -->
-        <script src="../js/table_pops.js"></script>
+        <script src="../js/tablePops.js"></script>
+        <script src="../js/crud.js"></script>
     </body>
 </html>

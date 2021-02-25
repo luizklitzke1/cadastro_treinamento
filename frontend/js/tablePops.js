@@ -12,7 +12,7 @@ function popularPessoasGeral(){
         dataType: "json", 
         success: listar, 
         error: function(problema) {
-            alert("Erro ao buscar os dados no backend ");
+            alert("Erro ao buscar os dados no backend! ");
         }
     });
     function listar (pessoas) {
@@ -58,7 +58,7 @@ function popularSalasGeral(){
         dataType: "json", 
         success: listar, 
         error: function(problema) {
-            alert("Erro ao buscar os dados no backend ");
+            alert("Erro ao buscar os dados no backend! ");
         }
     });
     function listar (salas) {
@@ -71,14 +71,14 @@ function popularSalasGeral(){
         // Percorre todas as salas registradas
         for (sala of salas){
             // Cria uma nova linha para cada sala
-            lin = "<tr>" + 
+            lin = "<tr id='trSala_"+ sala.id_sala +"'>" + 
                 "<td>" + (salas.indexOf(sala)+1) +"</td>" +
                 "<td>" + sala.nome + "</td>" + 
                 "<td>" + sala.lotacao1+ "</td>" + 
                 "<td>" + sala.lotacao2+ "</td>" + 
 
                 "<td style='font-size: 1.5em'>" + 
-                    "<a href='#' title='Apagar'><i class='fas fa-trash pr-1 text-danger'></i></a>" + 
+                    "<a href='#' title='Apagar' onClick='apagarSala("+sala.id_sala+");'><i class='fas fa-trash pr-1 text-danger'></i></a>" + 
                     "<a href='#' title='Editar'><i class='fas fa-edit text-primary'></i></a>" + 
                 "</td>" +
             "</tr>"
@@ -101,7 +101,7 @@ function popularCafeGeral(){
         dataType: "json", 
         success: listar, 
         error: function(problema) {
-            alert("Erro ao buscar os dados no backend ");
+            alert("Erro ao buscar os dados no backend! ");
         }
     });
     function listar (espacos) {

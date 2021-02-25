@@ -137,6 +137,25 @@ def registrar_Sala():
     
     return resposta
 
+# Rota para apagar um Personagem
+@app.route("/apagar_sala/<int:id_sala>",  methods=['DELETE'])
+def apagar_Sala(id_sala):
+    
+    resposta = jsonify({"resultado":"ok","detalhes": "ok"})
+    
+    try: #Tentar realizar a exclusão
+        sala = Sala.query.get_or_404(id_sala)
+                                               
+        db.session.delete(sala)
+        db.session.commit()
+        
+    except Exception as e:  #Envie mensagem em caso de erro
+        resposta = jsonify({"resultado":"erro", "detalhes":str(e)}) 
+        
+    resposta.headers.add("Access-Control-Allow-Origin","*")
+    return resposta
+
+
 def calcular_coincidentes_e_metade(id_sala):
     
     #Pega a lista de pessoas na primeira e segunda etapa e descobre quantas continuaram na segunda
