@@ -59,9 +59,7 @@
         </nav>
     
         <main class="container ml-2 mt-3">
-            <h2 class="h2 underlined"><i class="fas fa-door-open mr-2"></i><u>Nome da sala</u></h2>
-                
-
+            <h2 class="h2 underlined"><i class="fas fa-door-open mr-2"></i><u id="textNomeSala">Nome da sala</u></h2>          
             <h4 class="h4 mt-5">Procurar por uma pessoa na sala</h4>
             <section class="search-sec">
                 <div class="container ml-0 pl-0 mr-0 pr-0">
@@ -78,18 +76,7 @@
                                     <div class="col-lg-2 p-2 m-1">
                                         <input type="text" class="form-control search-slt" placeholder="Sobrenome">
                                     </div>
-                                    <div class="col-lg-2 p-2 m-1">
-                                        <select class="form-control search-slt">
-                                            <option>Sala1</option>
-                                            <option>Sala2</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-lg-2 p-2 m-1">
-                                        <select class="form-control search-slt">
-                                            <option>Sala1</option>
-                                            <option>Sala2</option>
-                                        </select>
-                                    </div>
+                                
                                     <div class="col-sm p-2 m-1">
                                         <button type="button" class="btn btn-primary wrn-btn" title="Procurar"><i class="fas fa-search"></i></button>
                                     </div>
@@ -115,41 +102,8 @@
 
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>092441414</td>
-                    <td>Carlos</td>
-                    <td>Silva</td>
-                
-                    <td style="font-size: 1.5em">
-                        <a href="#" title="Apagar"><i class="fas fa-user-times text-danger"></i></a>
-                        
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>092441414</td>
-                    <td>Carlos</td>
-                    <td>Silva</td>
-                
-                    <td style="font-size: 1.5em">
-                        <a href="#" title="Apagar"><i class="fas fa-user-times text-danger"></i></a>
-                        
-                    </td>
-                    
-                </tr>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>092441414</td>
-                    <td>Carlos</td>
-                    <td>Silva</td>
-                    <td style="font-size: 1.5em">
-                        <a href="#" title="Apagar"><i class="fas fa-user-times text-danger"></i></a>
-                        
-                    </td>
-                </tr>
-                
+                <tbody id="corpoTabelaPessoas1">
+              
                 </tbody>
             </table>
 
@@ -162,68 +116,38 @@
                     <th scope="col">CPF</th>
                     <th scope="col">Nome</th>
                     <th scope="col">Sobrenome</th>
-
-                    <th scope="col">Permanece</th>
                 
                     <th scope="col">Opções</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>092441414</td>
-                    <td>Carlos</td>
-                    <td>Silva</td>
-
-                    <td style="font-size: 1.5em">
-                        <a href="#" title="Apagar"><i class="fas fa-times text-danger"></i></a>
-                        
-                    </td>
-                
-                    <td style="font-size: 1.5em">
-                        <a href="#" title="Apagar"><i class="fas fa-user-times text-danger"></i></a>
-                        
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>092441414</td>
-                    <td>Carlos</td>
-                    <td>Silva</td>
-
-                    <td style="font-size: 1.5em">
-                        <a href="#" title="Apagar"><i class="fas fa-times text-danger"></i></a>
-                        
-                    </td>
-                
-                    <td style="font-size: 1.5em">
-                        <a href="#" title="Apagar"><i class="fas fa-user-times text-danger"></i></a>
-                        
-                    </td>
-                    
-                </tr>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>092441414</td>
-                    <td>Carlos</td>
-                    <td>Silva</td>
-
-                    <td style="font-size: 1.5em">
-                        <a href="#" title="Apagar"><i class="fas fa-check text-success"></i></a>
-
-                    </td>
-                
-                    <td style="font-size: 1.5em">
-                        <a href="#" title="Apagar"><i class="fas fa-user-times text-danger"></i></a>
-                        
-                    </td>
-                </tr>
-                
+                <tbody id="corpoTabelaPessoas2">
+               
                 </tbody>
             </table>
 
             
         </main>
+        <div class="modal fade" id="modalPessoaDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                       
+                        <h4 class="modal-title" id="myModalLabel">Apagar pessoa?</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Ao apagar essa pessoa, o balanço das salas pode ser afetado, fazendo com que as outra sejam <u>automaticamente rearranjadas</u> dando prioridade para sua posição na primeira etapa.</p>
+                        <p>Tem certeza que deseja continuar?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-danger" id="modalPessoaDeleteBtn" data-dismiss="modal">Apagar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Código para os JS  -->
         <script src="../js/tablePops.js"></script>
         

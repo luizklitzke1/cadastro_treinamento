@@ -34,6 +34,26 @@ def listar_salas():
     salas_json = [Sala.json() for Sala in salas]
     return (jsonify(salas_json))
 
+# Rota para pegar os dados de uma sala específica
+@app.route("/dados_sala/<int:id_sala>",  methods=['POST','GET'])
+def dados_sala(id_sala):
+    
+    sala_esp = Sala.query.get_or_404(id_sala)
+    
+    return (sala_esp.json())
+
+
+# Rota para pegar a lista de pessoas de uma sala em uma etapa
+@app.route("/pessoas_sala/<int:id_sala>/<int:etapa>",  methods=['POST','GET'])
+def pessoas_sala(id_sala,etapa):
+    
+    if etapa == 1:
+        pessoas = Pessoa.query.filter(Pessoa.sala1_id == id_sala).all()
+    else:
+        pessoas = Pessoa.query.filter(Pessoa.sala2_id == id_sala).all()
+    
+    pessoas_json = [Pessoa.json() for Pessoa in pessoas]
+    return (jsonify(pessoas_json))
 
 # Rota para listar os espaços para café
 @app.route("/listar_espacos_cafe")

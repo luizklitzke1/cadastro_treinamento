@@ -74,10 +74,10 @@ function popularSalasGeral(){
             // Cria uma nova linha para cada sala
             lin = "<tr id='trSala_"+ sala.id_sala +"'>" + 
                 "<td>" + (salas.indexOf(sala)+1) +"</td>" +
-                "<td>" + sala.nome + "</td>" + 
+                "<td> <a href='sala_esp.html?id_sala=" + sala.id_sala + "'>"+ sala.nome + "</td>" + 
                 "<td>" + sala.lotacao1+ "</td>" + 
                 "<td>" + sala.lotacao2+ "</td>" + 
-
+                "</a>"+
                 "<td style='font-size: 1.5em'>" + 
                 "<a href='#' title='Apagar' data-toggle='modal' data-target='#modalSalaDelete' onClick='chamarModalSalaDelete(" +sala.id_sala+");'>"+
                 "<i class='fas fa-trash pr-1 text-danger'></i></a>" +
@@ -194,4 +194,94 @@ function popularSalasCadastro(){
     }
 
 }
+
+//Função para popular os dados na página de uma sala específica
+function dadosSala(){
+    //Pega o ID através do link
+    let id_sala = document.location.search.replace(/^.*?\=/,'');
+    $.ajax({
+        url: 'http://localhost:5000/dados_sala/'+id_sala,
+        method: 'GET',
+        dataType: 'json',
+        success: function(resposta){
+           $("#textNomeSala").text(resposta.nome)
+        },
+        error: function() {
+            alert("Erro ao receber os dados da sala, verifique o backend!");
+        }
+    });
+    //Pega os alunos da primeira etapa
+    $.ajax({
+        url: "http://localhost:5000/pessoas_sala/"+id_sala+"/1",
+        method: "GET",
+        dataType: "json", 
+        success: listar1, 
+        error: function(problema) {
+            alert("Erro ao buscar os dados no backend! ");
+        }
+    });
+    function listar1 (pessoas) {
+        // Limpa os dados da tablea
+        $("#corpoTabelaPessoas1").empty();    
+
+        // Percorre todas as pessoas registradas
+        for (pessoa of pessoas){
+            // Cria uma nova linha para cada pessoa
+            lin = "<tr>" + 
+            "<td>" + (pessoas.indexOf(pessoa)+1) +"</td>" +
+            "<td>" + pessoa.cpf + "</td>" + 
+            "<td>" + pessoa.nome+ "</td>" + 
+            "<td>" + pessoa.sobrenome+ "</td>" + 
+
+            "<td style='font-size: 1.5em'>" + 
+                "<a href='#' title='Apagar' data-toggle='modal' data-target='#modalPessoaDelete' onClick='chamarModalPessoaDelete(" +pessoa.cpf+");'>"+
+                "<i class='fas fa-trash pr-1 text-danger'></i></a>" + 
+                "<a href='#' title='Editar'><i class='fas fa-edit text-primary'></i></a>" + 
+            "</td>" +
+            "</tr>"
+
+            // Adiciona a nova linha na tabela
+            $("#corpoTabelaPessoas1").append(lin);
+        }
+      
+    }
+
+    //Pega os alunos da segunda etapa
+    $.ajax({
+        url: "http://localhost:5000/pessoas_sala/"+id_sala+"/2",
+        method: "GET",
+        dataType: "json", 
+        success: listar2, 
+        error: function(problema) {
+            alert("Erro ao buscar os dados no backend! ");
+        }
+    });
+    function listar2 (pessoas) {
+        // Limpa os dados da tablea
+        $("#corpoTabelaPessoas2").empty();    
+
+        // Percorre todas as pessoas registradas
+        for (pessoa of pessoas){
+            // Cria uma nova linha para cada pessoa
+            lin = "<tr>" + 
+            "<td>" + (pessoas.indexOf(pessoa)+1) +"</td>" +
+            "<td>" + pessoa.cpf + "</td>" + 
+            "<td>" + pessoa.nome+ "</td>" + 
+            "<td>" + pessoa.sobrenome+ "</td>" + 
+
+            "<td style='font-size: 1.5em'>" + 
+                "<a href='#' title='Apagar' data-toggle='modal' data-target='#modalPessoaDelete' onClick='chamarModalPessoaDelete(" +pessoa.cpf+");'>"+
+                "<i class='fas fa-trash pr-1 text-danger'></i></a>" + 
+                "<a href='#' title='Editar'><i class='fas fa-edit text-primary'></i></a>" + 
+            "</td>" +
+            "</tr>"
+
+            // Adiciona a nova linha na tabela
+            $("#corpoTabelaPessoas2").append(lin);
+        }
+      
+    }
+
+  
+};
 
