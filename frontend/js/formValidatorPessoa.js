@@ -51,7 +51,7 @@ function show(id){
 }
 
 //Padrão de verificação dos caracteres de texto
-var testeLetters22 = new RegExp(/^[\s\d\p{L}]*$/ui);
+var testeLetters2 = new RegExp(/^[\s\d\p{L}]*$/ui);
 
 //Verificação customizada do nome
 $("#campoCPF").on('input', function() {

@@ -20,7 +20,7 @@ function cadastrarSala ()  {
             alert("Sala " + nome + " registrada com sucesso!");
             // Limpar o campo
             $("#campoNome").val("");
-            popularSalasGeral();
+            popularSalasGeral();popularPessoasGeral();popularCafeGeral();
 
         } 
         else {
@@ -84,7 +84,7 @@ function cadastrarEspacoCafe ()  {
             alert(nome + " registrado com sucesso!");
             // Limpar o campo
             $("#campoNome").val("");
-            popularCafeGeral();
+            popularSalasGeral();popularPessoasGeral();popularCafeGeral();
 
         } 
         else {
@@ -196,7 +196,7 @@ function cadastrarPessoa ()  {
             sobrenome = $("#campoSobrenome").val("");
             sala1_id = $("selectSala1").val("");
             cafe1_id = $("selectCafe1").val("");
-            popularPessoasGeral();
+            popularSalasGeral();popularPessoasGeral();popularCafeGeral();
 
         } 
         else {

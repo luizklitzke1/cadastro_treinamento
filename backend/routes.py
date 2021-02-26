@@ -106,6 +106,24 @@ def procurar_cafe():
     espacos_json = [Espaco_Cafe.json() for Espaco_Cafe in espacos]
   
     return (jsonify(espacos_json))
+
+
+# Procurar uma pessoa
+@app.route("/procurar_pessoa", methods=['POST'])
+def procurar_pessoa():
+    
+    dados = request.get_json()
+    cpf = dados['cpf']
+    nome = dados['nome']
+    sobrenome = dados['sobrenome']
+    
+    pessoas = db.session.query(Pessoa).filter(Pessoa.cpf.like(f"%{cpf}%"),
+                                              Pessoa.nome.like(f"%{nome}%"),
+                                              Pessoa.sobrenome.like(f"%{sobrenome}%")
+                                              ).all()
+    pessoas_json = [Pessoa.json() for Pessoa in pessoas]
+  
+    return (jsonify(pessoas_json))
     
 
 # Rota para listar oas pessoas de determinada sala e etapa
@@ -344,8 +362,6 @@ def designar_sala_etapa2(pessoa):
 # http://127.0.0.1:5000/alocar_pessoa_sala/1/05435950643/1
 @app.route("/alocar_pessoa_sala/<int:id_sala>/<string:cpf>/<int:etapa>", methods=['POST'])
 def alocar_pessoa_sala(id_sala, cpf, etapa):
-    
-    resposta = jsonify({"resultado":"ok","detalhes": "ok"})
     
     try: #Tenta alocar a pessoa
         

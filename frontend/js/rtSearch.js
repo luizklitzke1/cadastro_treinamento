@@ -138,5 +138,77 @@ $("#procurarCafe").on('input', function() {
 });
 
 
+//Não encontrei maneira melhor de setar o attr pra todos de uma vez só
+//E apenas chamando a função, sem declarar outra, ela não da trigger...
+$("#procurarPessoaCPF").on('input', function() {procurar_pessoa()})
+$("#procurarPessoaNome").on('input', function() {procurar_pessoa()})
+$("#procurarPessoaSobrenome").on('input', function() {procurar_pessoa()})
+
+function procurar_pessoa(){
+
+    cpf = $("#procurarPessoaCPF").val();
+    nome = $("#procurarPessoaNome").val();
+    sobrenome= $("#procurarPessoaSobrenome").val();
+
+    if (testeLetters.test(cpf) && testeLetters.test(nome) && testeLetters.test(sobrenome)){
+       //Função para popular a tabela geral de espaços para café
+        var dados = JSON.stringify({cpf: cpf, nome : nome, sobrenome : sobrenome});
+        $.ajax({
+            url: "http://localhost:5000/procurar_pessoa",
+            method: "POST",
+            dataType: 'json', contentType: 'application/json',
+            data: dados,  
+            success: listarPessoasProcura, 
+            error: function(problema) {
+                alert("Erro ao receber os dados do backend!");
+            }
+        });
+        function listarPessoasProcura (pessoas) {
+            // Limpa os dados da tabela
+            $("#corpoTabelaPessoas").empty();    
+            
+            // Percorre todas as salas registradas
+            try{
+                // Percorre todas as pessoas registradas
+                for (pessoa of pessoas){
+                    // Cria uma nova linha para cada pessoa
+                    lin = "<tr id='trPessoa_"+pessoa.cpf+"'>" + 
+                    "<td>" + (pessoas.indexOf(pessoa)+1) +"</td>" +
+                    "<td>" + pessoa.cpf + "</td>" + 
+                    "<td>" + pessoa.nome+ "</td>" + 
+                    "<td>" + pessoa.sobrenome+ "</td>" + 
+                    "<td> <a href='sala_esp.html?id_sala=" + pessoa.sala1.id_sala + "'>" + pessoa.sala1.nome+ "</td>" +
+                    "<td> <a href='sala_esp.html?id_sala=" + pessoa.sala2id_sala + "'>" + pessoa.sala2.nome+ "</td>" + 
+                    "<td> <a href='cafe_esp.html?id_sala=" + pessoa.cafe1.id_espaco + "'>" + pessoa.cafe1.nome+ "</td>" + 
+                    "<td> <a href='cafe_esp.html?id_sala=" + pessoa.cafe2.id_espaco + "'>" + pessoa.cafe2.nome+ "</td>" +  
+
+                    "<td style='font-size: 1.5em'>" + 
+                        "<a href='#' title='Apagar' data-toggle='modal' data-target='#modalPessoaDelete' onClick='chamarModalPessoaDelete(" +pessoa.cpf+");'>"+
+                        "<i class='fas fa-trash pr-1 text-danger'></i></a>" + 
+                        "<a href='#' title='Editar'><i class='fas fa-edit text-primary'></i></a>" + 
+                    "</td>" +
+                    "</tr>"
+
+                    // Adiciona a nova linha na tabela
+                    $("#corpoTabelaPessoas").append(lin);
+                }
+            
+            }
+            catch{
+               
+            }
+          
+        }
+    }
+    
+    else{
+        msg("#inv-nome-sala-procura","O nome deve conter apenas letras!");
+        
+    };
+
+    
+};
+
+
 
 
