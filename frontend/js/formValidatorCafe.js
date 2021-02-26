@@ -50,7 +50,7 @@ function show(id){
 //var textEsp = new RegExp(/^[a-zA-Z0-9]+$/);
 
 //Verificação customizada do nome
-var testeLetters = new RegExp(/^[\s\p{L}\d]*$/ui);
+var testeLetters3 = new RegExp(/^[\s\d\p{L}]*$/ui);
 
 $("#campoNomeCafe").on('input', function() {
     var input= $(this);
@@ -60,7 +60,7 @@ $("#campoNomeCafe").on('input', function() {
         formValid["nome"] = false;
     }
     else {
-        if (testeLetters.test(input.val())){
+        if (testeLetters3.test(input.val())){
             formValid["nome"] = true;
         }
         else{

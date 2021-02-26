@@ -51,7 +51,7 @@ function show(id){
 }
 
 //Padrão de verificação dos caracteres de texto
-var testeLetters = new RegExp(/^[\s\p{L}\d]*$/ui);
+var testeLetters22 = new RegExp(/^[\s\d\p{L}]*$/ui);
 
 //Verificação customizada do nome
 $("#campoCPF").on('input', function() {
@@ -88,7 +88,7 @@ $("#campoNome").on('input', function() {
         formValid["nome"] = false;
     }
     else {
-        if (testeLetters.test(input.val())){
+        if (testeLetters2.test(input.val())){
             formValid["nome"] = true;
         }
         else{
@@ -118,7 +118,7 @@ $("#campoSobrenome").on('input', function() {
         formValid["sobrenome"] = false;
     }
     else {
-        if (testeLetters.test(input.val())){
+        if (testeLetters2.test(input.val())){
             formValid["sobrenome"] = true;
         }
         else{

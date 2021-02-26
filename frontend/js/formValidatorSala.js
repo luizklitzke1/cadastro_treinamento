@@ -17,7 +17,7 @@ if ($("#form_editar").length){
 
 //Verifica se todos os campos estão válidos
 function checkFormSala(){
-    console.log("check");
+
     var check = true;
     
     if (!formValid.nome){
@@ -27,7 +27,6 @@ function checkFormSala(){
     //Fora do loop para evitar problemas com sync 
     if (check){
         $('#btnAdSala').removeAttr('disabled');
-        console.log("mec");
         return true;
     }
     else{
@@ -51,17 +50,18 @@ function show(id){
 //var textEsp = new RegExp(/^[a-zA-Z0-9]+$/);
 
 //Verificação customizada do nome
-var testeLetters = new RegExp(/^[\s\p{L}\d]*$/ui);
+var testeLetters1 = new RegExp(/^[\d\s\p{L}]*$/ui);
 
 $("#campoNomeSala").on('input', function() {
     var input= $(this);
+    nome = String(input.val());
 
     if (input.val().length <3){
         msg("#inv-nome-sala","O nome deve ter no mínimo 3 caracteres!");
         formValid["nome"] = false;
     }
     else {
-        if (testeLetters.test(input.val())){
+        if (testeLetters1.test(nome)){
             formValid["nome"] = true;
         }
         else{
