@@ -1,7 +1,7 @@
 //Registrar nova sala
 function cadastrarSala ()  {
 
-    nome = $("#campoNome").val();
+    nome = $("#campoNomeSala").val();
 
     var dados = JSON.stringify({nome: nome});
 
@@ -45,6 +45,7 @@ function apagarSala(id_sala){
             if (retorno.resultado == "ok") {
                 $("#trSala_" + id_sala).fadeOut(600, function(){ 
                 alert("Sala apagada com sucesso!"); 
+                popularSalasGeral();
                 
             });
             
@@ -64,7 +65,7 @@ function apagarSala(id_sala){
 //Registrar novo espaço para café
 function cadastrarEspacoCafe ()  {
 
-    nome = $("#campoNome").val();
+    nome = $("#campoNomeCafe").val();
 
     var dados = JSON.stringify({nome: nome});
 
@@ -115,6 +116,7 @@ function apagarEspacoCafe(id_espaco_cafe){
             if (retorno.resultado == "ok") {
                 $("#trCafe_" + id_espaco_cafe).fadeOut(600, function(){ 
                 alert("Espaço para café apagado com sucesso!"); 
+                popularCafeGeral();
                 
             });
             
@@ -147,6 +149,7 @@ function apagarSala(id_sala){
             if (retorno.resultado == "ok") {
                 $("#trSala_" + id_sala).fadeOut(600, function(){ 
                 alert("Sala apagada com sucesso!"); 
+                popularSalasGeral();
                 
             });
             
@@ -224,7 +227,8 @@ function apagarPessoa(cpf){
         success: function(retorno){
             if (retorno.resultado == "ok") {
                 $("#trPessoa_" + cpf).fadeOut(600, function(){ 
-                alert("Pessoa apagada com sucesso!"); 
+                alert("Pessoa apagada com sucesso!");
+                popularPessoasGeral(); 
                 
             });
             

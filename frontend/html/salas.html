@@ -88,7 +88,7 @@
                         </div>
                     </section>
 
-                    <p class="mt-5">Clique em qualquer sala para obter mais detalhes como a lista de pessoas alocados em cada etapa.</p>
+                    <p class="mt-5">Clique no nome de qualquer sala para obter mais detalhes como a lista de pessoas alocados em cada etapa.</p>
 
 
                     <table class="table table-striped table-hover col-lg-7 text-center">
@@ -124,10 +124,10 @@
 
                             <form>
                                 <div class="form-group">
-                                    <label for="campoNome">Nome</label>
+                                    <label for="campoNomeSala">Nome</label>
                                     <div class="input-group pb-modalreglog-input-group">
-                                        <input type="text" class="form-control" id="campoNome" required placeholder="Nome da sala...">
-                                        <span class="invalid-feedback" id="inv-nome">
+                                        <input type="text" class="form-control" id="campoNomeSala" required placeholder="Nome da sala...">
+                                        <span class="invalid-feedback" id="inv-nome-sala">
                                         </span>
                                     </div>
                                 </div>
@@ -135,7 +135,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-primary" id="btnAd" onClick="if (checkForm()) {cadastrarSala()};" disabled>Cadastrar</button>
+                            <button type="button" class="btn btn-primary" id="btnAdSala" onClick="if (checkFormSala()) {cadastrarSala();popularSalasGeral();};" disabled>Cadastrar</button>
                         </div>
                     </div>
                 </div>
@@ -165,6 +165,6 @@
         </main>
         <!-- Código para os JS  -->
         <script src="../js/tablePops.js"></script>
-        
+        <script src="../js/formValidatorSala.js"></script>
     </body>
 </html>

@@ -12,12 +12,12 @@ if ($("#form_editar").length){
     formValid = { 
         nome : true,
     };
-    checkFormSala();
+    checkFormCafe();
 }
 
 //Verifica se todos os campos estão válidos
-function checkFormSala(){
-    console.log("check");
+function checkFormCafe(){
+
     var check = true;
     
     if (!formValid.nome){
@@ -26,12 +26,11 @@ function checkFormSala(){
 
     //Fora do loop para evitar problemas com sync 
     if (check){
-        $('#btnAdSala').removeAttr('disabled');
-        console.log("mec");
+        $('#btnAdCafe').removeAttr('disabled');
         return true;
     }
     else{
-        $('#btnAdSala').attr('disabled', true);
+        $('#btnAdCafe').attr('disabled', true);
         return false;
     }
     
@@ -53,11 +52,11 @@ function show(id){
 //Verificação customizada do nome
 var testeLetters = new RegExp(/^[\s\p{L}]*$/ui);
 
-$("#campoNomeSala").on('input', function() {
+$("#campoNomeCafe").on('input', function() {
     var input= $(this);
 
     if (input.val().length <3){
-        msg("#inv-nome-sala","O nome deve ter no mínimo 3 caracteres!");
+        msg("#inv-nome-cafe","O nome deve ter no mínimo 3 caracteres!");
         formValid["nome"] = false;
     }
     else {
@@ -65,21 +64,21 @@ $("#campoNomeSala").on('input', function() {
             formValid["nome"] = true;
         }
         else{
-            msg("#inv-nome-sala","O nome deve conter apenas letras!");
+            msg("#inv-nome-cafe","O nome deve conter apenas letras!");
             formValid["nome"] = false;
         };
     }   
 
     if (formValid["nome"]){
-        $("#inv-nome-sala").hide();
+        $("#inv-nome-cafe").hide();
         input.removeClass("invalid").addClass("valid");
     }
     else{
-        show("#inv-nome-sala");
+        show("#inv-nome-cafe");
         input.removeClass("valid").addClass("invalid");
         
     };
-    checkFormSala();
+    checkFormCafe();
     
 });
 

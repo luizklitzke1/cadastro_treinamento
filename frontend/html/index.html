@@ -73,9 +73,9 @@
                 Clique para expandir/retrair os dados das salas
             </button>
 
-            <div class="collapse" id="collapseSalas">
+            <div class="collapse pl-5" id="collapseSalas">
 
-                <button type="button" class="btn btn-success btn-md mt-5" style="font-weight: bold;">Cadastrar pessoa</button>
+                <button type="button" class="btn btn-success btn-md mt-5" style="font-weight: bold;" data-toggle="modal" data-target="#modalSala">Cadastrar sala</button>
 
                 <p class="h5 mt-5">Procurar por uma sala</p>
                 <section class="search-sec">
@@ -101,7 +101,7 @@
                 <p class="mt-5">Clique em qualquer sala para obter mais detalhes como a lista de pessoas alocados em cada etapa.</p>
                 
 
-                <table class="table table-striped table-hover col-lg-7 text-center">
+                <table class="table table-striped table-hover col-lg-10 text-center">
                     <thead class="thead-dark">
                     <tr>
                         <th scope="col">#</th>
@@ -126,9 +126,10 @@
                 Clique para expandir/retrair os dados das pessoas
             </button>
 
-            <div class="collapse" id="collapsePessoas">
+            <div class="collapse pl-5" id="collapsePessoas">
 
-                <button type="button" class="btn btn-success btn-md mt-5" style="font-weight: bold;">Cadastrar pessoa</button>
+                <button type="button" class="btn btn-success btn-md mt-5" style="font-weight: bold;" data-toggle="modal" data-target="#modalPessoa" 
+                    onClick="popularSalasCadastro();">Cadastrar pessoa</button>
 
 
                 <p class="h5 mt-5">Procurar por uma pessoa</p>
@@ -174,7 +175,7 @@
                 <p class="mt-5">Clique em qualquer sala para obter mais detalhes como a lista de pessoas alocados em cada etapa.</p>
 
 
-                <table class="table table-striped table-hover col-lg-8 text-center">
+                <table class="table table-striped table-hover col-lg-10 text-center">
                     <thead class="thead-dark">
                     <tr>
                         <th scope="col">#</th>
@@ -201,10 +202,10 @@
                 Clique para expandir/retrair os dados das Espaços para Café
             </button>
 
-            <div class="collapse" id="collapseEspacosCafe">
+            <div class="collapse pl-5" id="collapseEspacosCafe">
 
                 
-                <button type="button" class="btn btn-success btn-md mt-5" style="font-weight: bold;">Cadastrar espaço para café</button>
+                <button type="button" class="btn btn-success btn-md mt-5" style="font-weight: bold;" data-toggle="modal" data-target="#modalCafe">Cadastrar espaço para café</button>
 
 
                 <p class="h5 mt-5">Procurar por um espaço para café</p>
@@ -231,7 +232,7 @@
                 <p class="mt-5">Clique em qualquer espaço para café para obter mais detalhes como a lista de pessoas alocados em cada etapa.</p>
 
 
-                <table class="table table-striped table-hover col-lg-7 text-center">
+                <table class="table table-striped table-hover col-lg-10 text-center">
                     <thead class="thead-dark">
                     <tr>
                         <th scope="col">#</th>
@@ -248,8 +249,195 @@
             </div>
 
         </main>
+        <div class="modal fade" id="modalPessoaDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                       
+                        <h4 class="modal-title" id="myModalLabel">Apagar pessoa?</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Ao apagar essa pessoa, o balanço das salas pode ser afetado, fazendo com que as outra sejam <u>automaticamente rearranjadas</u> dando prioridade para sua posição na primeira etapa.</p>
+                        <p>Tem certeza que deseja continuar?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-danger" id="modalPessoaDeleteBtn" data-dismiss="modal">Apagar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modalPessoa" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                       
+                        <h4 class="modal-title" id="myModalLabel">Cadastrar Pessoa</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="campoCPF ">CPF</label>
+                                <div class="input-group pb-modalreglog-input-group">
+                                    <input type="text" class="form-control" id="campoCPF" placeholder="CPF">
+                                    <span class="invalid-feedback" id="inv-cpf"></span>
+                                </div>
+                                
+                            </div>
+                            <div class="form-group">
+                                <label for="campoNome">Nome</label>
+                                <div class="input-group pb-modalreglog-input-group">
+                                    <input type="text" class="form-control" id="campoNome" placeholder="Nome">
+                                    <span class="invalid-feedback" id="inv-nome"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="campoSobrenome">Sobrenome</label>
+                                <div class="input-group pb-modalreglog-input-group">
+                                    <input type="text" class="form-control" id="campoSobrenome" placeholder="Sobrenome">
+                                    <span class="invalid-feedback" id="inv-sobrenome"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="selectSala1">Sala na primeira etapa</label>
+                                <p class="text-muted small">*A da segunda etapa será designada automaticamente e poderá ser editada posteriormente</p>
+                                <select class="form-control search-slt" id="selectSala1" name="selectSala1">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="selectCafe1">Primeiro espaço para café</label>
+                                <p class="text-muted small">*O segundo será designado automaticamente e poderá ser editado posteriormente</p>
+                                <select class="form-control search-slt" id="selectCafe1" name="selectCafe1">
+                                </select>
+                            </div>
+                           
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="btnAdPessoa" onClick="if (checkFormPessoa()) {cadastrarPessoa();popularPessoasGeral();};" disabled>Cadastrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modalSala" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        
+                        <h4 class="modal-title" id="myModalLabel">Cadastrar Sala</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <span class="font-weight-bold">Atenção!</span>
+                        <p>Ao registrar uma nova sala, o balanço de pessoas pode ser desfeito, então todos serão <u>automaticamente rearranjados</u> dando prioridade para sua posição na primeira etapa.</p>
+
+                        <form>
+                            <div class="form-group">
+                                <label for="campoNomeSala">Nome</label>
+                                <div class="input-group pb-modalreglog-input-group">
+                                    <input type="text" class="form-control" id="campoNomeSala" required placeholder="Nome da sala...">
+                                    <span class="invalid-feedback" id="inv-nome-sala">
+                                    </span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="btnAdSala" onClick="if (checkFormSala()) {cadastrarSala();popularSalasGeral()};" disabled>Cadastrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class="modal fade" id="modalSalaDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                           
+                            <h4 class="modal-title" id="myModalLabel">Apagar sala?</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Ao apagar essa sala, todas as pessoas designadas para ela serão <u>automaticamente rearranjadas</u> dando prioridade para sua posição na primeira etapa.</p>
+                            <p>Tem certeza que deseja continuar?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-danger" id="modalSalaDeleteBtn" data-dismiss="modal">Apagar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+    
+    <div class="modal fade" id="modalCafe" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                   
+                    <h4 class="modal-title" id="myModalLabel">Cadastrar Espaço para Café</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="campoNomeCafe">Nome</label>
+                            
+                            <div class="input-group pb-modalreglog-input-group">
+                                <input type="text" class="form-control" id="campoNomeCafe" placeholder="Nome da sala...">
+                            </div>
+                            <span class="invalid-feedback" id="inv-nome-cafe"></span>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="btnAdCafe" onClick="if (checkFormCafe()) {cadastrarEspacoCafe()};" disabled>Cadastrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalCafeDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                   
+                    <h4 class="modal-title" id="myModalLabel">Apagar espaço para café?</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Ao apagar esse espaço, todas as pessoas designadas para ele serão <u>automaticamente rearranjadas</u> dando prioridade para sua posição na primeira etapa.</p>
+                    <p>Tem certeza que deseja continuar?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="modalCafeDeleteBtn" data-dismiss="modal">Apagar</button>
+                </div>
+            </div>
+        </div>
+    </div>
         <!-- Código para os JS  -->
         <script src="../js/tablePops.js"></script>
+        <script src="../js/crud.js"></script>
+        <script src="../js/formValidatorSala.js"></script>
+        <script src="../js/formValidatorPessoa.js"></script>
+        <script src="../js/formValidatorCafe.js"></script>
         
     </body>
 </html>

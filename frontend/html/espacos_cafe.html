@@ -86,7 +86,7 @@
                 </div>
             </section>
 
-            <p class="mt-5">Clique em qualquer espaço para café para obter mais detalhes como a lista de pessoas alocados em cada etapa.</p>
+            <p class="mt-5">Clique no nome de qualquer espaço para café para obter mais detalhes como a lista de pessoas alocados em cada etapa.</p>
 
 
             <table class="table table-striped table-hover col-lg-7 text-center">
@@ -119,18 +119,18 @@
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <label for="campoNome">Nome</label>
+                            <label for="campoNomeCafe">Nome</label>
                             
                             <div class="input-group pb-modalreglog-input-group">
-                                <input type="text" class="form-control" id="campoNome" placeholder="Nome da sala...">
+                                <input type="text" class="form-control" id="campoNomeCafe" placeholder="Nome da sala...">
                             </div>
-                            <span class="invalid-feedback" id="inv-nome"></span>
+                            <span class="invalid-feedback" id="inv-nome-cafe"></span>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="btnAd" onClick="if (checkForm()) {cadastrarEspacoCafe()};" disabled>Cadastrar</button>
+                    <button type="button" class="btn btn-primary" id="btnAd" onClick="if (checkFormCafe()) {cadastrarEspacoCafe()};" disabled>Cadastrar</button>
                 </div>
             </div>
         </div>
@@ -159,6 +159,8 @@
     </div>
         <!-- Código para os JS  -->
         <script src="../js/tablePops.js"></script>
+        <script src="../js/formValidatorSala.js"></script>
+        <script src="../js/formValidatorCafe.js"></script>
         
     </body>
 </html>

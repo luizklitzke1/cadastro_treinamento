@@ -55,6 +55,28 @@ def pessoas_sala(id_sala,etapa):
     pessoas_json = [Pessoa.json() for Pessoa in pessoas]
     return (jsonify(pessoas_json))
 
+
+# Rota para pegar os dados de um espaço para café 
+@app.route("/dados_cafe/<int:id_espaco>",  methods=['POST','GET'])
+def dados_cafe(id_espaco):
+    
+    cafe_esp = Espaco_Cafe.query.get_or_404(id_espaco)
+    
+    return (cafe_esp.json())
+
+
+# Rota para pegar a lista de pessoas de um espaço para café em uma etapa
+@app.route("/pessoas_cafe/<int:id_espaco>/<int:etapa>",  methods=['POST','GET'])
+def pessoas_cafe(id_espaco,etapa):
+    
+    if etapa == 1:
+        pessoas = Pessoa.query.filter(Pessoa.cafe1_id == id_espaco).all()
+    else:
+        pessoas = Pessoa.query.filter(Pessoa.cafe2_id == id_espaco).all()
+    
+    pessoas_json = [Pessoa.json() for Pessoa in pessoas]
+    return (jsonify(pessoas_json))
+
 # Rota para listar os espaços para café
 @app.route("/listar_espacos_cafe")
 def listar_espacos_cafe():
@@ -167,8 +189,8 @@ def cadastrar_sala():
     try: #Tenta fazer o registro
         
         nova_Sala = Sala(**dados)
-        
         db.session.add(nova_Sala)
+        redistribuir_pessoas()
         db.session.commit()
         
     #Retorna erro com detalhes
@@ -189,6 +211,7 @@ def apagar_Sala(id_sala):
         sala = Sala.query.get_or_404(id_sala)
                                                
         db.session.delete(sala)
+        redistribuir_pessoas()
         db.session.commit()
         
     except Exception as e:  #Envie mensagem em caso de erro
@@ -205,7 +228,9 @@ def apagar_Pessoa(cpf):
     
     try: #Tentar realizar a exclusão
         pessoa = Pessoa.query.get_or_404(cpf)
-                                               
+                       
+        pessoa.cafe1.lotacao1 -= 1
+        pessoa.cafe2.lotacao2 -= 1                        
         db.session.delete(pessoa)
         redistribuir_pessoas()
         db.session.commit()
@@ -255,7 +280,6 @@ def designar_cafe_etapa2(pessoa):
     for cafe in espacos_cafe:
         if (cafe.id_espaco != pessoa.cafe1_id):
             pessoa.cafe2_id = cafe.id_espaco
-            print(cafe)
             cafe.lotacao2 += 1
     
 #Rota para designar automaticamente a sala da segunda etapa para uma pessoa
@@ -289,7 +313,6 @@ def designar_sala_etapa2(pessoa):
                         elegivel = False
                         pass
                 if elegivel:
-                    print(sala.id_sala)
                     pessoa.sala2_id = sala.id_sala
                     sala.lotacao2 += 1
                     return True
@@ -344,7 +367,6 @@ def alocar_pessoa_sala(id_sala, cpf, etapa):
     #Retorna erro com detalhes
     except: 
         return False
-    
     return True
     
 #Alocar pessoa para um espaço de café
@@ -385,21 +407,28 @@ def alocar_pessoa_cafe(id_espaco_cafe, cpf, etapa):
 def redistribuir_pessoas():
     
     pessoas = db.session.query(Pessoa).all()
+    cafes = db.session.query(Espaco_Cafe).all()
     salas = db.session.query(Sala).all()
     
     #Zera a lotação de todas as salas
     for sala in salas:
         sala.lotacao1 = 0
         sala.lotacao2 = 0
-        
+
     for pessoa in pessoas:
         
         #Tenta inicialmente alocar a pessoa em sua sala original da primeira etapa
         if not(alocar_pessoa_sala(pessoa.sala1_id,pessoa.cpf,1)):
-           
-           #Caso de errado, tenta a proxima elegivel
-           for sala in salas:
-               alocar_pessoa_sala(sala.id_sala,pessoa.cpf,1)
+            alocada = False
+            #Caso de errado, tenta a proxima elegivel
+            for sala in salas:
+                if not(alocada):
+                    if( (alocar_pessoa_sala(sala.id_sala,pessoa.cpf,1)) ):
+                        alocada = True
+                        continue
+                    
+        
+
         
 
 #Método para salvar imagens de perfil compactadas

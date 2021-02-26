@@ -15,12 +15,11 @@ if ($("#form_editar").length){
         nome : false,
         sobrenome : false,
     };
-    checkForm();
+    checkFormPessoa();
 }
 
 //Verifica se todos os campos estão válidos
-function checkForm(){
-
+function checkFormPessoa(){
     var check = true;
 
     $.each(formValid, function(index, element) {
@@ -75,7 +74,7 @@ $("#campoCPF").on('input', function() {
         input.removeClass("valid").addClass("invalid");
         
     };
-    checkForm();
+    checkFormPessoa();
     
 });
 
@@ -83,7 +82,6 @@ $("#campoCPF").on('input', function() {
 //Verificação customizada do nome
 $("#campoNome").on('input', function() {
     var input= $(this);
-    console.log(testeLetters.test(input.val()));
 
     if (input.val().length <3){
         msg("#inv-nome","O nome deve ter no mínimo 3 caracteres!");
@@ -108,7 +106,7 @@ $("#campoNome").on('input', function() {
         input.removeClass("valid").addClass("invalid");
         
     };
-    checkForm();
+    checkFormPessoa();
     
 });
 
@@ -139,7 +137,7 @@ $("#campoSobrenome").on('input', function() {
         input.removeClass("valid").addClass("invalid");
         
     };
-    checkForm();
+    checkFormPessoa();
     
 });
 
@@ -148,8 +146,7 @@ function validarCPF(cpf) {
     
     cpf = String(cpf).replace(/[^\d]+/g,'');	
     if(cpf == '') return false;	
-    // Elimina CPFs invalidos conhecidos
-    console.log(cpf);	
+    // Elimina CPFs invalidos conhecidos	
     if (cpf.length != 11 || 
         cpf == "00000000000" || 
         cpf == "11111111111" || 

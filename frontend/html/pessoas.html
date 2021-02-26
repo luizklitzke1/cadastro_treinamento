@@ -200,13 +200,13 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="btnAdPessoa" onClick="if (checkForm()) {cadastrarPessoa()};" disabled>Cadastrar</button>
+                    <button type="button" class="btn btn-primary" id="btnAdPessoa" onClick="if (checkFormPessoa()) {cadastrarPessoa();popularPessoasGeral();};" disabled>Cadastrar</button>
                 </div>
             </div>
         </div>
     </div>
         <!-- Código para os JS  -->
         <script src="../js/tablePops.js"></script>
-        
+        <script src="../js/formValidatorPessoa.js"></script>
     </body>
 </html>

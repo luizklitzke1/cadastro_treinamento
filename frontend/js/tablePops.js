@@ -16,7 +16,7 @@ function popularPessoasGeral(){
         }
     });
     function listar (pessoas) {
-        // Limpa os dados da tablea
+        // Limpa os dados da tabela
         $("#corpoTabelaPessoas").empty();    
 
         // Define o texto para o total de salas
@@ -24,16 +24,17 @@ function popularPessoasGeral(){
         
         // Percorre todas as pessoas registradas
         for (pessoa of pessoas){
+            console.log(pessoa.sala1_id);
             // Cria uma nova linha para cada pessoa
-            lin = "<tr>" + 
+            lin = "<tr id='trPessoa_"+pessoa.cpf+"'>" + 
             "<td>" + (pessoas.indexOf(pessoa)+1) +"</td>" +
             "<td>" + pessoa.cpf + "</td>" + 
             "<td>" + pessoa.nome+ "</td>" + 
             "<td>" + pessoa.sobrenome+ "</td>" + 
-            "<td>" + pessoa.sala1.nome+ "</td>" +
-            "<td>" + pessoa.sala2.nome+ "</td>" + 
-            "<td>" + pessoa.cafe1.nome+ "</td>" + 
-            "<td>" + pessoa.cafe2.nome+ "</td>" +  
+            "<td> <a href='sala_esp.html?id_sala=" + pessoa.sala1.id_sala + "'>" + pessoa.sala1.nome+ "</td>" +
+            "<td> <a href='sala_esp.html?id_sala=" + pessoa.sala2id_sala + "'>" + pessoa.sala2.nome+ "</td>" + 
+            "<td> <a href='cafe_esp.html?id_sala=" + pessoa.cafe1.id_espaco + "'>" + pessoa.cafe1.nome+ "</td>" + 
+            "<td> <a href='cafe_esp.html?id_sala=" + pessoa.cafe2.id_espaco + "'>" + pessoa.cafe2.nome+ "</td>" +  
 
             "<td style='font-size: 1.5em'>" + 
                 "<a href='#' title='Apagar' data-toggle='modal' data-target='#modalPessoaDelete' onClick='chamarModalPessoaDelete(" +pessoa.cpf+");'>"+
@@ -63,7 +64,7 @@ function popularSalasGeral(){
         }
     });
     function listar (salas) {
-        // Limpa os dados da tablea
+        // Limpa os dados da tabela
         $("#corpoTabelaSalas").empty();    
 
         // Define o texto para o total de salas
@@ -107,7 +108,7 @@ function popularCafeGeral(){
         }
     });
     function listar (espacos) {
-        // Limpa os dados da tablea
+        // Limpa os dados da tabela
         $("#corpoTabelaCafe").empty();    
 
         // Define o texto para o total de salas
@@ -118,7 +119,7 @@ function popularCafeGeral(){
             // Cria uma nova linha para cada espaço
             lin = "<tr id='trCafe_"+ espaco.id_espaco +"'>" + 
                 "<td>" + (espacos.indexOf(espaco)+1) +"</td>" +
-                "<td>" + espaco.nome + "</td>" + 
+                "<td> <a href='cafe_esp.html?id_espaco=" + espaco.id_espaco + "'>"+ espaco.nome + "</td>" + 
                 "<td>" + espaco.lotacao1+ "</td>" + 
                 "<td>" + espaco.lotacao2+ "</td>" + 
 
@@ -151,7 +152,7 @@ function popularSalasCadastro(){
         }
     });
     function listaresp (espacos) {
-        // Limpa os dados da tablea
+        // Limpa os dados da tabela
         $("#selectCafe1").empty();    
         
         // Percorre todas os espaços registradas
@@ -178,7 +179,7 @@ function popularSalasCadastro(){
     });
     function listarsalas (salas) {
         
-        // Limpa os dados da tablea
+        // Limpa os dados da tabela
         $("#selectSala1").empty();    
         
         // Percorre todas as salas registradas
@@ -205,12 +206,13 @@ function dadosSala(){
         dataType: 'json',
         success: function(resposta){
            $("#textNomeSala").text(resposta.nome)
+           document.title += resposta.nome
         },
         error: function() {
             alert("Erro ao receber os dados da sala, verifique o backend!");
         }
     });
-    //Pega os alunos da primeira etapa
+    //Pega as pessoas da primeira etapa
     $.ajax({
         url: "http://localhost:5000/pessoas_sala/"+id_sala+"/1",
         method: "GET",
@@ -221,32 +223,14 @@ function dadosSala(){
         }
     });
     function listar1 (pessoas) {
-        // Limpa os dados da tablea
+        // Limpa os dados da tabela
         $("#corpoTabelaPessoas1").empty();    
 
-        // Percorre todas as pessoas registradas
-        for (pessoa of pessoas){
-            // Cria uma nova linha para cada pessoa
-            lin = "<tr>" + 
-            "<td>" + (pessoas.indexOf(pessoa)+1) +"</td>" +
-            "<td>" + pessoa.cpf + "</td>" + 
-            "<td>" + pessoa.nome+ "</td>" + 
-            "<td>" + pessoa.sobrenome+ "</td>" + 
-
-            "<td style='font-size: 1.5em'>" + 
-                "<a href='#' title='Apagar' data-toggle='modal' data-target='#modalPessoaDelete' onClick='chamarModalPessoaDelete(" +pessoa.cpf+");'>"+
-                "<i class='fas fa-trash pr-1 text-danger'></i></a>" + 
-                "<a href='#' title='Editar'><i class='fas fa-edit text-primary'></i></a>" + 
-            "</td>" +
-            "</tr>"
-
-            // Adiciona a nova linha na tabela
-            $("#corpoTabelaPessoas1").append(lin);
-        }
+        popularTabelaPessoas(pessoas,"#corpoTabelaPessoas1");
       
     }
 
-    //Pega os alunos da segunda etapa
+    //Pega as pessoas da segunda etapa
     $.ajax({
         url: "http://localhost:5000/pessoas_sala/"+id_sala+"/2",
         method: "GET",
@@ -257,31 +241,99 @@ function dadosSala(){
         }
     });
     function listar2 (pessoas) {
-        // Limpa os dados da tablea
+        // Limpa os dados da tabela
         $("#corpoTabelaPessoas2").empty();    
+
+        popularTabelaPessoas(pessoas,"#corpoTabelaPessoas2");
+      
+    }
+  
+};
+
+
+//Função para popular os dados na página de um espaço para café
+function dadosCafe(){
+    //Pega o ID através do link
+    let id_espaco = document.location.search.replace(/^.*?\=/,'');
+    $.ajax({
+        url: 'http://localhost:5000/dados_cafe/'+id_espaco,
+        method: 'GET',
+        dataType: 'json',
+        success: function(resposta){
+           $("#textNomeCafe").text(resposta.nome)
+           document.title += resposta.nome;
+
+        },
+        error: function() {
+            alert("Erro ao receber os dados da sala, verifique o backend!");
+        }
+    });
+    //Pega as pessoas da primeira etapa
+    $.ajax({
+        url: "http://localhost:5000/pessoas_cafe/"+id_espaco+"/1",
+        method: "GET",
+        dataType: "json", 
+        success: listar1, 
+        error: function(problema) {
+            alert("Erro ao buscar os dados no backend! ");
+        }
+    });
+    function listar1 (pessoas) {
+        // Limpa os dados da tabela
+        $("#corpoTabelaPessoas1").empty();    
+
+        $("#total_espacos_cafe1").text(pessoas.length)
 
         // Percorre todas as pessoas registradas
         for (pessoa of pessoas){
-            // Cria uma nova linha para cada pessoa
-            lin = "<tr>" + 
-            "<td>" + (pessoas.indexOf(pessoa)+1) +"</td>" +
-            "<td>" + pessoa.cpf + "</td>" + 
-            "<td>" + pessoa.nome+ "</td>" + 
-            "<td>" + pessoa.sobrenome+ "</td>" + 
-
-            "<td style='font-size: 1.5em'>" + 
-                "<a href='#' title='Apagar' data-toggle='modal' data-target='#modalPessoaDelete' onClick='chamarModalPessoaDelete(" +pessoa.cpf+");'>"+
-                "<i class='fas fa-trash pr-1 text-danger'></i></a>" + 
-                "<a href='#' title='Editar'><i class='fas fa-edit text-primary'></i></a>" + 
-            "</td>" +
-            "</tr>"
-
-            // Adiciona a nova linha na tabela
-            $("#corpoTabelaPessoas2").append(lin);
+            popularTabelaPessoas(pessoas,"#corpoTabelaPessoas1");
         }
       
     }
 
-  
+    //Pega as pessoas da segunda etapa
+    $.ajax({
+        url: "http://localhost:5000/pessoas_cafe/"+id_espaco+"/2",
+        method: "GET",
+        dataType: "json", 
+        success: listar2, 
+        error: function(problema) {
+            alert("Erro ao buscar os dados no backend! ");
+        }
+    });
+    function listar2 (pessoas) {
+        // Limpa os dados da tabela  
+
+        $("#total_espacos_cafe2").text(pessoas.length);
+        popularTabelaPessoas(pessoas,"#corpoTabelaPessoas2");
+      
+    }
+
 };
+
+function popularTabelaPessoas(pessoas,id_tabela){
+    $(id_tabela).empty();  
+
+    // Percorre todas as pessoas registradas
+    for (pessoa of pessoas){
+
+        // Cria uma nova linha para cada pessoa
+        lin = "<tr>" + 
+        "<td>" + (pessoas.indexOf(pessoa)+1) +"</td>" +
+        "<td>" + pessoa.cpf + "</td>" + 
+        "<td>" + pessoa.nome+ "</td>" + 
+        "<td>" + pessoa.sobrenome+ "</td>" + 
+
+        "<td style='font-size: 1.5em'>" + 
+            "<a href='#' title='Apagar' data-toggle='modal' data-target='#modalPessoaDelete' onClick='chamarModalPessoaDelete(" +pessoa.cpf+");'>"+
+            "<i class='fas fa-trash pr-1 text-danger'></i></a>" + 
+            "<a href='#' title='Editar'><i class='fas fa-edit text-primary'></i></a>" + 
+        "</td>" +
+        "</tr>"
+
+        // Adiciona a nova linha na tabela
+        $(id_tabela).append(lin);
+    }
+
+}
 
