@@ -57,12 +57,12 @@ function popularSalasGeral(){
         url: "http://localhost:5000/listar_salas",
         method: "GET",
         dataType: "json", 
-        success: listar, 
+        success: listarsalas, 
         error: function(problema) {
             alert("Erro ao buscar os dados no backend! ");
         }
     });
-    function listar (salas) {
+    function listarsalas (salas) {
         // Limpa os dados da tabela
         $("#corpoTabelaSalas").empty();    
 

@@ -91,12 +91,21 @@ def procurar_sala():
     
     dados = request.get_json()
     nome = dados['nome']
-    salas = db.session.query(Sala).filter(Sala.nome.like("%%"))
-    print(salas)
-    
+    salas = db.session.query(Sala).filter(Sala.nome.like(f"%{nome}%")).all()
     salas_json = [Sala.json() for Sala in salas]
   
     return (jsonify(salas_json))
+
+# Procurar espaço para café
+@app.route("/procurar_cafe", methods=['POST'])
+def procurar_cafe():
+    
+    dados = request.get_json()
+    nome = dados['nome']
+    espacos = db.session.query(Espaco_Cafe).filter(Espaco_Cafe.nome.like(f"%{nome}%")).all()
+    espacos_json = [Espaco_Cafe.json() for Espaco_Cafe in espacos]
+  
+    return (jsonify(espacos_json))
     
 
 # Rota para listar oas pessoas de determinada sala e etapa
