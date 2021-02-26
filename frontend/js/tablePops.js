@@ -24,7 +24,6 @@ function popularPessoasGeral(){
         
         // Percorre todas as pessoas registradas
         for (pessoa of pessoas){
-            console.log(pessoa.sala1_id);
             // Cria uma nova linha para cada pessoa
             lin = "<tr id='trPessoa_"+pessoa.cpf+"'>" + 
             "<td>" + (pessoas.indexOf(pessoa)+1) +"</td>" +

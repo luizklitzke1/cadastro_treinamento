@@ -85,6 +85,19 @@ def listar_espacos_cafe():
     espacos_cafe_json = [Espaco_Cafe.json() for Espaco_Cafe in espacos_cafe]
     return (jsonify(espacos_cafe_json))
 
+# Procurar sala
+@app.route("/procurar_sala", methods=['POST'])
+def procurar_sala():
+    
+    dados = request.get_json()
+    nome = dados['nome']
+    salas = db.session.query(Sala).filter(Sala.nome.like("%%"))
+    print(salas)
+    
+    salas_json = [Sala.json() for Sala in salas]
+  
+    return (jsonify(salas_json))
+    
 
 # Rota para listar oas pessoas de determinada sala e etapa
 @app.route("/listar_pessoas_sala/<int:id_sala>/<int:etapa>",  methods=['POST'])

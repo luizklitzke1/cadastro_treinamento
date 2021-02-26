@@ -51,7 +51,7 @@ function show(id){
 }
 
 //Padrão de verificação dos caracteres de texto
-var testeLetters = new RegExp(/^[\s\p{L}]*$/ui);
+var testeLetters = new RegExp(/^[\s\p{L}\d]*$/ui);
 
 //Verificação customizada do nome
 $("#campoCPF").on('input', function() {
@@ -92,7 +92,7 @@ $("#campoNome").on('input', function() {
             formValid["nome"] = true;
         }
         else{
-            msg("#inv-nome","O nome deve conter apenas letras!");
+            msg("#inv-nome","O nome deve conter apenas letras ou números!");
             formValid["nome"] = false;
         };
     }   
@@ -122,7 +122,7 @@ $("#campoSobrenome").on('input', function() {
             formValid["sobrenome"] = true;
         }
         else{
-            msg("#inv-sobrenome","O sobrenome deve conter apenas letras!");
+            msg("#inv-sobrenome","O sobrenome deve conter apenas letras ou números!");
             formValid["sobrenome"] = false;
         };
     }   
@@ -182,6 +182,6 @@ function validarCPF(cpf) {
 
 //Padrão de verificação dos caracteres de texto para o resumo
 //Desativado por problemas com UTF-8
-//var textEspHist = new RegExp(/^[\p{L}a-zA-Z0-9-!?"'/,. ]+$/);
+//var textEspHist = new RegExp(/^[\p{L}\da-zA-Z0-9-!?"'/,. ]+$/);
 
 

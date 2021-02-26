@@ -45,7 +45,7 @@ function apagarSala(id_sala){
             if (retorno.resultado == "ok") {
                 $("#trSala_" + id_sala).fadeOut(600, function(){ 
                 alert("Sala apagada com sucesso!"); 
-                popularSalasGeral();
+                popularSalasGeral();popularPessoasGeral();popularCafeGeral();
                 
             });
             
@@ -149,7 +149,7 @@ function apagarSala(id_sala){
             if (retorno.resultado == "ok") {
                 $("#trSala_" + id_sala).fadeOut(600, function(){ 
                 alert("Sala apagada com sucesso!"); 
-                popularSalasGeral();
+                popularSalasGeral();popularPessoasGeral();popularCafeGeral();
                 
             });
             
@@ -228,7 +228,7 @@ function apagarPessoa(cpf){
             if (retorno.resultado == "ok") {
                 $("#trPessoa_" + cpf).fadeOut(600, function(){ 
                 alert("Pessoa apagada com sucesso!");
-                popularPessoasGeral(); 
+                popularSalasGeral();popularPessoasGeral();popularCafeGeral();
                 
             });
             

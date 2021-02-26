@@ -50,7 +50,7 @@ function show(id){
 //var textEsp = new RegExp(/^[a-zA-Z0-9]+$/);
 
 //Verificação customizada do nome
-var testeLetters = new RegExp(/^[\s\p{L}]*$/ui);
+var testeLetters = new RegExp(/^[\s\p{L}\d]*$/ui);
 
 $("#campoNomeCafe").on('input', function() {
     var input= $(this);
@@ -64,7 +64,7 @@ $("#campoNomeCafe").on('input', function() {
             formValid["nome"] = true;
         }
         else{
-            msg("#inv-nome-cafe","O nome deve conter apenas letras!");
+            msg("#inv-nome-cafe","O nome deve conter apenas letras ou números!");
             formValid["nome"] = false;
         };
     }   
