@@ -284,7 +284,6 @@ function dadosCafe(){
 };
 
 function popularTabelaPessoas(pessoas,id_tabela){
-    console.log("alo1?");
     $(id_tabela).empty();  
 
     // Percorre todas as pessoas registradas

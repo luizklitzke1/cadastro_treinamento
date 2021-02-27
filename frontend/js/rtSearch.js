@@ -21,7 +21,7 @@ $("#procurarSala").on('input', function() {
     nome = input.val();
 
     if (testeLetters.test(nome)){
-       //Função para popular a tabela geral de espaços para café
+       
        
        var dados = JSON.stringify({nome : nome});
 
@@ -82,7 +82,7 @@ $("#procurarCafe").on('input', function() {
     nome = input.val();
 
     if (testeLetters.test(nome)){
-       //Função para popular a tabela geral de espaços para café
+       
        
        var dados = JSON.stringify({nome : nome});
 
@@ -151,7 +151,7 @@ function procurar_pessoa(){
     sobrenome= $("#procurarPessoaSobrenome").val();
 
     if (testeLetters.test(cpf) && testeLetters.test(nome) && testeLetters.test(sobrenome)){
-       //Função para popular a tabela geral de espaços para café
+       
         var dados = JSON.stringify({cpf: cpf, nome : nome, sobrenome : sobrenome});
         $.ajax({
             url: "http://localhost:5000/procurar_pessoa",
@@ -169,30 +169,78 @@ function procurar_pessoa(){
             
             // Percorre todas as salas registradas
             try{
-                // Percorre todas as pessoas registradas
-                for (pessoa of pessoas){
-                    // Cria uma nova linha para cada pessoa
-                    lin = "<tr id='trPessoa_"+pessoa.cpf+"'>" + 
-                    "<td>" + (pessoas.indexOf(pessoa)+1) +"</td>" +
-                    "<td>" + pessoa.cpf + "</td>" + 
-                    "<td>" + pessoa.nome+ "</td>" + 
-                    "<td>" + pessoa.sobrenome+ "</td>" + 
-                    "<td> <a href='sala_esp.html?id_sala=" + pessoa.sala1.id_sala + "'>" + pessoa.sala1.nome+ "</td>" +
-                    "<td> <a href='sala_esp.html?id_sala=" + pessoa.sala2id_sala + "'>" + pessoa.sala2.nome+ "</td>" + 
-                    "<td> <a href='cafe_esp.html?id_sala=" + pessoa.cafe1.id_espaco + "'>" + pessoa.cafe1.nome+ "</td>" + 
-                    "<td> <a href='cafe_esp.html?id_sala=" + pessoa.cafe2.id_espaco + "'>" + pessoa.cafe2.nome+ "</td>" +  
-
-                    "<td style='font-size: 1.5em'>" + 
-                        "<a href='#' title='Apagar' data-toggle='modal' data-target='#modalPessoaDelete' onClick='chamarModalPessoaDelete(" +pessoa.cpf+");'>"+
-                        "<i class='fas fa-trash pr-1 text-danger'></i></a>" + 
-                        "<a href='#' title='Editar'><i class='fas fa-edit text-primary'></i></a>" + 
-                    "</td>" +
-                    "</tr>"
-
-                    // Adiciona a nova linha na tabela
-                    $("#corpoTabelaPessoas").append(lin);
-                }
+               popularTabelaPessoas(pessoas,"#corpoTabelaPessoas");
             
+            }
+            catch{
+               
+            }
+          
+        }
+    }
+    
+    else{
+        msg("#inv-nome-sala-procura","O nome deve conter apenas letras!");
+        
+    };
+
+    
+};
+
+
+
+//Não encontrei maneira melhor de setar o attr pra todos de uma vez só
+//E apenas chamando a função, sem declarar outra, ela não da trigger...
+$("#procurarPessoaCPFSala").on('input', function() {procurar_pessoa_sala()})
+$("#procurarPessoaNomeSala").on('input', function() {procurar_pessoa_sala()})
+$("#procurarPessoaSobrenomeSala").on('input', function() {procurar_pessoa_sala()})
+
+function procurar_pessoa_sala(){
+
+    let id_sala = document.location.search.replace(/^.*?\=/,'');
+
+    cpf = $("#procurarPessoaCPFSala").val();
+    nome = $("#procurarPessoaNomeSala").val();
+    sobrenome= $("#procurarPessoaSobrenomeSala").val();
+
+    if (testeLetters.test(cpf) && testeLetters.test(nome) && testeLetters.test(sobrenome)){
+        
+        var dados = JSON.stringify({cpf: cpf, nome : nome, sobrenome : sobrenome});
+        $.ajax({
+            url: "http://localhost:5000/procurar_pessoa_sala/"+id_sala+"/1",
+            method: "POST",
+            dataType: 'json', contentType: 'application/json',
+            data: dados,  
+            success: listarPessoasProcuraSala1, 
+            error: function(problema) {
+                alert("Erro ao receber os dados do backend!");
+            }
+        });
+        function listarPessoasProcuraSala1 (pessoas) {
+
+            try{
+                popularTabelaPessoas(pessoas,"#corpoTabelaPessoas1");
+            }
+            catch{
+               
+            }
+          
+        }
+
+        $.ajax({
+            url: "http://localhost:5000/procurar_pessoa_sala/"+id_sala+"/2",
+            method: "POST",
+            dataType: 'json', contentType: 'application/json',
+            data: dados,  
+            success: listarPessoasProcuraSala2, 
+            error: function(problema) {
+                alert("Erro ao receber os dados do backend!");
+            }
+        });
+        function listarPessoasProcuraSala2 (pessoas) {
+
+            try{
+                popularTabelaPessoas(pessoas,"#corpoTabelaPessoas2");
             }
             catch{
                

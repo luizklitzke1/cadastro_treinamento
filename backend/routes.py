@@ -124,6 +124,31 @@ def procurar_pessoa():
     pessoas_json = [Pessoa.json() for Pessoa in pessoas]
   
     return (jsonify(pessoas_json))
+
+# Procurar uma pessoa
+@app.route("/procurar_pessoa_sala/<int:id_sala>/<int:etapa>", methods=['POST'])
+def procurar_pessoa_sala(id_sala,etapa):
+    
+    dados = request.get_json()
+    cpf = dados['cpf']
+    nome = dados['nome']
+    sobrenome = dados['sobrenome']
+    
+    if etapa == 1 :
+        pessoas = db.session.query(Pessoa).filter(Pessoa.cpf.like(f"%{cpf}%"),
+                                                Pessoa.nome.like(f"%{nome}%"),
+                                                Pessoa.sobrenome.like(f"%{sobrenome}%"),
+                                                Pessoa.sala1_id==id_sala
+                                                ).all()
+    else:
+        pessoas = db.session.query(Pessoa).filter(Pessoa.cpf.like(f"%{cpf}%"),
+                                                Pessoa.nome.like(f"%{nome}%"),
+                                                Pessoa.sobrenome.like(f"%{sobrenome}%"),
+                                                Pessoa.sala2_id==id_sala
+                                                ).all()
+    pessoas_json = [Pessoa.json() for Pessoa in pessoas]
+  
+    return (jsonify(pessoas_json))
     
 
 # Rota para listar oas pessoas de determinada sala e etapa
