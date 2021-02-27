@@ -125,7 +125,7 @@ def procurar_pessoa():
   
     return (jsonify(pessoas_json))
 
-# Procurar uma pessoa
+# Procurar uma pessoa em uma sala específica
 @app.route("/procurar_pessoa_sala/<int:id_sala>/<int:etapa>", methods=['POST'])
 def procurar_pessoa_sala(id_sala,etapa):
     
@@ -149,7 +149,32 @@ def procurar_pessoa_sala(id_sala,etapa):
     pessoas_json = [Pessoa.json() for Pessoa in pessoas]
   
     return (jsonify(pessoas_json))
+
+
+# Procurar uma pessoa em um espaço para café específica
+@app.route("/procurar_pessoa_cafe/<int:id_cafe>/<int:etapa>", methods=['POST'])
+def procurar_pessoa_cafe(id_cafe,etapa):
     
+    dados = request.get_json()
+    cpf = dados['cpf']
+    nome = dados['nome']
+    sobrenome = dados['sobrenome']
+    
+    if etapa == 1 :
+        pessoas = db.session.query(Pessoa).filter(Pessoa.cpf.like(f"%{cpf}%"),
+                                                Pessoa.nome.like(f"%{nome}%"),
+                                                Pessoa.sobrenome.like(f"%{sobrenome}%"),
+                                                Pessoa.cafe1_id==id_cafe
+                                                ).all()
+    else:
+        pessoas = db.session.query(Pessoa).filter(Pessoa.cpf.like(f"%{cpf}%"),
+                                                Pessoa.nome.like(f"%{nome}%"),
+                                                Pessoa.sobrenome.like(f"%{sobrenome}%"),
+                                                Pessoa.cafe2_id==id_cafe
+                                                ).all()
+    pessoas_json = [Pessoa.json() for Pessoa in pessoas]
+  
+    return (jsonify(pessoas_json))
 
 # Rota para listar oas pessoas de determinada sala e etapa
 @app.route("/listar_pessoas_sala/<int:id_sala>/<int:etapa>",  methods=['POST'])

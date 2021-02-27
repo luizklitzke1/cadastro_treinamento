@@ -258,5 +258,74 @@ function procurar_pessoa_sala(){
 };
 
 
+//Não encontrei maneira melhor de setar o attr pra todos de uma vez só
+//E apenas chamando a função, sem declarar outra, ela não da trigger...
+$("#procurarPessoaCPFCafe").on('input', function() {procurar_pessoa_cafe()})
+$("#procurarPessoaNomeCafe").on('input', function() {procurar_pessoa_cafe()})
+$("#procurarPessoaSobrenomeCafe").on('input', function() {procurar_pessoa_cafe()})
+
+function procurar_pessoa_cafe(){
+
+    let id_cafe = document.location.search.replace(/^.*?\=/,'');
+
+    cpf = $("#procurarPessoaCPFCafe").val();
+    nome = $("#procurarPessoaNomeCafe").val();
+    sobrenome= $("#procurarPessoaSobrenomeCafe").val();
+
+    if (testeLetters.test(cpf) && testeLetters.test(nome) && testeLetters.test(sobrenome)){
+        
+        var dados = JSON.stringify({cpf: cpf, nome : nome, sobrenome : sobrenome});
+        $.ajax({
+            url: "http://localhost:5000/procurar_pessoa_cafe/"+id_cafe+"/1",
+            method: "POST",
+            dataType: 'json', contentType: 'application/json',
+            data: dados,  
+            success: listarPessoasProcuraCafe1, 
+            error: function(problema) {
+                alert("Erro ao receber os dados do backend!");
+            }
+        });
+        function listarPessoasProcuraCafe1 (pessoas) {
+
+            try{
+                popularTabelaPessoas(pessoas,"#corpoTabelaPessoas1");
+            }
+            catch{
+               
+            }
+          
+        }
+
+        $.ajax({
+            url: "http://localhost:5000/procurar_pessoa_cafe/"+id_cafe+"/2",
+            method: "POST",
+            dataType: 'json', contentType: 'application/json',
+            data: dados,  
+            success: listarPessoasProcuraCafe2, 
+            error: function(problema) {
+                alert("Erro ao receber os dados do backend!");
+            }
+        });
+        function listarPessoasProcuraCafe2 (pessoas) {
+
+            try{
+                popularTabelaPessoas(pessoas,"#corpoTabelaPessoas2");
+            }
+            catch{
+               
+            }
+          
+        }
+    }
+    
+    else{
+        msg("#inv-nome-sala-procura","O nome deve conter apenas letras!");
+        
+    };
+
+    
+};
+
+
 
 
