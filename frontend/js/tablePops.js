@@ -16,35 +16,11 @@ function popularPessoasGeral(){
         }
     });
     function listar (pessoas) {
-        // Limpa os dados da tabela
-        $("#corpoTabelaPessoas").empty();    
 
+        
         // Define o texto para o total de salas
         $("#total_pessoas").text(pessoas.length)
-        
-        // Percorre todas as pessoas registradas
-        for (pessoa of pessoas){
-            // Cria uma nova linha para cada pessoa
-            lin = "<tr id='trPessoa_"+pessoa.cpf+"'>" + 
-            "<td>" + (pessoas.indexOf(pessoa)+1) +"</td>" +
-            "<td>" + pessoa.cpf + "</td>" + 
-            "<td>" + pessoa.nome+ "</td>" + 
-            "<td>" + pessoa.sobrenome+ "</td>" + 
-            "<td> <a href='sala_esp.html?id_sala=" + pessoa.sala1.id_sala + "'>" + pessoa.sala1.nome+ "</td>" +
-            "<td> <a href='sala_esp.html?id_sala=" + pessoa.sala2id_sala + "'>" + pessoa.sala2.nome+ "</td>" + 
-            "<td> <a href='cafe_esp.html?id_sala=" + pessoa.cafe1.id_espaco + "'>" + pessoa.cafe1.nome+ "</td>" + 
-            "<td> <a href='cafe_esp.html?id_sala=" + pessoa.cafe2.id_espaco + "'>" + pessoa.cafe2.nome+ "</td>" +  
-
-            "<td style='font-size: 1.5em'>" + 
-                "<a href='#' title='Apagar' data-toggle='modal' data-target='#modalPessoaDelete' onClick='chamarModalPessoaDelete(" +pessoa.cpf+");'>"+
-                "<i class='fas fa-trash pr-1 text-danger'></i></a>" + 
-                "<a href='#' title='Editar'><i class='fas fa-edit text-primary'></i></a>" + 
-            "</td>" +
-            "</tr>"
-
-            // Adiciona a nova linha na tabela
-            $("#corpoTabelaPessoas").append(lin);
-        }
+        popularTabelaPessoas(pessoas,"#corpoTabelaPessoas")
       
     }
 
@@ -223,7 +199,6 @@ function dadosSala(){
     });
     function listar1 (pessoas) {
         // Limpa os dados da tabela
-        $("#corpoTabelaPessoas1").empty();    
 
         popularTabelaPessoas(pessoas,"#corpoTabelaPessoas1");
       
@@ -241,7 +216,6 @@ function dadosSala(){
     });
     function listar2 (pessoas) {
         // Limpa os dados da tabela
-        $("#corpoTabelaPessoas2").empty();    
 
         popularTabelaPessoas(pessoas,"#corpoTabelaPessoas2");
       
@@ -278,8 +252,7 @@ function dadosCafe(){
         }
     });
     function listar1 (pessoas) {
-        // Limpa os dados da tabela
-        $("#corpoTabelaPessoas1").empty();    
+        // Limpa os dados da tabela  
 
         $("#total_espacos_cafe1").text(pessoas.length)
 
@@ -311,17 +284,22 @@ function dadosCafe(){
 };
 
 function popularTabelaPessoas(pessoas,id_tabela){
+    console.log("alo1?");
     $(id_tabela).empty();  
 
     // Percorre todas as pessoas registradas
     for (pessoa of pessoas){
 
         // Cria uma nova linha para cada pessoa
-        lin = "<tr>" + 
+        lin = "<tr id='trPessoa_"+pessoa.cpf+"'>" + 
         "<td>" + (pessoas.indexOf(pessoa)+1) +"</td>" +
         "<td>" + pessoa.cpf + "</td>" + 
         "<td>" + pessoa.nome+ "</td>" + 
         "<td>" + pessoa.sobrenome+ "</td>" + 
+        "<td> <a href='sala_esp.html?id_sala=" + pessoa.sala1.id_sala + "'>" + pessoa.sala1.nome+ "</td>" +
+        "<td> <a href='sala_esp.html?id_sala=" + pessoa.sala2id_sala + "'>" + pessoa.sala2.nome+ "</td>" + 
+        "<td> <a href='cafe_esp.html?id_sala=" + pessoa.cafe1.id_espaco + "'>" + pessoa.cafe1.nome+ "</td>" + 
+        "<td> <a href='cafe_esp.html?id_sala=" + pessoa.cafe2.id_espaco + "'>" + pessoa.cafe2.nome+ "</td>" +  
 
         "<td style='font-size: 1.5em'>" + 
             "<a href='#' title='Apagar' data-toggle='modal' data-target='#modalPessoaDelete' onClick='chamarModalPessoaDelete(" +pessoa.cpf+");'>"+
@@ -329,7 +307,6 @@ function popularTabelaPessoas(pessoas,id_tabela){
             "<a href='#' title='Editar'><i class='fas fa-edit text-primary'></i></a>" + 
         "</td>" +
         "</tr>"
-
         // Adiciona a nova linha na tabela
         $(id_tabela).append(lin);
     }
