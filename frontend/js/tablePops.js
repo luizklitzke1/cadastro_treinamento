@@ -284,7 +284,8 @@ function popularTabelaPessoas(pessoas,id_tabela){
         "<td style='font-size: 1.5em'>" + 
             "<a href='#' title='Apagar' data-toggle='modal' data-target='#modalPessoaDelete' onClick='chamarModalPessoaDelete(" +pessoa.cpf+");'>"+
             "<i class='fas fa-trash pr-1 text-danger'></i></a>" + 
-            "<a href='#' title='Editar'><i class='fas fa-edit text-primary'></i></a>" + 
+            "<a href='#' title='Editar' data-toggle='modal' data-target='#modalPessoaEditar' onClick='chamarModalPessoaEditar(" +pessoa.cpf+");'>"+
+            "<i class='fas fa-edit text-primary'></i></a>" + 
         "</td>" +
         "</tr>"
         // Adiciona a nova linha na tabela

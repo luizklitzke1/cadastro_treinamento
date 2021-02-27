@@ -209,6 +209,9 @@ def cadastar_Pessoa():
     dados = request.get_json()
     try: #Tenta fazer o registro
         
+        if len(dados["cpf"]) != 11:
+            dados["cpf"] = "0" + dados["cpf"]
+        
         nova_Pessoa = Pessoa(**dados)
         
         #Testa se foi informada alguma foto para salvar nos arquivos, ou mantém a padrão
@@ -350,11 +353,43 @@ def editar_Cafe(id_cafe):
     resposta.headers.add("Access-Control-Allow-Origin","*")
     return resposta
 
+# Rota para editar uma Pessoa
+@app.route("/editar_pessoa/<string:cpf>",  methods=['POST'])
+def editar_Pessoa(cpf):
+   
+    dados = request.get_json()
+    resposta = jsonify({"resultado":"ok","detalhes": "ok"})
+    
+    if len(cpf) != 11:
+        cpf = "0" + cpf
+    
+    if len(dados["novo_cpf"]) != 11:
+        dados["novo_cpf"] = "0" + dados["novo_cpf"]
+        
+    try:
+        print(dados["novo_cpf"]) 
+        pessoa = Pessoa.query.get_or_404(cpf)
+        
+        pessoa.cpf = dados["novo_cpf"]                                 
+        pessoa.nome = dados["novo_nome"]
+        pessoa.sobrenome = dados["novo_sobrenome"]
+        db.session.commit()
+        
+    except Exception as e:  #Envie mensagem em caso de erro
+        resposta = jsonify({"resultado":"erro", "detalhes":str(e)}) 
+        
+    resposta.headers.add("Access-Control-Allow-Origin","*")
+    return resposta
+
+
 
 
 # Rota para apagar uma Pessoa
 @app.route("/apagar_pessoa/<string:cpf>",  methods=['DELETE'])
 def apagar_Pessoa(cpf):
+    
+    if len(cpf) != 11:
+        cpf = "0" + cpf
     
     resposta = jsonify({"resultado":"ok","detalhes": "ok"})
     

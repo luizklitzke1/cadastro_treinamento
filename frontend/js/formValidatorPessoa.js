@@ -180,8 +180,121 @@ function validarCPF(cpf) {
     return true;   
 }
 
-//Padrão de verificação dos caracteres de texto para o resumo
-//Desativado por problemas com UTF-8
-//var textEspHist = new RegExp(/^[\p{L}\da-zA-Z0-9-!?"'/,. ]+$/);
+//Variável que garante que todos os campos sejam válidos 
+var formValid2 = {
+    cpf: false,
+    nome : false,
+    sobrenome : false,
+};
+
+    
+//Verifica se todos os campos estão válidos
+function checkFormPessoa2(){
+    var check = true;
+
+    for(var key in formValid2){
+        if (!(formValid2[key])){
+            check = false;
+        }
+    }
 
 
+    //Fora do loop para evitar problemas com sync 
+    if (check){
+        $('#btnEditarPessoa').removeAttr('disabled');
+        return true;
+    }
+    else{
+        $('#btnEditarPessoa').attr('disabled', true);
+        return false;
+    }
+    
+    };
+
+//Verificação customizada do nome
+$("#campoCPFPessoaEditar").on('input', function() {
+    var input= $(this);
+
+    if (!validarCPF(input.val())){
+        msg("#inv_cpf_pessoa_editar","CPF inválido");
+        formValid2["cpf"] = false;
+    }
+    else {
+        formValid2["cpf"] = true;
+    }   
+
+    if (formValid2["cpf"]){
+        $("#inv_cpf_pessoa_editar").hide();
+        input.removeClass("invalid").addClass("valid");
+    }
+    else{
+        show("#inv_cpf_pessoa_editar");
+        input.removeClass("valid").addClass("invalid");
+        
+    };
+    checkFormPessoa2();
+    
+});
+
+
+//Verificação customizada do nome
+$("#campoNomePessoaEditar").on('input', function() {
+    var input= $(this);
+
+    if (input.val().length <3){
+        msg("#inv_nome_pessoa_editar","O nome deve ter no mínimo 3 caracteres!");
+        formValid2["nome"] = false;
+    }
+    else {
+        if (testeLetters2.test(input.val())){
+            formValid2["nome"] = true;
+        }
+        else{
+            msg("#inv_nome_pessoa_editar","O nome deve conter apenas letras ou números!");
+            formValid2["nome"] = false;
+        };
+    }   
+
+    if (formValid2["nome"]){
+        $("#inv_nome_pessoa_editar").hide();
+        input.removeClass("invalid").addClass("valid");
+    }
+    else{
+        show("#inv_nome_pessoa_editar");
+        input.removeClass("valid").addClass("invalid");
+        
+    };
+    checkFormPessoa2();
+    
+});
+
+//Verificação customizada do sobrenome
+$("#campoSobrenomePessoaEditar").on('input', function() {
+    var input= $(this); 
+    if (input.val().length <3){
+        msg("#inv_sobrenome_pessoa_editar","O sobrenome deve ter no mínimo 3 caracteres!");
+        formValid2["sobrenome"] = false;
+    }
+    else {
+        if (testeLetters2.test(input.val())){
+            formValid2["sobrenome"] = true;
+        }
+        else{
+            msg("#inv_sobrenome_pessoa_editar","O sobrenome deve conter apenas letras ou números!");
+            formValid2["sobrenome"] = false;
+        };
+    }   
+
+    if (formValid2["sobrenome"]){
+        $("#inv_sobrenome_pessoa_editar").hide();
+        input.removeClass("invalid").addClass("valid");
+
+    }
+    else{
+        show("#inv_sobrenome_pessoa_editar");
+        input.removeClass("valid").addClass("invalid");
+        
+    };
+    checkFormPessoa2();
+    
+});

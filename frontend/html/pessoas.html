@@ -111,85 +111,129 @@
 
             
         </main>
-    </div>
-    <div class="modal fade" id="modalPessoaDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                   
-                    <h4 class="modal-title" id="myModalLabel">Apagar pessoa?</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Ao apagar essa pessoa, o balanço das salas pode ser afetado, fazendo com que as outra sejam <u>automaticamente rearranjadas</u> dando prioridade para sua posição na primeira etapa.</p>
-                    <p>Tem certeza que deseja continuar?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-danger" id="modalPessoaDeleteBtn" data-dismiss="modal">Apagar</button>
+        </div>
+        <div class="modal fade" id="modalPessoaDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    
+                        <h4 class="modal-title" id="myModalLabel">Apagar pessoa?</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Ao apagar essa pessoa, o balanço das salas pode ser afetado, fazendo com que as outra sejam <u>automaticamente rearranjadas</u> dando prioridade para sua posição na primeira etapa.</p>
+                        <p>Tem certeza que deseja continuar?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-danger" id="modalPessoaDeleteBtn" data-dismiss="modal">Apagar</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="modal fade" id="modalPessoa" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                   
-                    <h4 class="modal-title" id="myModalLabel">Cadastrar Pessoa</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="campoCPF ">CPF</label>
-                            <div class="input-group pb-modalreglog-input-group">
-                                <input type="text" class="form-control" id="campoCPF" placeholder="CPF">
-                                <span class="invalid-feedback" id="inv-cpf"></span>
+        <div class="modal fade" id="modalPessoa" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    
+                        <h4 class="modal-title" id="myModalLabel">Cadastrar Pessoa</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="campoCPF ">CPF</label>
+                                <div class="input-group pb-modalreglog-input-group">
+                                    <input type="text" class="form-control" id="campoCPF" placeholder="CPF">
+                                    <span class="invalid-feedback" id="inv-cpf"></span>
+                                </div>
+                                
                             </div>
-                            
-                        </div>
-                        <div class="form-group">
-                            <label for="campoNome">Nome</label>
-                            <div class="input-group pb-modalreglog-input-group">
-                                <input type="text" class="form-control" id="campoNome" placeholder="Nome">
-                                <span class="invalid-feedback" id="inv-nome"></span>
+                            <div class="form-group">
+                                <label for="campoNome">Nome</label>
+                                <div class="input-group pb-modalreglog-input-group">
+                                    <input type="text" class="form-control" id="campoNome" placeholder="Nome">
+                                    <span class="invalid-feedback" id="inv-nome"></span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="campoSobrenome">Sobrenome</label>
-                            <div class="input-group pb-modalreglog-input-group">
-                                <input type="text" class="form-control" id="campoSobrenome" placeholder="Sobrenome">
-                                <span class="invalid-feedback" id="inv-sobrenome"></span>
+                            <div class="form-group">
+                                <label for="campoSobrenome">Sobrenome</label>
+                                <div class="input-group pb-modalreglog-input-group">
+                                    <input type="text" class="form-control" id="campoSobrenome" placeholder="Sobrenome">
+                                    <span class="invalid-feedback" id="inv-sobrenome"></span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="selectSala1">Sala na primeira etapa</label>
-                            <p class="text-muted small">*A da segunda etapa será designada automaticamente e poderá ser editada posteriormente</p>
-                            <select class="form-control search-slt" id="selectSala1" name="selectSala1">
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="selectCafe1">Primeiro espaço para café</label>
-                            <p class="text-muted small">*O segundo será designado automaticamente e poderá ser editado posteriormente</p>
-                            <select class="form-control search-slt" id="selectCafe1" name="selectCafe1">
-                            </select>
-                        </div>
-                       
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="btnAdPessoa" onClick="if (checkFormPessoa()) {cadastrarPessoa();popularPessoasGeral();};" disabled>Cadastrar</button>
+                            <div class="form-group">
+                                <label for="selectSala1">Sala na primeira etapa</label>
+                                <p class="text-muted small">*A da segunda etapa será designada automaticamente e poderá ser editada posteriormente</p>
+                                <select class="form-control search-slt" id="selectSala1" name="selectSala1">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="selectCafe1">Primeiro espaço para café</label>
+                                <p class="text-muted small">*O segundo será designado automaticamente e poderá ser editado posteriormente</p>
+                                <select class="form-control search-slt" id="selectCafe1" name="selectCafe1">
+                                </select>
+                            </div>
+                        
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="btnAdPessoa" onClick="if (checkFormPessoa()) {cadastrarPessoa();popularPessoasGeral();};" disabled>Cadastrar</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+        <div class="modal fade" id="modalPessoaEditar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                       
+                        <h4 class="modal-title" id="myModalLabel">Editar Pessoa</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="form_editar">
+                            <div class="form-group">
+
+                                <label for="campoCPFPessoaEditar">CPF</label>
+                                <div class="input-group pb-modalreglog-input-group">
+                                    <input type="text" class="form-control" id="campoCPFPessoaEditar" required placeholder="CPF...">
+                                    <span class="invalid-feedback" id="inv_cpf_pessoa_editar">
+                                    </span>
+                                </div>
+
+                                <label for="campoNomePessoaEditar mt-3">Nome</label>
+                                <div class="input-group pb-modalreglog-input-group">
+                                    <input type="text" class="form-control" id="campoNomePessoaEditar" required placeholder="Nobrenome da pessoa...">
+                                    <span class="invalid-feedback" id="inv_nome_pessoa_editar">
+                                    </span>
+                                </div>
+
+                                <label for="campoNomeSobrenomeEditar mt-3">Sobrenome</label>
+                                <div class="input-group pb-modalreglog-input-group">
+                                    <input type="text" class="form-control" id="campoSobrenomePessoaEditar" required placeholder="Nobrenome da pessoa...">
+                                    <span class="invalid-feedback" id="inv_sobrenome_pessoa_editar">
+                                    </span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="btnEditarPessoa" onClick="" disabled>Editar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Código para os JS  -->
         
         <script src="../js/formValidatorPessoa.js"></script>

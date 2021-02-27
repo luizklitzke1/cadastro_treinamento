@@ -190,6 +190,15 @@ function chamarModalCafeDelete(id_espaco_cafe){
     $("#modalCafeDeleteBtn").attr('onclick', ('apagarEspacoCafe('+id_espaco_cafe+ ')'));
 
 }
+
+
+//Muda os dados no modal do espaço
+function chamarModalPessoaEditar(cpf){
+
+    //$("#deleteCafeNome").val(espaco_nome);
+    $("#btnEditarPessoa").attr('onclick', ('editarPessoa('+cpf+ ')'));
+
+}
 //Apagar espaço para café baseado no ID
 function apagarEspacoCafe(id_espaco_cafe){
     $.ajax({
@@ -319,9 +328,6 @@ function chamarModalPessoaDelete(cpf){
 }
 //Apagar pessoa baseado no ID
 function apagarPessoa(cpf){
-    if (cpf.length != 11){
-        cpf = "0"+cpf;
-    }
     $.ajax({
         
         url: 'http://localhost:5000/apagar_pessoa/'+cpf,
@@ -347,3 +353,45 @@ function apagarPessoa(cpf){
     })
 };
 
+
+//Editar pessoa  baseado no CPF
+function editarPessoa(cpf){
+
+    
+    novo_cpf = $("#campoCPFPessoaEditar").val();
+    novo_cpf = String(cpf).replace(/[^\d]+/g,'')
+    novo_nome = $("#campoNomePessoaEditar").val();
+    novo_sobrenome = $("#campoSobrenomePessoaEditar").val();
+    var dados = JSON.stringify({novo_cpf: novo_cpf, novo_nome: novo_nome, novo_sobrenome: novo_sobrenome});
+
+    // Enivo dos dados ao back-end para a inclusão
+    $.ajax({
+        url: 'http://localhost:5000/editar_pessoa/'+cpf,
+        type: 'POST',
+        dataType: 'json', contentType: 'application/json',
+        data: dados, 
+        success: pessoaEditada, 
+        error: erroAoIncluir
+
+    });
+    function pessoaEditada (retorno) {
+        if (retorno.resultado == "ok") { 
+            alert("Pessoa editada com sucesso!");
+            // Limpar o campo
+            $("#campoCPFPessoaEditar").val("");
+            $("#campoNomePessoaEditar").val("");
+            $("#campoSobrenomePessoaEditar").val("");
+            popularSalasGeral();popularPessoasGeral();popularCafeGeral();
+            
+        } 
+        else {
+            // informar mensagem de erro
+            alert(retorno.resultado + ":" + retorno.detalhes);
+        };            
+    };
+        function erroAoIncluir (retorno) {
+            // informar mensagem de erro
+            alert("ERRO: "+retorno.resultado + ":" + retorno.detalhes);
+        };
+    
+};
