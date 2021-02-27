@@ -4,6 +4,8 @@
 
 O projeto possibilita o cadastro de pessoas, salase espaços para café de um evento, seguindo alguns requisitos como lógica de organização e fazendo sua manutenção de maneira automática. Veja mais sobre esses requisitos e lógicas abaixo.
 
+A lógica do projeto roda prioritariamente em Python, com requerimentos dade dados pela parte gráfica, a qual optei por desenvolver em um ambiente WEB com JavaScript e jQuery, uma vez que me sinto mais confortável e não tenho experiência com *frameworks* de criação de telas para aplicações em Java.
+
 ## 🛠 Instalação
   
 Para rodar o servidor backend, basta instalar os pacotes necessário, todos listados no arquivo requirements.txt.
@@ -14,6 +16,12 @@ python  -m pip install -r backend/requirements.txt
 ```
 
 Para acessar os dados pelo frontend, basta executar qualquer um dos arquivos .html presentes em ˋfrontend/htmlˋ, **cerifique-se que o servido backend está rodando para obter os dados!**.
+
+## 💻 Utilização
+O acesso do usuário é feito pelo ambiente web ao se executar os arquivos html, vide explicação anterior.
+Uma vez no site, pode-se navegar tanto pelos links na tela como pela barra de acesso rápido na lateral esquerda.
+
+> O Site funciona de maneira responsiva, logo, se adapta ao tamanho da tela e acessos em dispositivos mobile.
 
 ## 📈 Lógica de distribuição
 
