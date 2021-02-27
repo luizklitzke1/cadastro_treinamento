@@ -7,14 +7,6 @@ var formValid = {
 };
 
 
-//Torna todos os valores válidos caso estiver apenas editando
-if ($("#form_editar").length){
-    formValid = { 
-        nome : true,
-    };
-    checkFormCafe();
-}
-
 //Verifica se todos os campos estão válidos
 function checkFormCafe(){
 
@@ -79,6 +71,58 @@ $("#campoNomeCafe").on('input', function() {
         
     };
     checkFormCafe();
+    
+});
+
+//Verifica se todos os campos estão válidos
+function checkFormCafe2(){
+
+    var check = true;
+    
+    if (!formValid.nome){
+        check = false;
+    };
+
+    //Fora do loop para evitar problemas com sync 
+    if (check){
+        $('#btnEditarCafe').removeAttr('disabled');
+        return true;
+    }
+    else{
+        $('#btnEditarCafe').attr('disabled', true);
+        return false;
+    }
+    
+    };
+
+
+$("#campoNomeCafeEditar").on('input', function() {
+    var input= $(this);
+
+    if (input.val().length <3){
+        msg("#inv-nome-cafe-editar","O nome deve ter no mínimo 3 caracteres!");
+        formValid["nome"] = false;
+    }
+    else {
+        if (testeLetters3.test(input.val())){
+            formValid["nome"] = true;
+        }
+        else{
+            msg("#inv-nome-cafe-editar","O nome deve conter apenas letras ou números!");
+            formValid["nome"] = false;
+        };
+    }   
+
+    if (formValid["nome"]){
+        $("#inv-nome-cafe-editar").hide();
+        input.removeClass("invalid").addClass("valid");
+    }
+    else{
+        show("#inv-nome-cafe-editar");
+        input.removeClass("valid").addClass("invalid");
+        
+    };
+    checkFormCafe2();
     
 });
 

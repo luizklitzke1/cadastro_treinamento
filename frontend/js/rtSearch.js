@@ -98,29 +98,13 @@ $("#procurarCafe").on('input', function() {
         });
         function listarCafeProcura (espacos) {
             // Limpa os dados da tabela
+            
             $("#corpoTabelaCafe").empty();    
             
             // Percorre todas as salas registradas
             try{
-                for (espaco of espacos){
-                    // Cria uma nova linha para cada espaço
-                    lin = "<tr id='trCafe_"+ espaco.id_espaco +"'>" + 
-                    "<td>" + (espacos.indexOf(espaco)+1) +"</td>" +
-                    "<td> <a href='cafe_esp.html?id_espaco=" + espaco.id_espaco + "'>"+ espaco.nome + "</td>" + 
-                    "<td>" + espaco.lotacao1+ "</td>" + 
-                    "<td>" + espaco.lotacao2+ "</td>" + 
-
-                    "<td style='font-size: 1.5em'>" + 
-                    "<a href='#' title='Apagar' data-toggle='modal' data-target='#modalCafeDelete' onClick='chamarModalCafeDelete(" +espaco.id_espaco+");'>"+
-                        "<i class='fas fa-trash pr-1 text-danger'></i></a>" + 
-                        "<a href='#' title='Editar'><i class='fas fa-edit text-primary'></i></a>" + 
-                    "</td>" +
-                    "</tr>"
-
-                    // Adiciona a nova linha na tabela
-                    $("#corpoTabelaCafe").append(lin);
-                }
-            
+                popularTabelaCafe(espacos,"#corpoTabelaCafe");
+                
             }
             catch{
                

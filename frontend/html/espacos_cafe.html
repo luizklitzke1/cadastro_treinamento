@@ -102,58 +102,88 @@
             </table>
 
         </main>
-    </div>
-    <div class="modal fade" id="modalCafe" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                   
-                    <h4 class="modal-title" id="myModalLabel">Cadastrar Espaço para Café</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="campoNomeCafe">Nome</label>
-                            
-                            <div class="input-group pb-modalreglog-input-group">
-                                <input type="text" class="form-control" id="campoNomeCafe" placeholder="Nome da sala...">
+        </div>
+        <div class="modal fade" id="modalCafe" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    
+                        <h4 class="modal-title" id="myModalLabel">Cadastrar Espaço para Café</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="campoNomeCafe">Nome</label>
+                                
+                                <div class="input-group pb-modalreglog-input-group">
+                                    <input type="text" class="form-control" id="campoNomeCafe" placeholder="Nome da sala...">
+                                </div>
+                                <span class="invalid-feedback" id="inv-nome-cafe"></span>
                             </div>
-                            <span class="invalid-feedback" id="inv-nome-cafe"></span>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="btnAdCafe" onClick="if (checkFormCafe()) {cadastrarEspacoCafe()};" disabled>Cadastrar</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="btnAdCafe" onClick="if (checkFormCafe()) {cadastrarEspacoCafe()};" disabled>Cadastrar</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="modal fade" id="modalCafeDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                   
-                    <h4 class="modal-title" id="myModalLabel">Apagar espaço para café?</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Ao apagar esse espaço, todas as pessoas designadas para ele serão <u>automaticamente rearranjadas</u> dando prioridade para sua posição na primeira etapa.</p>
-                    <p>Tem certeza que deseja continuar?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-danger" id="modalCafeDeleteBtn" data-dismiss="modal">Apagar</button>
+        <div class="modal fade" id="modalCafeDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    
+                        <h4 class="modal-title" id="myModalLabel">Apagar espaço para café?</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Ao apagar esse espaço, todas as pessoas designadas para ele serão <u>automaticamente rearranjadas</u> dando prioridade para sua posição na primeira etapa.</p>
+                        <p>Tem certeza que deseja continuar?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-danger" id="modalCafeDeleteBtn" data-dismiss="modal">Apagar</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+
+        <div class="modal fade" id="modalCafeEditar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                       
+                        <h4 class="modal-title" id="myModalLabel">Editar Espaço para Café</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="form_editar">
+                            <div class="form-group">
+                                <label for="campoNomeSala">Nome</label>
+                                <div class="input-group pb-modalreglog-input-group">
+                                    <input type="text" class="form-control" id="campoNomeCafeEditar" required placeholder="Nome do espaço...">
+                                    <span class="invalid-feedback" id="inv-nome-cafe-editar">
+                                    </span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="btnEditarCafe" onClick="" disabled>Editar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Código para os JS  -->
         <script src="../js/tablePops.js"></script>
         <script src="../js/formValidatorSala.js"></script>

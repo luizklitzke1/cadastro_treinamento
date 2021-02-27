@@ -312,7 +312,7 @@ def apagar_Sala(id_sala):
     return resposta
 
 
-# Rota para apagar uma Sala
+# Rota para editar uma Sala
 @app.route("/editar_sala/<int:id_sala>",  methods=['POST'])
 def editar_Sala(id_sala):
     
@@ -330,6 +330,26 @@ def editar_Sala(id_sala):
         
     resposta.headers.add("Access-Control-Allow-Origin","*")
     return resposta
+
+# Rota para editar um Espaço para café
+@app.route("/editar_cafe/<int:id_cafe>",  methods=['POST'])
+def editar_Cafe(id_cafe):
+    
+    dados = request.get_json()
+    resposta = jsonify({"resultado":"ok","detalhes": "ok"})
+    
+    try: 
+        cafe = Espaco_Cafe.query.get_or_404(id_cafe)
+                                               
+        cafe.nome = dados["novo_nome"]
+        db.session.commit()
+        
+    except Exception as e:  #Envie mensagem em caso de erro
+        resposta = jsonify({"resultado":"erro", "detalhes":str(e)}) 
+        
+    resposta.headers.add("Access-Control-Allow-Origin","*")
+    return resposta
+
 
 
 # Rota para apagar uma Pessoa

@@ -95,6 +95,41 @@ function editarSala(id_sala){
     
 };
 
+//Editar espaço para café baseado no ID
+function editarCafe(id_cafe){
+
+    novo_nome = $("#campoNomeCafeEditar").val();
+    var dados = JSON.stringify({novo_nome: novo_nome});
+
+    // Enivo dos dados ao back-end para a inclusão
+    $.ajax({
+        url: 'http://localhost:5000/editar_cafe/'+id_cafe,
+        type: 'POST',
+        dataType: 'json', contentType: 'application/json',
+        data: dados, 
+        success: cafeEditado, 
+        error: erroAoIncluir
+
+    });
+    function cafeEditado (retorno) {
+        if (retorno.resultado == "ok") { 
+            alert("Espaço para café editado  com sucesso!");
+            // Limpar o campo
+            $("#campoNomeCafeEditar").val("");
+            popularSalasGeral();popularPessoasGeral();popularCafeGeral();
+        } 
+        else {
+            // informar mensagem de erro
+            alert(retorno.resultado + ":" + retorno.detalhes);
+        };            
+    };
+        function erroAoIncluir (retorno) {
+            // informar mensagem de erro
+            alert("ERRO: "+retorno.resultado + ":" + retorno.detalhes);
+        };
+    
+};
+
 
 
 //Registrar novo espaço para café
@@ -179,6 +214,15 @@ function chamarModalSalaEditar(id_sala){
     $("#btnEditarSala").attr('onclick', ('if (checkFormSala2()) {editarSala('+id_sala+');popularSalasGeral();};'));
 
 }
+
+//Muda os dados no modal de um espaço para café
+function chamarModalCafeEditar(id_espaco){
+
+    $("#btnEditarCafe").attr('onclick', ('if (checkFormCafe2()) {editarCafe('+id_espaco+');popularCafeGeral();};'));
+
+}
+
+
 //Apagar sala baseado no ID
 function apagarSala(id_sala){
     $.ajax({
