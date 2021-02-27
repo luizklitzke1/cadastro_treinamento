@@ -201,12 +201,12 @@ function cadastrarPessoa ()  {
         } 
         else {
             // informar mensagem de erro
-            alert(retorno.resultado + ":" + retorno.detalhes);
+            alert("Ocorreu um erro ao cadastrar a pessoa! Verifique se o CPF já não é cadastrado!");
         };            
     };
         function erroAoIncluir (retorno) {
             // informar mensagem de erro
-            alert("ERRO: "+retorno.resultado + ":" + retorno.detalhes);
+            alert("Ocorreu um erro ao cadastrar a pessoa! Verifique se o CPF já não é cadastrado!");
         };
 };
 

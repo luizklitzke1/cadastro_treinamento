@@ -292,7 +292,7 @@ function popularTabelaPessoas(pessoas,id_tabela){
         // Cria uma nova linha para cada pessoa
         lin = "<tr id='trPessoa_"+pessoa.cpf+"'>" + 
         "<td>" + (pessoas.indexOf(pessoa)+1) +"</td>" +
-        "<td>" + pessoa.cpf + "</td>" + 
+        "<td>" + pessoa.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4") + "</td>" + 
         "<td>" + pessoa.nome+ "</td>" + 
         "<td>" + pessoa.sobrenome+ "</td>" + 
         "<td> <a href='sala_esp.html?id_sala=" + pessoa.sala1.id_sala + "'>" + pessoa.sala1.nome+ "</td>" +
