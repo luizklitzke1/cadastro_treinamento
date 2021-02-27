@@ -96,7 +96,7 @@ function popularTabelaPessoas(pessoas,id_tabela){
         "<td>" + pessoa.nome+ "</td>" + 
         "<td>" + pessoa.sobrenome+ "</td>" + 
         "<td> <a href='sala_esp.html?id_sala=" + pessoa.sala1.id_sala + "'>" + pessoa.sala1.nome+ "</td>" +
-        "<td> <a href='sala_esp.html?id_sala=" + pessoa.sala2id_sala + "'>" + pessoa.sala2.nome+ "</td>" + 
+        "<td> <a href='sala_esp.html?id_sala=" + pessoa.sala2.id_sala + "'>" + pessoa.sala2.nome+ "</td>" + 
         "<td> <a href='cafe_esp.html?id_sala=" + pessoa.cafe1.id_espaco + "'>" + pessoa.cafe1.nome+ "</td>" + 
         "<td> <a href='cafe_esp.html?id_sala=" + pessoa.cafe2.id_espaco + "'>" + pessoa.cafe2.nome+ "</td>" +  
 
