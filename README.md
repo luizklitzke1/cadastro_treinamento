@@ -1,4 +1,7 @@
 # Cadastro para Treinamento
+[![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
+[![made-with-js](https://img.shields.io/badge/Made%20with-JavaScript-1f425f.svg)](https://www.javascript.com/)
+[![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/) 
 
 📜 Descrição do projeto
 
@@ -65,12 +68,12 @@ if not(alocar_pessoa_cafe(pessoa.cafe1_id,pessoa.cpf,1)):
 ## 🗃 Persistência de dados
 
 Os dados do programa são armazenados em um banco de dados utilizando a biblioeta SQAlchemy e SQLite e acessados e modificados através de *requests* no back-end.
-Segue imagem da tabela de dados das pessoas, vista com o DB Browser, como exemoplo:
 
 
 ## 🧅 Camadas do projeto
 
 O sistema é dividido em duas partes principais para torna-lo mais modular e seguro, sendo o processamento feito no back-end através da utilização de Python e algumas bibliotecas, principalmente Flask, enquanto o front-end é populado pelos dados obtidos do back-end através de requisições Ajax pelo jQuery e tem sua lógica de exposição baseada em JavaScript e jQuery.
+![Camadas](imgs/estructcamadas.png)
 
 
 
