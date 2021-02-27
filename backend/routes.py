@@ -208,9 +208,10 @@ def apagar_Espaco_cafe(id_espaco_cafe):
     resposta = jsonify({"resultado":"ok","detalhes": "ok"})
     
     try: #Tentar realizar a exclusão
-        espaco = Espaco_Cafe.query.get_or_404(id_espaco_cafe)
-                                               
+        espaco = Espaco_Cafe.query.get_or_404(id_espaco_cafe) 
         db.session.delete(espaco)
+        
+        redistribuir_pessoas()  
         db.session.commit()
         
     except Exception as e:  #Envie mensagem em caso de erro
@@ -267,10 +268,9 @@ def apagar_Pessoa(cpf):
     resposta = jsonify({"resultado":"ok","detalhes": "ok"})
     
     try: #Tentar realizar a exclusão
-        pessoa = Pessoa.query.get_or_404(cpf)
-                       
-        pessoa.cafe1.lotacao1 -= 1
-        pessoa.cafe2.lotacao2 -= 1                        
+ 
+        pessoa = Pessoa.query.get(cpf)
+                                             
         db.session.delete(pessoa)
         redistribuir_pessoas()
         db.session.commit()
@@ -411,15 +411,13 @@ def alocar_pessoa_sala(id_sala, cpf, etapa):
 @app.route("/alocar_pessoa_cafe/<int:id_espaco_cafe>/<string:cpf>/<int:etapa>", methods=['POST'])
 def alocar_pessoa_cafe(id_espaco_cafe, cpf, etapa):
     
-    resposta = jsonify({"resultado":"ok","detalhes": "ok"})
-    
     try:
         
         cafe_esp = Espaco_Cafe.query.get_or_404(id_espaco_cafe)
     
         pessoa = Pessoa.query.get_or_404(cpf)
         
-        if etapa == 1:
+        if etapa == 1 and (pessoa.cafe1_id == id_espaco_cafe or pessoa.cafe1_id == None):
             pessoa.cafe1_id = id_espaco_cafe
             cafe_esp.lotacao1 += 1
             designar_cafe_etapa2(pessoa)
@@ -429,16 +427,12 @@ def alocar_pessoa_cafe(id_espaco_cafe, cpf, etapa):
             designar_cafe_etapa2(pessoa)
         
         else:
-            raise Exception("O espaço de café não pode se repetir nas duas etapas!")
+            return False
        
-     #Retorna erro com detalhes
-    except Exception as e: 
-        resposta = jsonify({"resultado":"erro","detalhes":str(e)})
-        
-    db.session.commit()
-    resposta.headers.add("Access-Control-Allow-Origin","*")
+    except:
+        return False
     
-    return resposta
+    return True
 
 
 #Realocar todas as pessoas, priorizando suas posições atuais na primeira etapa
@@ -452,6 +446,10 @@ def redistribuir_pessoas():
     for sala in salas:
         sala.lotacao1 = 0
         sala.lotacao2 = 0
+        
+    for cafe in cafes:
+        cafe.lotacao1 = 0
+        cafe.lotacao2 = 0
 
     for pessoa in pessoas:
         
@@ -464,6 +462,17 @@ def redistribuir_pessoas():
                     if( (alocar_pessoa_sala(sala.id_sala,pessoa.cpf,1)) ):
                         alocada = True
                         continue
+        
+        if not(alocar_pessoa_cafe(pessoa.cafe1_id,pessoa.cpf,1)):
+            alocadacafe = False
+            for cafe in cafes:
+                if not(alocadacafe):
+                    if (alocar_pessoa_cafe(cafe.id_espaco_cafe,pessoa.cpf,1)):
+                        print(pessoa.nome,cafe.nome)
+                        alocadacafe = True
+                        continue
+                    
+        
                     
         
 

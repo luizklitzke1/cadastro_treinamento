@@ -16,10 +16,10 @@ function cadastrarSala ()  {
 
     });
     function salaIncluida (retorno) {
-        if (retorno.resultado == "ok") { 
+        if (retorno.resultado == "ok") {
+            $("#campoNomeSala").val(""); 
             alert("Sala " + nome + " registrada com sucesso!");
             // Limpar o campo
-            $("#campoNome").val("");
             popularSalasGeral();popularPessoasGeral();popularCafeGeral();
 
         } 
@@ -83,7 +83,7 @@ function cadastrarEspacoCafe ()  {
         if (retorno.resultado == "ok") { 
             alert(nome + " registrado com sucesso!");
             // Limpar o campo
-            $("#campoNome").val("");
+            $("#campoNomeCafe").val("");
             popularSalasGeral();popularPessoasGeral();popularCafeGeral();
 
         } 
@@ -214,12 +214,16 @@ function cadastrarPessoa ()  {
 function chamarModalPessoaDelete(cpf){
 
     //$("#deleteCafeNome").val(espaco_nome);
-    $("#modalPessoaDeleteBtn").attr('onclick', ('apagarPessoa('+cpf+')'));
+    $("#modalPessoaDeleteBtn").attr('onclick', ("apagarPessoa('"+cpf+"')"));
 
 }
 //Apagar pessoa baseado no ID
 function apagarPessoa(cpf){
+    if (cpf.length != 11){
+        cpf = "0"+cpf;
+    }
     $.ajax({
+        
         url: 'http://localhost:5000/apagar_pessoa/'+cpf,
         type: 'DELETE',
         dataType: 'json', contentType: 'application/json',
