@@ -81,7 +81,15 @@ function editarSala(id_sala){
             alert("Sala editada  com sucesso!");
             // Limpar o campo
             $("#campoNomeSalaEditar").val("");
-            popularSalasGeral();popularPessoasGeral();popularCafeGeral();
+            if ($('#textNomeSala').length > 0) {
+                location.reload();
+            }
+            else{
+                popularSalasGeral();popularPessoasGeral();popularCafeGeral();
+            }
+            
+            
+            
         } 
         else {
             // informar mensagem de erro
@@ -116,7 +124,14 @@ function editarCafe(id_cafe){
             alert("Espaço para café editado  com sucesso!");
             // Limpar o campo
             $("#campoNomeCafeEditar").val("");
-            popularSalasGeral();popularPessoasGeral();popularCafeGeral();
+            if ($('#textNomeCafe').length > 0) {
+                location.reload();
+            }
+            else{
+                popularSalasGeral();popularPessoasGeral();popularCafeGeral();
+            }
+            
+            
         } 
         else {
             // informar mensagem de erro

@@ -160,6 +160,7 @@ function dadosSala(){
         dataType: 'json',
         success: function(resposta){
            $("#textNomeSala").text(resposta.nome)
+           document.getElementById("btnEditarSala").setAttribute( "onClick", ("editarSala(" +id_sala+");"));
            document.title += resposta.nome
         },
         error: function() {
@@ -213,6 +214,7 @@ function dadosCafe(){
         dataType: 'json',
         success: function(resposta){
            $("#textNomeCafe").text(resposta.nome)
+           document.getElementById("btnEditarCafe").setAttribute( "onClick", ("editarCafe(" +id_espaco+");"));
            document.title += resposta.nome;
 
         },

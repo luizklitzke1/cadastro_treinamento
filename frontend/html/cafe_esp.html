@@ -60,6 +60,7 @@
     
         <main class="container ml-2 mt-3">
             <h2 class="h2 underlined"><i class="fas fa-mug-hot mr-2"> </i> <u id="textNomeCafe"></u></h2>
+            <button type="button" class="btn btn-primary btn-md mt-5" style="font-weight: bold;" data-toggle="modal" data-target="#modalCafeEditar">Editar espaço para café</button>   
                 
 
             <h4 class="h4 mt-5">Procurar por uma pessoa no Espaço para Café</h4>
@@ -133,9 +134,39 @@
                     
 
         </main>
+        <div class="modal fade" id="modalCafeEditar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                       
+                        <h4 class="modal-title" id="myModalLabel">Editar Espaço para Café</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="form_editar">
+                            <div class="form-group">
+                                <label for="campoNomeSala">Nome</label>
+                                <div class="input-group pb-modalreglog-input-group">
+                                    <input type="text" class="form-control" id="campoNomeCafeEditar" required placeholder="Nome do espaço...">
+                                    <span class="invalid-feedback" id="inv-nome-cafe-editar">
+                                    </span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="btnEditarCafe" onClick="" disabled>Editar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Código para os JS  -->
         <script src="../js/tablePops.js"></script>
         <script src="../js/rtSearch.js"></script>
         <script src="../js/crud.js"></script>
+        <script src="../js/formValidatorCafe.js"></script>
     </body>
 </html>
