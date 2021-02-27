@@ -25,6 +25,11 @@ O acesso do usuário é feito pelo ambiente web ao se executar os arquivos html,
 Uma vez no site, pode-se navegar tanto pelos links na tela como pela barra de acesso rápido na lateral esquerda.
 
 > O Site funciona de maneira responsiva, logo, se adapta ao tamanho da tela e acessos em dispositivos mobile.
+![Responsivo](imgs/respons.gif)
+
+### 🔍Consulta de dados
+Em vários locais no sistema, você pode informar os dados desejados para consultar dados de pessoas, salas ou espaços de café em tempo real.
+![Responsivo](imgs/search.gif)
 
 ## 📈 Lógica de distribuição
 
