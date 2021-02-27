@@ -48,10 +48,6 @@ class Pessoa(db.Model):
     nome = db.Column(db.String(150), nullable=False)
     sobrenome = db.Column(db.String(150), nullable=False)
 
-    #Endereço em string para o arquivo salvo em Static - gera ao registrar -
-    foto = db.Column(db.String(20), nullable=False, default='pessoa.png')
-    
-    
     #Chave estrangeira da primeira sala
     sala1_id = db.Column(db.Integer, db.ForeignKey(Sala.id_sala), nullable = True,)
     sala1 = db.relationship("Sala", foreign_keys=sala1_id)
@@ -81,8 +77,7 @@ class Pessoa(db.Model):
             "cafe1": self.cafe1.json(),
             "cafe2": self.cafe2.json(),
             "sala1": self.sala1.json(),
-            "sala2": self.sala2.json(),
-            "foto": self.foto,
+            "sala2": self.sala2.json()
         }
   
 
@@ -103,9 +98,6 @@ if __name__ == "__main__":
         nome = "Café 2"
     )
     
-    db.session.add(c1)
-    db.session.add(c2)
-    
     s1 = Sala(
         nome = "Sala 1"
     )
@@ -119,71 +111,18 @@ if __name__ == "__main__":
         nome = "Sala 4"
     )
     
-    db.session.add(s1)
-    db.session.add(s2)
-    #db.session.add(s3)
     db.session.commit()
-    print(c1)
-    print(c2)
-    
-    print(s1)
-    print(s2)
-    
-    #Gerador de CPF em: https://www.geradorcpf.com/
-    p1 = Pessoa(
-        cpf = "05435950643",
-        nome = "Jonas",
-        sobrenome = "Silveira"
 
-    )
-    
-    p2 = Pessoa(
-        cpf = "61284732533",
-        nome = "Carlinhos",
-        sobrenome = "Teixeira"
-    )
-    
-    p3 = Pessoa(
-        cpf = "18187443090",
-        nome = "Zéca",
-        sobrenome = "Pagodinho"
-    )
-    
-    p4 = Pessoa(
-        cpf = "61784818887",
-        nome = "Lucas",
-        sobrenome = "Machado"
-    )
-    
-    p5 = Pessoa(
-        cpf = "88345372546",
-        nome = "Anna",
-        sobrenome = "Kretz"
-    )
-    
-    p6 = Pessoa(
-        cpf = "55564351460",
-        nome = "Jarbas",
-        sobrenome = "Souza"
-    )
+    #Gerador de CPF em: https://www.geradorcpf.com/
     
     p7 = Pessoa(
         cpf = "63414167506",
         nome = "Tobias",
         sobrenome = "Afreim"
     )
-        
-    db.session.add(p1)
-    db.session.add(p2)
-    db.session.add(p3)
-    db.session.add(p4)
-    db.session.add(p5)
-    db.session.add(p6)
-    db.session.add(p7)
+
     db.session.commit()
-    print(p1)
-    print(p2)
-    
+
     
     
     

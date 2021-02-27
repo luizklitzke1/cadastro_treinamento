@@ -1,12 +1,12 @@
 
-from flask import Flask, jsonify, request, Blueprint
-from flask_sqlalchemy import SQLAlchemy
-from flask_cors import CORS
-from datetime import datetime
-from PIL import Image
-
-import secrets
 import os
+import secrets
+from datetime import datetime
+
+from flask import Blueprint, Flask, jsonify, request
+from flask_cors import CORS
+from flask_sqlalchemy import SQLAlchemy
+from PIL import Image
 
 #Criação do APP
 app = Flask(__name__)

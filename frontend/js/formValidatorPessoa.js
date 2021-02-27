@@ -27,6 +27,19 @@ function checkFormPessoa(){
             check = false;
         };
     });
+    console.log();
+    if ($("#selectSala1").val() == null){
+        check = false;
+    }
+        
+    if ($("#selectCafe1").val()  == null){
+        check = false;
+    }
+    if ($("#selectCafe2").val()  == null){
+        console.log($("#selectCafe2").val());
+        check = false;
+    }	
+
 
     //Fora do loop para evitar problemas com sync 
     if (check){
@@ -297,4 +310,41 @@ $("#campoSobrenomePessoaEditar").on('input', function() {
     };
     checkFormPessoa2();
     
+});
+
+$('#selectCafe1').on('change', function (e) {
+    var optionSelected = $("option:selected", this);
+    var valueSelected = this.value;
+    //Pegar as opções de espaço de café
+    $.ajax({
+        url: "http://localhost:5000/listar_espacos_cafe",
+        method: "GET",
+        dataType: "json", 
+        success: listaresp, 
+        error: function(problema) {
+            alert("Erro ao buscar os dados no backend! ");
+        }
+    });
+    function listaresp (espacos) {
+        // Limpa os dados da tabela
+        $("#selectCafe2").empty();    
+        
+        // Percorre todas os espaços registradas
+        for (espaco of espacos){
+
+            if (espaco.id_espaco != valueSelected){
+                // Cria uma nova linha para cada espaço
+                op =
+                "<option value= '" + espaco.id_espaco+"'>"+ espaco.nome + "</option>"
+
+                    // Adiciona a nova linha na tabela
+                    $("#selectCafe2").append(op);
+            }
+          
+        }
+        checkFormPessoa();
+        
+    }
+    
+  
 });
