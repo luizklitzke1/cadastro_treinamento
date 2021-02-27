@@ -6,15 +6,6 @@ var formValid = {
     nome : false,
 };
 
-
-//Torna todos os valores válidos caso estiver apenas editando
-if ($("#form_editar").length){
-    formValid = { 
-        nome : true,
-    };
-    checkFormSala();
-}
-
 //Verifica se todos os campos estão válidos
 function checkFormSala(){
 
@@ -82,6 +73,73 @@ $("#campoNomeSala").on('input', function() {
     checkFormSala();
     
 });
+
+
+
+//Variável que garante que todos os campos sejam válidos 
+var formValid2 = {
+    nome : false,
+};
+
+//Verifica se todos os campos estão válidos
+function checkFormSala2(){
+
+    var check = true;
+    
+    if (!formValid2.nome){
+        check = false;
+    };
+
+    //Fora do loop para evitar problemas com sync 
+    if (check){
+        $('#btnEditarSala').removeAttr('disabled');
+        return true;
+    }
+    else{
+        $('#btnEditarSala').attr('disabled', true);
+        return false;
+    }
+    
+    };
+
+//Padrão de verificação dos caracteres de texto
+//var textEsp = new RegExp(/^[a-zA-Z0-9]+$/);
+
+//Verificação customizada do nome
+var testeLetters1 = new RegExp(/^[\d\s\p{L}]*$/ui);
+
+$("#campoNomeSalaEditar").on('input', function() {
+    var input= $(this);
+    nome = String(input.val());
+
+    if (input.val().length <3){
+        msg("#inv-nome-sala-editar","O nome deve ter no mínimo 3 caracteres!");
+        formValid2["nome"] = false;
+    }
+    else {
+        if (testeLetters1.test(nome)){
+            formValid2["nome"] = true;
+        }
+        else{
+            msg("#inv-nome-sala-editar","O nome deve conter apenas letras ou números!");
+            formValid2["nome"] = false;
+        };
+    }   
+
+    if (formValid2["nome"]){
+        $("#inv-nome-sala-editar").hide();
+        input.removeClass("invalid").addClass("valid");
+    }
+    else{
+        show("#inv-nome-sala-editar");
+        input.removeClass("valid").addClass("invalid");
+        
+    };
+    checkFormSala2();
+    
+});
+
+
 
 
 

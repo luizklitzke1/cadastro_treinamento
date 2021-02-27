@@ -57,7 +57,8 @@ function popularSalasGeral(){
                 "<td style='font-size: 1.5em'>" + 
                 "<a href='#' title='Apagar' data-toggle='modal' data-target='#modalSalaDelete' onClick='chamarModalSalaDelete(" +sala.id_sala+");'>"+
                 "<i class='fas fa-trash pr-1 text-danger'></i></a>" +
-                    "<a href='#' title='Editar'><i class='fas fa-edit text-primary'></i></a>" + 
+                "<a href='#' title='Editar' data-toggle='modal' data-target='#modalSalaEditar' onClick='chamarModalSalaEditar(" +sala.id_sala+");'>"+
+                    "<i class='fas fa-edit text-primary'></i></a>" + 
                 "</td>" +
             "</tr>"
 

@@ -311,6 +311,27 @@ def apagar_Sala(id_sala):
     resposta.headers.add("Access-Control-Allow-Origin","*")
     return resposta
 
+
+# Rota para apagar uma Sala
+@app.route("/editar_sala/<int:id_sala>",  methods=['POST'])
+def editar_Sala(id_sala):
+    
+    dados = request.get_json()
+    resposta = jsonify({"resultado":"ok","detalhes": "ok"})
+    
+    try: 
+        sala = Sala.query.get_or_404(id_sala)
+                                               
+        sala.nome = dados["novo_nome"]
+        db.session.commit()
+        
+    except Exception as e:  #Envie mensagem em caso de erro
+        resposta = jsonify({"resultado":"erro", "detalhes":str(e)}) 
+        
+    resposta.headers.add("Access-Control-Allow-Origin","*")
+    return resposta
+
+
 # Rota para apagar uma Pessoa
 @app.route("/apagar_pessoa/<string:cpf>",  methods=['DELETE'])
 def apagar_Pessoa(cpf):

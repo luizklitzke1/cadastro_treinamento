@@ -417,6 +417,36 @@
                 </div>
             </div>
         </div>
+        
+    </div>
+    <div class="modal fade" id="modalSalaEditar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                   
+                    <h4 class="modal-title" id="myModalLabel">Editar Sala</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="form_editar">
+                        <div class="form-group">
+                            <label for="campoNomeSala">Nome</label>
+                            <div class="input-group pb-modalreglog-input-group">
+                                <input type="text" class="form-control" id="campoNomeSalaEditar" required placeholder="Nome da sala...">
+                                <span class="invalid-feedback" id="inv-nome-sala-editar">
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="btnEditarSala" onClick="" disabled>Editar</button>
+                </div>
+            </div>
+        </div>
     </div>
         <!-- Código para os JS  -->
         <script src="../js/tablePops.js"></script>
