@@ -7,16 +7,6 @@ var formValid = {
     sobrenome : false,
 };
 
-    
-//Torna todos os valores válidos caso estiver apenas editando
-if ($("#form_editar").length){
-    formValid = { 
-        cpf: false,
-        nome : false,
-        sobrenome : false,
-    };
-    checkFormPessoa();
-}
 
 //Verifica se todos os campos estão válidos
 function checkFormPessoa(){
@@ -193,18 +183,20 @@ function validarCPF(cpf) {
 
 //Variável que garante que todos os campos sejam válidos 
 var formValid2 = {
-    cpf: false,
-    nome : false,
-    sobrenome : false,
+    cpf: true,
+    nome : true,
+    sobrenome : true,
 };
 
     
 //Verifica se todos os campos estão válidos
 function checkFormPessoa2(){
+    console.log("check");
     var check = true;
 
     for(var key in formValid2){
         if (!(formValid2[key])){
+            console.log(key, formValid2[key]);
             check = false;
         }
     }

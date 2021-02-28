@@ -28,6 +28,7 @@ def listar_pessoas():
     pessoas_json = [Pessoa.json() for Pessoa in pessoas]
     return (jsonify(pessoas_json))
 
+
 # Rota para cadastrar pessoas
 @geral.route("/cadastrar_pessoa", methods=['POST'])
 def cadastar_Pessoa():
@@ -254,6 +255,17 @@ def procurar_pessoa():
   
     return (jsonify(pessoas_json))
 
+# Rota para pegar os dados de uma pessoa específica
+@geral.route("/dados_pessoa/<string:cpf>",  methods=['POST','GET'])
+def dados_pessoa(cpf):
+    
+    if len(cpf) != 11:
+        cpf = "0" + cpf
+        
+    pessoa = Pessoa.query.get_or_404(cpf)
+    
+    return (pessoa.json())
+
 # Procurar uma pessoa em uma sala específica
 @geral.route("/procurar_pessoa_sala/<int:id_sala>/<int:etapa>", methods=['POST'])
 def procurar_pessoa_sala(id_sala,etapa):
@@ -342,7 +354,7 @@ def editar_Pessoa(cpf):
     if len(dados["novo_cpf"]) != 11:
         dados["novo_cpf"] = "0" + dados["novo_cpf"] 
         
-    if not(testar_cpf(dados["cpf"])):
+    if not(testar_cpf(cpf)):
         raise Exception("CPF inválido!")
     
     try:
@@ -423,15 +435,6 @@ def procurar_sala():
     salas_json = [Sala.json() for Sala in salas]
   
     return (jsonify(salas_json))
-
-# Procurar sala
-@geral.route("/carlos", methods=['GET'])
-def carlos():
-    
-    dados = request.get_json()
-    return (jsonify({"a":"b"}))
-
-
 
 # Rota para cadastrar salas
 @geral.route("/cadastrar_sala", methods=['POST',])

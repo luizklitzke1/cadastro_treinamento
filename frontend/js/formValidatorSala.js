@@ -75,15 +75,13 @@ $("#campoNomeSala").on('input', function() {
 });
 
 
-
 //Variável que garante que todos os campos sejam válidos 
 var formValid2 = {
-    nome : false,
+    nome : true,
 };
 
 //Verifica se todos os campos estão válidos
 function checkFormSala2(){
-
     var check = true;
     
     if (!formValid2.nome){

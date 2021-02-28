@@ -480,6 +480,50 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="modalPessoaEditar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                       
+                        <h4 class="modal-title" id="myModalLabel">Editar Pessoa</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="form_editar">
+                            <div class="form-group">
+
+                                <label for="campoCPFPessoaEditar">CPF</label>
+                                <div class="input-group pb-modalreglog-input-group">
+                                    <input type="text" class="form-control" id="campoCPFPessoaEditar" required placeholder="CPF...">
+                                    <span class="invalid-feedback" id="inv_cpf_pessoa_editar">
+                                    </span>
+                                </div>
+
+                                <label for="campoNomePessoaEditar mt-3">Nome</label>
+                                <div class="input-group pb-modalreglog-input-group">
+                                    <input type="text" class="form-control" id="campoNomePessoaEditar" required placeholder="Nobrenome da pessoa...">
+                                    <span class="invalid-feedback" id="inv_nome_pessoa_editar">
+                                    </span>
+                                </div>
+
+                                <label for="campoNomeSobrenomeEditar mt-3">Sobrenome</label>
+                                <div class="input-group pb-modalreglog-input-group">
+                                    <input type="text" class="form-control" id="campoSobrenomePessoaEditar" required placeholder="Nobrenome da pessoa...">
+                                    <span class="invalid-feedback" id="inv_sobrenome_pessoa_editar">
+                                    </span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="btnEditarPessoa" onClick="" disabled>Editar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Código para os JS  -->
         <script src="../js/tablePops.js"></script>
         <script src="../js/crud.js"></script>

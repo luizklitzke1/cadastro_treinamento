@@ -49,7 +49,6 @@ function cadastrarPessoa ()  {
 //Muda os dados no modal da pessoa
 function chamarModalPessoaDelete(cpf){
 
-    //$("#deleteCafeNome").val(espaco_nome);
     $("#modalPessoaDeleteBtn").attr('onclick', ("apagarPessoa('"+cpf+"')"));
 
 }
@@ -57,8 +56,23 @@ function chamarModalPessoaDelete(cpf){
 //Muda os dados no modal do espaço
 function chamarModalPessoaEditar(cpf){
 
-    //$("#deleteCafeNome").val(espaco_nome);
     $("#btnEditarPessoa").attr('onclick', ('editarPessoa('+cpf+ ')'));
+    $.ajax({
+        url: 'http://localhost:5000/dados_pessoa/'+cpf,
+        method: 'GET',
+        dataType: 'json',
+        success: function(resposta){
+
+            $("#campoCPFPessoaEditar").val(resposta.cpf);
+            $("#campoNomePessoaEditar").val(resposta.nome);
+            $("#campoSobrenomePessoaEditar").val(resposta.sobrenome);
+
+        },
+        error: function() {
+            alert("Erro ao receber os dados da pessoa, verifique o backend!");
+        }
+    });
+
 
 }
 //Apagar pessoa baseado no ID
@@ -112,10 +126,7 @@ function editarPessoa(cpf){
     function pessoaEditada (retorno) {
         if (retorno.resultado == "ok") { 
             alert("Pessoa editada com sucesso!");
-            // Limpar o campo
-            $("#campoCPFPessoaEditar").val("");
-            $("#campoNomePessoaEditar").val("");
-            $("#campoSobrenomePessoaEditar").val("");
+
             popularSalasGeral();popularPessoasGeral();popularCafeGeral();
             
         } 
@@ -215,7 +226,6 @@ function editarSala(id_sala){
         if (retorno.resultado == "ok") { 
             alert("Sala editada  com sucesso!");
             // Limpar o campo
-            $("#campoNomeSalaEditar").val("");
             if ($('#textNomeSala').length > 0) {
                 location.reload();
             }
@@ -247,6 +257,18 @@ function chamarModalSalaDelete(id_sala){
 function chamarModalSalaEditar(id_sala){
 
     $("#btnEditarSala").attr('onclick', ('if (checkFormSala2()) {editarSala('+id_sala+');popularSalasGeral();};'));
+    $.ajax({
+        url: 'http://localhost:5000/dados_sala/'+id_sala,
+        method: 'GET',
+        dataType: 'json',
+        success: function(resposta){
+           $("#campoNomeSalaEditar").val(resposta.nome);
+           checkFormSala2();
+        },
+        error: function() {
+            alert("Erro ao receber os dados da sala, verifique o backend!");
+        }
+    });
 
 }
 
@@ -256,6 +278,19 @@ function chamarModalSalaEditar(id_sala){
 function chamarModalCafeEditar(id_espaco){
 
     $("#btnEditarCafe").attr('onclick', ('if (checkFormCafe2()) {editarCafe('+id_espaco+');popularCafeGeral();};'));
+
+    $.ajax({
+        url: 'http://localhost:5000/dados_cafe/'+id_espaco,
+        method: 'GET',
+        dataType: 'json',
+        success: function(resposta){
+           $("#campoNomeCafeEditar").val(resposta.nome)
+
+        },
+        error: function() {
+            alert("Erro ao receber os dados da sala, verifique o backend!");
+        }
+    });
 
 }
 
@@ -278,8 +313,6 @@ function editarCafe(id_cafe){
     function cafeEditado (retorno) {
         if (retorno.resultado == "ok") { 
             alert("Espaço para café editado  com sucesso!");
-            // Limpar o campo
-            $("#campoNomeCafeEditar").val("");
             if ($('#textNomeCafe').length > 0) {
                 location.reload();
             }
