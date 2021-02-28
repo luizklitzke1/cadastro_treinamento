@@ -7,15 +7,15 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-def create_app(test_config=None):
+def create_app(testing=False):
     
     app = Flask(__name__,instance_relative_config=True)
     
-    if test_config is None:
-        app.config.from_object(DevelopConfig)
+    if testing :
+        app.config.from_object(TestingConfig)
     else:
-        app.config.from_mapping(test_config)
-
+        app.config.from_object(DevelopConfig)
+        
     CORS(app)
     db.init_app(app)
     
