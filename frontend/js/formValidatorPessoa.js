@@ -27,7 +27,6 @@ function checkFormPessoa(){
             check = false;
         };
     });
-    console.log();
     if ($("#selectSala1").val() == null){
         check = false;
     }
@@ -36,7 +35,6 @@ function checkFormPessoa(){
         check = false;
     }
     if ($("#selectCafe2").val()  == null){
-        console.log($("#selectCafe2").val());
         check = false;
     }	
 

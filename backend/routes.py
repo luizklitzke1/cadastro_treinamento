@@ -46,7 +46,6 @@ def cadastar_Pessoa():
         alocar_pessoa_sala(nova_Pessoa.sala1_id,nova_Pessoa.cpf,1)
         alocar_pessoa_cafe(nova_Pessoa.cafe1_id,nova_Pessoa.cpf,1)
         alocar_pessoa_cafe(nova_Pessoa.cafe1_id,nova_Pessoa.cpf,2)
-        nova_Pessoa.cafe2.lotacao2 += 1
         db.session.commit()
         
         
@@ -76,8 +75,10 @@ def designar_cafe_etapa2(pessoa):
     for cafe in espacos_cafe:
         if (cafe.id_espaco != pessoa.cafe1_id):
             pessoa.cafe2_id = cafe.id_espaco
-            print(cafe)
             cafe.lotacao2 += 1
+    
+    db.session.commit()
+            
     
 #Rota para designar automaticamente a sala da segunda etapa para uma pessoa
 #(A pessoa pode alterar posteriomente, se necessário e atenda os critérios)
@@ -174,16 +175,16 @@ def alocar_pessoa_cafe(id_espaco_cafe, cpf, etapa, auto = False):
     
         pessoa = Pessoa.query.get_or_404(cpf)
         
-        if etapa == 1 and (pessoa.cafe1_id == id_espaco_cafe or pessoa.cafe1_id == None):
+        if etapa == 1:
             pessoa.cafe1_id = id_espaco_cafe
             cafe_esp.lotacao1 += 1
             if auto:
                 designar_cafe_etapa2(pessoa)
         
         #Evita a repetição do espaço de café
-        elif pessoa.cafe1_id != id_espaco_cafe:
-            
-            designar_cafe_etapa2(pessoa)
+        elif etapa ==2:
+            pessoa.cafe2_id = id_espaco_cafe
+            cafe_esp.lotacao2 += 1
         
         else:
             return False
@@ -191,6 +192,7 @@ def alocar_pessoa_cafe(id_espaco_cafe, cpf, etapa, auto = False):
     except:
         return False
     
+    db.session.commit()
     return True
 
 
@@ -222,12 +224,11 @@ def redistribuir_pessoas():
                         alocada = True
                         continue
         
-        if not(alocar_pessoa_cafe(pessoa.cafe1_id,pessoa.cpf,1)):
+        if not(alocar_pessoa_cafe(pessoa.cafe1_id,pessoa.cpf,1,True)):
             alocadacafe = False
             for cafe in cafes:
                 if not(alocadacafe):
-                    if (alocar_pessoa_cafe(cafe.id_espaco_cafe,pessoa.cpf,1)):
-                        print(pessoa.nome,cafe.nome)
+                    if (alocar_pessoa_cafe(cafe.id_espaco,pessoa.cpf,1,True)):
                         alocadacafe = True
                         continue
                     
@@ -340,7 +341,6 @@ def editar_Pessoa(cpf):
         dados["novo_cpf"] = "0" + dados["novo_cpf"]
         
     try:
-        print(dados["novo_cpf"]) 
         pessoa = Pessoa.query.get_or_404(cpf)
         
         pessoa.cpf = dados["novo_cpf"]                                 
@@ -577,13 +577,13 @@ def cadastrar_Espaco_Cafe():
     return resposta
 
 # Rota para apagar um Espaço para Café
-@app.route("/apagar_espaco_cafe/<int:id_espaco_cafe>",  methods=['DELETE'])
-def apagar_Espaco_cafe(id_espaco_cafe):
+@app.route("/apagar_espaco_cafe/<int:id_espaco>",  methods=['DELETE'])
+def apagar_Espaco_cafe(id_espaco):
     
     resposta = jsonify({"resultado":"ok","detalhes": "ok"})
     
     try: #Tentar realizar a exclusão
-        espaco = Espaco_Cafe.query.get_or_404(id_espaco_cafe) 
+        espaco = Espaco_Cafe.query.get_or_404(id_espaco) 
         db.session.delete(espaco)
         
         redistribuir_pessoas()  
