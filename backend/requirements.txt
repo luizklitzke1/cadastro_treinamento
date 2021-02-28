@@ -1,4 +1,5 @@
 pytest
+pytest-flask
 flask 
 flask_sqlalchemy
 flask_cors

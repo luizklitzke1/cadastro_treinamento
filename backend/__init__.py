@@ -10,18 +10,20 @@ db = SQLAlchemy()
 def create_app(testing=False):
     
     app = Flask(__name__,instance_relative_config=True)
-    
     if testing :
         app.config.from_object(TestingConfig)
     else:
         app.config.from_object(DevelopConfig)
-        
+    
     CORS(app)
     db.init_app(app)
     
     with app.app_context():
         # Include routes
-        from . import routes 
+        
+        from . import routes
+        app.register_blueprint(routes.geral)
+     
         return app
    
 

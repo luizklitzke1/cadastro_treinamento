@@ -1,24 +1,6 @@
-from flask import json, jsonify
-"""
-def test_cadastrar_sala(app,client):
-    
-    data = {
-        'nome': 'sala 111'
-    }
-    
-    response = client.post("/cadastrar_sala", json=data)
-
-    assert response.json['resultado'] == "ok"
-"""    
+from flask import json, jsonify, request
 
 def test_add(app,client):        
-    response = client.post(
-        '/cadastrar_sala',
-        data=json.dumps({'nome': 'sala 313'}),
-        content_type='application/json',
-    )
-
-    data = json.loads(response.get_data(as_text=True))
-
-    assert response.status_code == 200
+   response= client.post("/cadastrar_sala", data=json.dumps( {'nome': 'sala 31313'}), content_type='application/json')
+   assert response.status_code == 200
     

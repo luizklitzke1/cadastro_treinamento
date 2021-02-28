@@ -1,12 +1,12 @@
 import pytest
 from backend import create_app
 
-@pytest.fixture(scope="module")
+@pytest.fixture
 def app():
     app=create_app(testing=True)
     yield app
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture
 def client(app):
     return app.test_client()

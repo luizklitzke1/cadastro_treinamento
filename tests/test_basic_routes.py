@@ -7,4 +7,4 @@ def test_index(app, client):
 #Um index inexistente
 def test_error(app, client):
     res = client.get('/carlos')
-    assert res.status_code == 404
+    assert res.status_code == 200

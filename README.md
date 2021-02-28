@@ -15,7 +15,7 @@ Para rodar o servidor backend, basta instalar os pacotes necessário, todos list
 O mesmo pode ser feito com pip em um terminal na pasta fonte do projeto através do comando :
 
 ```sh
-python  -m pip install -r backend/requirements.txt
+python -m pip install -r backend/requirements.txt
 ```
 
 Para acessar os dados pelo frontend, basta executar qualquer um dos arquivos .html presentes em ˋfrontend/htmlˋ, **cerifique-se que o servido backend está rodando para obter os dados!**.
