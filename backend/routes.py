@@ -1,15 +1,11 @@
 #Módulo responsável pra lógica de rotas do servidor backend e comunicação com o DB
-
-import base64
 import io
 import json
 import os
 
-from PIL import Image
-
-from config import *
-from models_db import Espaco_Cafe, Pessoa, Sala
-
+from flask import jsonify, request
+from .models_db import Espaco_Cafe, Pessoa, Sala, db
+from flask import current_app as app
 
 # Rota para a home
 @app.route("/")

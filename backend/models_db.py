@@ -1,4 +1,4 @@
-from config import *
+from . import db
 
 #Classe para os dados de um Espaço de Café
 class Espaco_Cafe(db.Model):
