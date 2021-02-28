@@ -38,13 +38,16 @@ def cadastar_Pessoa():
         
         if len(dados["cpf"]) != 11:
             dados["cpf"] = "0" + dados["cpf"]
+            
+        if not(testar_cpf(dados["cpf"])):
+            raise Exception("CPF inválido!")
         
         nova_Pessoa = Pessoa(**dados)
         
         db.session.add(nova_Pessoa)
         alocar_pessoa_sala(nova_Pessoa.sala1_id,nova_Pessoa.cpf,1)
         alocar_pessoa_cafe(nova_Pessoa.cafe1_id,nova_Pessoa.cpf,1)
-        alocar_pessoa_cafe(nova_Pessoa.cafe1_id,nova_Pessoa.cpf,2)
+        alocar_pessoa_cafe(nova_Pessoa.cafe2_id,nova_Pessoa.cpf,2)
         db.session.commit()
         
         
@@ -337,8 +340,11 @@ def editar_Pessoa(cpf):
         cpf = "0" + cpf
     
     if len(dados["novo_cpf"]) != 11:
-        dados["novo_cpf"] = "0" + dados["novo_cpf"]
+        dados["novo_cpf"] = "0" + dados["novo_cpf"] 
         
+    if not(testar_cpf(dados["cpf"])):
+        raise Exception("CPF inválido!")
+    
     try:
         pessoa = Pessoa.query.get_or_404(cpf)
         
@@ -618,3 +624,26 @@ def editar_Cafe(id_cafe):
     resposta.headers.add("Access-Control-Allow-Origin","*")
     return resposta
 
+def testar_cpf(cpf):
+    
+    
+    # Obtém apenas os números do CPF, ignorando pontuações
+    numbers = [int(digit) for digit in cpf if digit.isdigit()]
+
+    # Verifica se o CPF possui 11 números ou se todos são iguais:
+    if len(numbers) != 11 or len(set(numbers)) == 1:
+        return False
+
+    # Validação do primeiro dígito verificador:
+    sum_of_products = sum(a*b for a, b in zip(numbers[0:9], range(10, 1, -1)))
+    expected_digit = (sum_of_products * 10 % 11) % 10
+    if numbers[9] != expected_digit:
+        return False
+
+    # Validação do segundo dígito verificador:
+    sum_of_products = sum(a*b for a, b in zip(numbers[0:10], range(11, 1, -1)))
+    expected_digit = (sum_of_products * 10 % 11) % 10
+    if numbers[10] != expected_digit:
+        return False
+
+    return True  

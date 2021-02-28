@@ -10,6 +10,7 @@ db = SQLAlchemy()
 def create_app(testing=False):
     
     app = Flask(__name__,instance_relative_config=True)
+    app.app_context().push()
     if testing :
         app.config.from_object(TestingConfig)
     else:
@@ -17,6 +18,13 @@ def create_app(testing=False):
     
     CORS(app)
     db.init_app(app)
+    
+    db.create_all()
+    
+    meta = db.metadata
+    for table in reversed(meta.sorted_tables):
+        db.session.execute(table.delete())
+    db.session.commit()
     
     with app.app_context():
         # Include routes
