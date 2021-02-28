@@ -47,29 +47,30 @@ O sistema segue uma lógica para a distruibuição de pessoas nas salas:
   * A pessoa deve trocar de espaço para café entre o primeiro e segundo intervalo
   
 Logo, um algoritmo garante que tais parâmetros sejam respeitados, organizando automaticamente as pessoas. 
-Exemplo da parte principal do código responsável por realocar as pessoas nas salas e espaços para café, dando prioridade para seus lugares na primeira etapa:
+Exemplo da parte principal do código responsável por realocar as pessoas nas salas e espaços para café:
 ~~~python
 for pessoa in pessoas:
         
-#Tenta inicialmente alocar a pessoa em sua sala original da primeira etapa
-if not(alocar_pessoa_sala(pessoa.sala1_id,pessoa.cpf,1)):
-    alocada = False
-    #Caso de errado, tenta a proxima elegivel
-    for sala in salas:
-        if not(alocada):
-            if( (alocar_pessoa_sala(sala.id_sala,pessoa.cpf,1)) ):
-                alocada = True
-                continue
+        pessoa.sala1_id = None
+        pessoa.sala2_id = None
+      
+        alocada = False
+        #Caso de errado, tenta a proxima elegivel
+        for sala in salas:
+            if not(alocada):
+                if (alocar_pessoa_sala(sala.id_sala,pessoa.cpf,1)):
+                    alocada = True
+                    continue
+        
 
-if not(alocar_pessoa_cafe(pessoa.cafe1_id,pessoa.cpf,1)):
-    alocadacafe = False
-    for cafe in cafes:
-        if not(alocadacafe):
-            if (alocar_pessoa_cafe(cafe.id_espaco_cafe,pessoa.cpf,1)):
-                print(pessoa.nome,cafe.nome)
-                alocadacafe = True
-                continue
-
+        alocadacafe = False
+        for cafe in cafes:
+            if not(alocadacafe):
+                if (alocar_pessoa_cafe(cafe.id_espaco,pessoa.cpf,1,True)):
+                    alocadacafe = True
+                    continue
+                    
+        designar_sala_etapa2(pessoa)
 ~~~
 ## 🧪 Teste unitários
 Os testes unitário são realizados utilizando a biblioteca Pytest em uma instância separada da aplicação e do banco de dados para evitar conflitos com a produção.
