@@ -674,3 +674,12 @@ def recalcular_lotacao_salas():
         sala.lotacao1 = len(pessoas1)
         sala.lotacao2 = len(pessoas2)
         
+        
+    cafes = db.session.query(Espaco_Cafe).all()
+    
+    for cafe in cafes:
+        pessoas1 = Pessoa.query.filter(Pessoa.cafe1_id == cafe.id_espaco).all()
+        pessoas2 = Pessoa.query.filter(Pessoa.cafe2_id == cafe.id_espaco).all()
+        cafe.lotacao1 = len(pessoas1)
+        cafe.lotacao2 = len(pessoas2)
+        
