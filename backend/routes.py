@@ -93,7 +93,6 @@ def designar_cafe_etapa2(pessoa):
 def designar_sala_etapa2(pessoa):
     
     salas= db.session.query(Sala).all()
-    
     coincidem, metade = calcular_coincidentes_e_metade(pessoa.sala1_id)
     sala1 = Sala.query.get_or_404(pessoa.sala1_id)
     
@@ -115,13 +114,14 @@ def designar_sala_etapa2(pessoa):
                 for s2 in salas:
         
                     if (sala.lotacao2 > s2.lotacao2):
-                        
                         elegivel = False
-                        pass
+                    
                 if elegivel:
                     pessoa.sala2_id = sala.id_sala
                     sala.lotacao2 += 1
                     return True
+        pessoa.sala2_id = sala1.id_sala
+
 
 
 # Rota para  alocar uma pessoa em uma sala
@@ -158,9 +158,10 @@ def alocar_pessoa_sala(id_sala, cpf, etapa):
             if not(designar_sala_etapa2(pessoa)):
                 return False
             
-            
+        
         elif etapa == 2 and (pessoa.sala2_id != sala_esp.id_sala):
             pessoa.sala2_id = sala_esp.id_sala
+
             sala_esp.lotacao2 += 1
         
         db.session.commit()
@@ -238,8 +239,9 @@ def redistribuir_pessoas():
                         alocadacafe = True
                         continue
                     
+    recalcular_lotacao_salas()
+                    
         
-                   
                    
 # Procurar uma pessoa
 @geral.route("/procurar_pessoa", methods=['POST'])
@@ -643,3 +645,15 @@ def testar_cpf(cpf):
         return False
 
     return True  
+
+
+#Recacalcula a lotação por erros possíveis com salas ímpares
+def recalcular_lotacao_salas():
+    salas = db.session.query(Sala).all()
+    
+    for sala in salas:
+        pessoas1 = Pessoa.query.filter(Pessoa.sala1_id == sala.id_sala).all()
+        pessoas2 = Pessoa.query.filter(Pessoa.sala2_id == sala.id_sala).all()
+        sala.lotacao1 = len(pessoas1)
+        sala.lotacao2 = len(pessoas2)
+        

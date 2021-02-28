@@ -40,7 +40,7 @@ Em vários locais no sistema, você pode informar os dados desejados para consul
 ### 🚪Salas
 O sistema segue uma lógica para a distruibuição de pessoas nas salas:
   * A diferença de pessoas não pode ser maior que um
-  * Metade dos alunos devem trocar de sala na segunda etapa
+  * Metade das pessoas devem trocar de sala na segunda etapa
   > 💡 No caso da sala possuir um número impar de pessoas na primeira etapa, a metade é aredondada para baixo. Exemplo: metade de 3 pessoas = ~~1.5~~ 1
   
 ### ☕Espaços para café
@@ -79,7 +79,7 @@ Todos os parâmetros para os mesmos são definidos na pasta tests, o que faz tam
 ## 🗃 Persistência de dados
 
 Os dados do programa são armazenados em um banco de dados utilizando a biblioteca SQAlchemy e SQLite e acessados e modificados através de *requests* no back-end.
-
+> Um banco de dados chamado "testes.db" é utilizado apenas durante os testes unitários.
 
 ## 🧅 Camadas do projeto
 
