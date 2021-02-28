@@ -361,7 +361,7 @@ def editar_Pessoa(cpf):
 
 
 # Rota para apagar uma Pessoa
-@geral.route("/apagar_pessoa/<string:cpf>",  methods=['DELETE'])
+@geral.route("/apagar_pessoa/<string:cpf>",  methods=['DELETE','POST'])
 def apagar_Pessoa(cpf):
     
     if len(cpf) != 11:
@@ -456,7 +456,7 @@ def cadastrar_sala():
     return resposta
 
 # Rota para apagar uma Sala
-@geral.route("/apagar_sala/<int:id_sala>",  methods=['DELETE'])
+@geral.route("/apagar_sala/<int:id_sala>",  methods=['DELETE','POST'])
 def apagar_Sala(id_sala):
     
     resposta = jsonify({"resultado":"ok","detalhes": "ok"})
@@ -585,7 +585,7 @@ def cadastrar_Espaco_Cafe():
     return resposta
 
 # Rota para apagar um Espaço para Café
-@geral.route("/apagar_espaco_cafe/<int:id_espaco>",  methods=['DELETE'])
+@geral.route("/apagar_espaco_cafe/<int:id_espaco>",  methods=['DELETE','POST'])
 def apagar_Espaco_cafe(id_espaco):
     
     resposta = jsonify({"resultado":"ok","detalhes": "ok"})

@@ -21,6 +21,9 @@ python -m pip install -r backend/requirements.txt
 Para acessar os dados pelo frontend, basta executar qualquer um dos arquivos .html presentes em ˋfrontend/htmlˋ, **cerifique-se que o servido backend está rodando para obter os dados!**.
 
 ## 💻 Utilização
+
+Para inicilizar o servidor backend, basta apenas inicilizar o módulo servidor_backend.py e o servidor irá rodar por padrão no *localhost*.
+
 O acesso do usuário é feito pelo ambiente web ao se executar os arquivos html, vide explicação anterior.
 Uma vez no site, pode-se navegar tanto pelos links na tela como pela barra de acesso rápido na lateral esquerda.
 
@@ -68,11 +71,14 @@ if not(alocar_pessoa_cafe(pessoa.cafe1_id,pessoa.cpf,1)):
                 continue
 
 ~~~
-
+## 🧪 Teste unitários
+Os testes unitário são realizados utilizando a biblioteca Pytest em uma instância separada da aplicação e do banco de dados para evitar conflitos com a produção.
+Todos os parâmetros para os mesmos são definidos na pasta tests, o que faz também com que para vizualizar os resultados de todos basta digitar **pytest** no prompt de comando, estando na pasta raiz do repositório(uma vez com a biblioteca instalada).
+![Testes](imgs/pytest.png)
 
 ## 🗃 Persistência de dados
 
-Os dados do programa são armazenados em um banco de dados utilizando a biblioeta SQAlchemy e SQLite e acessados e modificados através de *requests* no back-end.
+Os dados do programa são armazenados em um banco de dados utilizando a biblioteca SQAlchemy e SQLite e acessados e modificados através de *requests* no back-end.
 
 
 ## 🧅 Camadas do projeto
