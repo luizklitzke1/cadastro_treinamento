@@ -4,7 +4,7 @@ from . import db
 class Espaco_Cafe(db.Model):
     id_espaco = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(150), nullable=False)
-    #Lotação é modificada toda vez que um aluno entra ou sai, para evitar muitas requisições ao DB
+    #Lotação é modificada toda vez que uma pessoa entra ou sai, para evitar muitas requisições ao DB
     lotacao1 = db.Column(db.Integer, nullable=False, default = 0)
     lotacao2 = db.Column(db.Integer, nullable=False, default = 0)
     
@@ -22,7 +22,7 @@ class Espaco_Cafe(db.Model):
 class Sala(db.Model):
     id_sala = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(150), nullable=False)
-    #Lotação é modificada toda vez que um aluno entra ou sai, para evitar muitas requisições ao DB
+    #Lotação é modificada toda vez que uma pessoa entra ou sai, para evitar muitas requisições ao DB
     lotacao1 = db.Column(db.Integer, nullable=False, default = 0)
     lotacao2 = db.Column(db.Integer, nullable=False, default = 0)
     
@@ -85,41 +85,13 @@ class Pessoa(db.Model):
 if __name__ == "__main__":
     
     #Apaga o DB, se já existir
-    
     if os.path.exists(arquivodb):
         os.remove(arquivodb)
         
     db.create_all()
-    
-    c1 = Espaco_Cafe(
-        nome = "Café 1"
-    )
-    c2 = Espaco_Cafe(
-        nome = "Café 2"
-    )
-    
-    s1 = Sala(
-        nome = "Sala 1"
-    )
-    s2 = Sala(
-        nome = "Sala 2"
-    )
-    s3 = Sala(
-        nome = "Sala 3"
-    )
-    s4 = Sala(
-        nome = "Sala 4"
-    )
+
     
     db.session.commit()
-
-    #Gerador de CPF em: https://www.geradorcpf.com/
-    
-    p7 = Pessoa(
-        cpf = "63414167506",
-        nome = "Tobias",
-        sobrenome = "Afreim"
-    )
 
     db.session.commit()
 

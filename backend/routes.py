@@ -1,5 +1,4 @@
 #Módulo responsável pra lógica de rotas do servidor backend e comunicação com o DB
-import io
 import json
 import os
 
@@ -49,6 +48,7 @@ def cadastar_Pessoa():
         alocar_pessoa_sala(nova_Pessoa.sala1_id,nova_Pessoa.cpf,1)
         alocar_pessoa_cafe(nova_Pessoa.cafe1_id,nova_Pessoa.cpf,1)
         alocar_pessoa_cafe(nova_Pessoa.cafe2_id,nova_Pessoa.cpf,2)
+
         db.session.commit()
         
         
@@ -59,6 +59,7 @@ def cadastar_Pessoa():
     resposta.headers.add("Access-Control-Allow-Origin","*")
     
     return resposta
+
 def calcular_coincidentes_e_metade(id_sala):
     
     #Pega a lista de pessoas na primeira e segunda etapa e descobre quantas continuaram na segunda
@@ -75,16 +76,20 @@ def designar_cafe_etapa2(pessoa):
     
     espacos_cafe = db.session.query(Espaco_Cafe).all()
     
+    alocada = False
     for cafe in espacos_cafe:
-        if (cafe.id_espaco != pessoa.cafe1_id):
-            pessoa.cafe2_id = cafe.id_espaco
-            cafe.lotacao2 += 1
+        
+        if not(alocada):
+            if (cafe.id_espaco != pessoa.cafe1_id):
+                pessoa.cafe2_id = cafe.id_espaco
+                cafe.lotacao2 += 1
+                alocada = True
+                break
     
     db.session.commit()
             
     
 #Rota para designar automaticamente a sala da segunda etapa para uma pessoa
-#(A pessoa pode alterar posteriomente, se necessário e atenda os critérios)
 def designar_sala_etapa2(pessoa):
     
     salas= db.session.query(Sala).all()
@@ -103,7 +108,7 @@ def designar_sala_etapa2(pessoa):
         for sala in salas:
             elegivel = True
             coincidem, metade =  calcular_coincidentes_e_metade(sala.id_sala)
-            #Garante que 50% sejam mantido e da preferência pra misturar os alunos
+            #Garante que 50% sejam mantido e da preferência pra misturar os pessoas
             
             if ((coincidem < metade or metade == 0) and pessoa.sala1_id == sala.id_sala) or ((coincidem >= metade and pessoa.sala1_id != sala.id_sala)):
             
@@ -120,7 +125,6 @@ def designar_sala_etapa2(pessoa):
 
 
 # Rota para  alocar uma pessoa em uma sala
-# http://127.0.0.1:5000/alocar_pessoa_sala/1/05435950643/1
 @geral.route("/alocar_pessoa_sala/<int:id_sala>/<string:cpf>/<int:etapa>", methods=['POST'])
 def alocar_pessoa_sala(id_sala, cpf, etapa):
     
@@ -141,7 +145,6 @@ def alocar_pessoa_sala(id_sala, cpf, etapa):
                     return False
                 
                 #Verifica quantas pessoas que tinham essa sala na etapa 1 permaneceram para a etapa, vide a permanencia de 50%
-                #Caso seja um número impar, considera o inteiro da divisão por 2
                 coincidem = calcular_coincidentes_e_metade(sala.id_sala)[0]
                 if coincidem != sala_esp.lotacao1//2:
                     return False
@@ -292,7 +295,7 @@ def procurar_pessoa_sala(id_sala,etapa):
     return (jsonify(pessoas_json))
 
 
-# Procurar uma pessoa em um espaço para café específica
+# Procurar uma pessoa em um espaço para café específico
 @geral.route("/procurar_pessoa_cafe/<int:id_cafe>/<int:etapa>", methods=['POST'])
 def procurar_pessoa_cafe(id_cafe,etapa):
     
@@ -317,17 +320,6 @@ def procurar_pessoa_cafe(id_cafe,etapa):
   
     return (jsonify(pessoas_json))
 
-# Rota para listar oas pessoas de determinada sala e etapa
-@geral.route("/listar_pessoas_sala/<int:id_sala>/<int:etapa>",  methods=['POST'])
-def listar_pessoas_sala(id_sala,etapa):
-   
-    if etapa == 1:
-        pessoas = Pessoa.query.filter(Pessoa.sala1_id == id_sala).all()
-    else:
-        pessoas = Pessoa.query.filter(Pessoa.sala2_id == id_sala).all()
-    
-    pessoas_json = [Pessoa.json() for Pessoa in pessoas]
-    return (jsonify(pessoas_json))
 
 # Rota para listar oas pessoas de determinado espaço de café e etapa
 @geral.route("/listar_pessoas_cafe/<int:id_espaco>/<int:etapa>",  methods=['POST'])
@@ -382,7 +374,6 @@ def apagar_Pessoa(cpf):
     resposta = jsonify({"resultado":"ok","detalhes": "ok"})
     
     try: #Tentar realizar a exclusão
- 
         pessoa = Pessoa.query.get(cpf)
                                              
         db.session.delete(pessoa)
@@ -626,6 +617,8 @@ def editar_Cafe(id_cafe):
         
     resposta.headers.add("Access-Control-Allow-Origin","*")
     return resposta
+
+
 
 def testar_cpf(cpf):
     

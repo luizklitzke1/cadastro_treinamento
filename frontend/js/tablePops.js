@@ -1,8 +1,4 @@
 
-function teste(){
-    alert("Teste");
-};
-
 //Função para popular a tabela geral de pessoas
 function popularPessoasGeral(){
 
@@ -115,6 +111,7 @@ function popularTabelaPessoas(pessoas,id_tabela){
 
 //Função para popular os dados na página de uma sala específica
 function dadosSala(){
+    
     //Pega o ID através do link
     let id_sala = document.location.search.replace(/^.*?\=/,'');
     $.ajax({

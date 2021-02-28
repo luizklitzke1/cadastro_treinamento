@@ -191,12 +191,10 @@ var formValid2 = {
     
 //Verifica se todos os campos estão válidos
 function checkFormPessoa2(){
-    console.log("check");
     var check = true;
 
     for(var key in formValid2){
         if (!(formValid2[key])){
-            console.log(key, formValid2[key]);
             check = false;
         }
     }
