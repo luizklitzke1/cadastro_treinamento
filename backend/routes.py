@@ -235,7 +235,7 @@ def redistribuir_pessoas():
         
         
         #Distribui as pessoas nos espaços de café de maneira que não fiquem muito polarizadas também
-        #Do contrário, supondo que temos 3 espaços, poderiamos ter 1 com todas pessoas na primeira etapa e outro com todos na
+        #Do contrário, supondo que temos 3 espaços, poderiamos ter 1 com todas pessoas na primeira etapa e outro com todas na segunda
         indexpessoa = pessoas.index(pessoa)
         alocadacafe = False
         
