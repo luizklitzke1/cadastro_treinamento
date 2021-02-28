@@ -46,6 +46,7 @@ def cadastar_Pessoa():
         
         db.session.add(nova_Pessoa)
         alocar_pessoa_sala(nova_Pessoa.sala1_id,nova_Pessoa.cpf,1)
+        designar_sala_etapa2(nova_Pessoa)
         alocar_pessoa_cafe(nova_Pessoa.cafe1_id,nova_Pessoa.cpf,1)
         alocar_pessoa_cafe(nova_Pessoa.cafe2_id,nova_Pessoa.cpf,2)
 
@@ -187,8 +188,11 @@ def alocar_pessoa_cafe(id_espaco_cafe, cpf, etapa, auto = False):
         
         #Evita a repetição do espaço de café
         elif etapa ==2:
-            pessoa.cafe2_id = id_espaco_cafe
-            cafe_esp.lotacao2 += 1
+            if pessoa.cafe1_id != id_espaco_cafe:
+                pessoa.cafe2_id = id_espaco_cafe
+                cafe_esp.lotacao2 += 1
+            else:
+                return False
         
         else:
             return False
@@ -229,12 +233,25 @@ def redistribuir_pessoas():
                     alocada = True
                     continue
         
-
+        
+        #Distribui as pessoas nos espaços de café de maneira que não fiquem muito polarizadas também
+        #Do contrário, supondo que temos 3 espaços, poderiamos ter 1 com todas pessoas na primeira etapa e outro com todos na
+        indexpessoa = pessoas.index(pessoa)
         alocadacafe = False
+        
         for cafe in cafes:
             if not(alocadacafe):
-                if (alocar_pessoa_cafe(cafe.id_espaco,pessoa.cpf,1,True)):
-                    alocadacafe = True
+                if ((indexpessoa!=0 and len(cafes)>1) and (pessoas[indexpessoa-1].cafe1_id != cafe.id_espaco)):  
+                    if (alocar_pessoa_cafe(cafe.id_espaco,pessoa.cpf,1)):
+                        alocadacafe = True
+                        continue
+                    
+        alocadacafe2 = False
+       
+        for cafe in cafes:
+            if not(alocadacafe2):
+                if (alocar_pessoa_cafe(cafe.id_espaco,pessoa.cpf,2)):
+                    alocadacafe2 = True
                     continue
                     
         designar_sala_etapa2(pessoa)
