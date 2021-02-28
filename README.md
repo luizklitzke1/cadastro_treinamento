@@ -9,10 +9,6 @@ O projeto possibilita o cadastro de pessoas, salase espaços para café de um ev
 
 A lógica do projeto roda prioritariamente em Python, com requerimentos dade dados pela parte gráfica, a qual optei por desenvolver em um ambiente WEB com JavaScript e jQuery, uma vez que me sinto mais confortável e não tenho experiência com *frameworks* de criação de telas para aplicações em Java.
 
-## 👾 Live demo
-O sistema está hospedado temporariamente em um servidor gratuito do PyAnywhere, com velocidade limitada, principalmenten nos cadastros, porém funciona bem para visualizar o geral.
-Para acessá-lo, [clique nesse link](http://luizklitzke1.pythonanywhere.com/html/html/index.html).
-
 ## 🛠 Instalação
   
 Para rodar o servidor backend, basta instalar os pacotes necessário, todos listados no arquivo requirements.txt.
@@ -51,30 +47,29 @@ O sistema segue uma lógica para a distruibuição de pessoas nas salas:
   * A pessoa deve trocar de espaço para café entre o primeiro e segundo intervalo
   
 Logo, um algoritmo garante que tais parâmetros sejam respeitados, organizando automaticamente as pessoas. 
-Exemplo da parte principal do código responsável por realocar as pessoas nas salas e espaços para café:
+Exemplo da parte principal do código responsável por realocar as pessoas nas salas e espaços para café, dando prioridade para seus lugares na primeira etapa:
 ~~~python
 for pessoa in pessoas:
         
-        pessoa.sala1_id = None
-        pessoa.sala2_id = None
-      
-        alocada = False
-        #Caso de errado, tenta a proxima elegivel
-        for sala in salas:
-            if not(alocada):
-                if (alocar_pessoa_sala(sala.id_sala,pessoa.cpf,1)):
-                    alocada = True
-                    continue
-        
+#Tenta inicialmente alocar a pessoa em sua sala original da primeira etapa
+if not(alocar_pessoa_sala(pessoa.sala1_id,pessoa.cpf,1)):
+    alocada = False
+    #Caso de errado, tenta a proxima elegivel
+    for sala in salas:
+        if not(alocada):
+            if( (alocar_pessoa_sala(sala.id_sala,pessoa.cpf,1)) ):
+                alocada = True
+                continue
 
-        alocadacafe = False
-        for cafe in cafes:
-            if not(alocadacafe):
-                if (alocar_pessoa_cafe(cafe.id_espaco,pessoa.cpf,1,True)):
-                    alocadacafe = True
-                    continue
-                    
-        designar_sala_etapa2(pessoa)
+if not(alocar_pessoa_cafe(pessoa.cafe1_id,pessoa.cpf,1)):
+    alocadacafe = False
+    for cafe in cafes:
+        if not(alocadacafe):
+            if (alocar_pessoa_cafe(cafe.id_espaco_cafe,pessoa.cpf,1)):
+                print(pessoa.nome,cafe.nome)
+                alocadacafe = True
+                continue
+
 ~~~
 ## 🧪 Teste unitários
 Os testes unitário são realizados utilizando a biblioteca Pytest em uma instância separada da aplicação e do banco de dados para evitar conflitos com a produção.
