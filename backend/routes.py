@@ -108,11 +108,11 @@ def designar_sala_etapa2(pessoa):
             elegivel = True
             coincidem, metade =  calcular_coincidentes_e_metade(sala.id_sala)
             #Garante que 50% sejam mantido e da preferência pra misturar os pessoas
-            
+
             if ((coincidem < metade or metade == 0) and pessoa.sala1_id == sala.id_sala) or ((coincidem >= metade and pessoa.sala1_id != sala.id_sala)):
-            
+                
                 for s2 in salas:
-        
+                    
                     if (sala.lotacao2 > s2.lotacao2):
                         elegivel = False
                     
@@ -155,9 +155,6 @@ def alocar_pessoa_sala(id_sala, cpf, etapa):
             pessoa.sala1_id = sala_esp.id_sala
             sala_esp.lotacao1 += 1
             #Designa automaticamente um sala pra segunda etapa
-            if not(designar_sala_etapa2(pessoa)):
-                return False
-            
         
         elif etapa == 2 and (pessoa.sala2_id != sala_esp.id_sala):
             pessoa.sala2_id = sala_esp.id_sala
@@ -221,23 +218,26 @@ def redistribuir_pessoas():
 
     for pessoa in pessoas:
         
-        #Tenta inicialmente alocar a pessoa em sua sala original da primeira etapa
-        if not(alocar_pessoa_sala(pessoa.sala1_id,pessoa.cpf,1)):
-            alocada = False
-            #Caso de errado, tenta a proxima elegivel
-            for sala in salas:
-                if not(alocada):
-                    if( (alocar_pessoa_sala(sala.id_sala,pessoa.cpf,1)) ):
-                        alocada = True
-                        continue
+        pessoa.sala1_id = None
+        pessoa.sala2_id = None
+      
+        alocada = False
+        #Caso de errado, tenta a proxima elegivel
+        for sala in salas:
+            if not(alocada):
+                if (alocar_pessoa_sala(sala.id_sala,pessoa.cpf,1)):
+                    alocada = True
+                    continue
         
-        if not(alocar_pessoa_cafe(pessoa.cafe1_id,pessoa.cpf,1,True)):
-            alocadacafe = False
-            for cafe in cafes:
-                if not(alocadacafe):
-                    if (alocar_pessoa_cafe(cafe.id_espaco,pessoa.cpf,1,True)):
-                        alocadacafe = True
-                        continue
+
+        alocadacafe = False
+        for cafe in cafes:
+            if not(alocadacafe):
+                if (alocar_pessoa_cafe(cafe.id_espaco,pessoa.cpf,1,True)):
+                    alocadacafe = True
+                    continue
+                    
+        designar_sala_etapa2(pessoa)
                     
     recalcular_lotacao_salas()
                     
