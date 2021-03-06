@@ -235,7 +235,7 @@ def redistribuir_pessoas():
         
         
         #Distribui as pessoas nos espaços de café de maneira que não fiquem muito polarizadas também
-        #Do contrário, supondo que temos 3 espaços, poderiamos ter 1 com todas pessoas na primeira etapa e outro com todas na segunda
+        #Do contrário, supondo que temos 3 espaços, poderiamos ter 1 com todas pessoas na primeira etapa e outro com todos na
         indexpessoa = pessoas.index(pessoa)
         alocadacafe = False
         
@@ -475,11 +475,17 @@ def apagar_Sala(id_sala):
     resposta = jsonify({"resultado":"ok","detalhes": "ok"})
     
     try: #Tentar realizar a exclusão
-        sala = Sala.query.get_or_404(id_sala)
-                                               
-        db.session.delete(sala)
-        redistribuir_pessoas()
-        db.session.commit()
+        
+        salas= db.session.query(Sala).all()
+        pessoas = db.session.query(Pessoa).all()
+        if ((len(salas)>1) or (len(pessoas) == 0)):
+            sala = Sala.query.get_or_404(id_sala)
+                                                
+            db.session.delete(sala)
+            redistribuir_pessoas()
+            db.session.commit()
+        else:
+            raise Exception("As pessoas ficarão sem nenhuma sala para se distribuirem! \nRemova todas as pessoas antes para então recomeçar o cadastro de salas.")
         
     except Exception as e:  #Envie mensagem em caso de erro
         resposta = jsonify({"resultado":"erro", "detalhes":str(e)}) 
@@ -604,11 +610,18 @@ def apagar_Espaco_cafe(id_espaco):
     resposta = jsonify({"resultado":"ok","detalhes": "ok"})
     
     try: #Tentar realizar a exclusão
-        espaco = Espaco_Cafe.query.get_or_404(id_espaco) 
-        db.session.delete(espaco)
         
-        redistribuir_pessoas()  
-        db.session.commit()
+        espacos_cafe = db.session.query(Espaco_Cafe).all()
+        pessoas = db.session.query(Pessoa).all()
+        if ((len(espacos_cafe)>2) or (len(pessoas) == 0)):
+            espaco = Espaco_Cafe.query.get_or_404(id_espaco) 
+            db.session.delete(espaco)
+        
+            redistribuir_pessoas()  
+            db.session.commit()
+        else:
+            raise Exception("Irão sobrar menos de dois espaços para café! \nRemova todas as pessoas antes para então recomeçar o cadastro de espaços.")
+            
         
     except Exception as e:  #Envie mensagem em caso de erro
         resposta = jsonify({"resultado":"erro", "detalhes":str(e)}) 
@@ -682,4 +695,3 @@ def recalcular_lotacao_salas():
         pessoas2 = Pessoa.query.filter(Pessoa.cafe2_id == cafe.id_espaco).all()
         cafe.lotacao1 = len(pessoas1)
         cafe.lotacao2 = len(pessoas2)
-        
